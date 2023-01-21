@@ -1,8 +1,17 @@
 {
-    "extends": "tsconfig/base.json",
-    "compilerOptions": {
-      "baseUrl": "./src"
-    },
-    "include": ["."],
-    "exclude": ["dist", "build", "node_modules"]
-  }
+  "extends": "tsconfig/base.json",
+  "compilerOptions": {
+    "baseUrl": "./src"
+  },
+  "include": [
+    ".",
+  ],
+  "typeRoots": [
+    "index.d.ts"
+  ],
+  "exclude": [
+    "dist",
+    "build",
+    "node_modules"
+  ]
+}

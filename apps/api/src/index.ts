@@ -3,15 +3,18 @@ import cors from "cors";
 import express from "express";
 import session from "express-session";
 import { v4 as uuidv4 } from "uuid";
-import { SECRET } from "./configs/secrets";
-import REDIS_CLIENT from "./utils/redis";
+import { MONGO_URL, SECRET } from "./configs/secrets";
+import REDIS_CLIENT from "./configs/redis";
 
+import mongoose from "mongoose";
 import ApplicationRouter from "./controllers/index.router";
 
-let RedisStore = connectRedis(session);
+const RedisStore = connectRedis(session);
 const app = express();
 const port = 3000;
 
+mongoose.set('strictQuery', false);
+mongoose.connect(MONGO_URL);
 app.use(cors({ origin: "*" }));
 
 app.use(

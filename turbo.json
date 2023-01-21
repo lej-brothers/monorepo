@@ -15,7 +15,8 @@
     },
     "api#dev": {
       "env": [
-        "SECRET"
+        "SECRET",
+        "MONGO_URL"
       ],
       "cache": false
     },
