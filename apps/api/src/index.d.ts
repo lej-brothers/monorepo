@@ -1,11 +1,7 @@
 import { IOrderDocument } from "./model/order.model";
 
-declare global {
-  namespace Express {
-    interface Request {
-      order?: IOrderDocument;
-    }
+declare module "express-serve-static-core" {
+  export interface Request {
+    order?: IOrderDocument;
   }
 }
-
-export {};

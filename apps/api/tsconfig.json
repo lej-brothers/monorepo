@@ -7,7 +7,7 @@
     ".",
   ],
   "typeRoots": [
-    "index.d.ts"
+    "./src/index.d.ts"
   ],
   "exclude": [
     "dist",

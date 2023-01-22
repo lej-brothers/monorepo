@@ -1,4 +1,6 @@
-import { Schema, Document, model } from "mongoose";
+import { Schema, Document, model, PaginateModel } from "mongoose";
+import paginate from "mongoose-paginate-v2";
+
 import { LocaleMemberSchema } from "./locale.model";
 import { ImageSchema } from "./images.model";
 import { ICategory } from "common";
@@ -11,7 +13,7 @@ const CategorySchema = new Schema(
     slug: { type: String, unique: true, required: true },
     description: [LocaleMemberSchema],
     image: ImageSchema,
-    products: [{ type: Schema.Types.ObjectId, ref: "products" }],
+    products: [{ type: Schema.Types.ObjectId, ref: "Products" }],
   },
   {
     timestamps: {
@@ -21,6 +23,12 @@ const CategorySchema = new Schema(
   }
 );
 
-const Category = model<ICategoryDocument>("categories", CategorySchema);
+CategorySchema.plugin(paginate);
+
+const Category = model<ICategoryDocument, PaginateModel<ICategoryDocument>>(
+  "Categories",
+  CategorySchema,
+  "categories"
+);
 
 export default Category;

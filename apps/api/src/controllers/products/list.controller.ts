@@ -3,12 +3,15 @@ import { param } from "express-validator";
 
 import ProductService from "../../services/product.service";
 
-const validations = [param("id").isMongoId()];
+const validations = [param("page"), param("limit")];
 
 const controller = async (req: Request, res: Response) => {
-  const { id } = req.params;
-  const product = await ProductService.get(id);
-  res.send(product);
+  const { page, limit } = req.params;
+  const data = await ProductService.list({
+    page: Number(page),
+    limit: Number(limit) || 20,
+  });
+  res.send(data);
 };
 
 export default { validations, controller };

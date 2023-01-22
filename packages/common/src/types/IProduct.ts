@@ -3,6 +3,7 @@ import { ILocaleMember } from "./ILocale";
 
 export type IProduct = {
   _id: string;
+  slug: string;
   title: IProductTitle[];
   images: IProductImage[];
   details?: IProductDetails[];
