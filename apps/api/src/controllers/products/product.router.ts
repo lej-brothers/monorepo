@@ -4,7 +4,7 @@ import { assertRequestInput } from "../../middlewares/assertRequestInput";
 
 import ListController from "./list.controller";
 import GetController from "./get.controller";
-import PostController from './post.controller'
+import PostController from "./post.controller";
 
 const router = Router();
 
@@ -14,8 +14,11 @@ router.get(
   ListController.controller
 );
 
-router.post('/', assertRequestInput(PostController.validations), PostController.controller)
-
+router.post(
+  "/",
+  assertRequestInput(PostController.validations),
+  PostController.controller
+);
 
 router.get(
   "/:id",

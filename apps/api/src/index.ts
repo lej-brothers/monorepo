@@ -5,6 +5,7 @@ import session from "express-session";
 import { v4 as uuidv4 } from "uuid";
 import { MONGO_URL, SECRET } from "./configs/secrets";
 import REDIS_CLIENT from "./configs/redis";
+import MINIO from "./configs/minio";
 
 import mongoose from "mongoose";
 import ApplicationRouter from "./controllers/index.router";
@@ -13,8 +14,9 @@ const RedisStore = connectRedis(session);
 const app = express();
 const port = 3000;
 
-mongoose.set('strictQuery', false);
+mongoose.set("strictQuery", false);
 mongoose.connect(MONGO_URL);
+MINIO.getBucketNotification("lej-marketplace");
 app.use(cors({ origin: "*" }));
 
 app.use(
