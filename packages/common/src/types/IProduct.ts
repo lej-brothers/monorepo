@@ -1,5 +1,6 @@
 import { ICategory } from "./ICategory";
 import { ILocaleMember } from "./ILocale";
+import { IWarehourse } from "./IWarehouse";
 
 export type IProduct = {
   _id: string;
@@ -9,6 +10,7 @@ export type IProduct = {
   details?: IProductDetails[];
   description: IProductDescription[];
   categories: ICategory[];
+  warehourse: IWarehourse;
 };
 
 export interface IProductImage {
