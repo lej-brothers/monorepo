@@ -1,6 +1,10 @@
 import { createGlobalStyle, css } from "styled-components";
 
 const Global = createGlobalStyle`${css`
+  @tailwind base;
+  @tailwind components;
+  @tailwind utilities;
+  
   #root {
     height: 100vh;
   }

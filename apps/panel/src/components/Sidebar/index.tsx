@@ -1,18 +1,12 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import {
-  DesktopOutlined,
-  FileOutlined,
-  PieChartOutlined,
-  TableOutlined,
-  TeamOutlined,
-  UserOutlined,
-} from "@ant-design/icons";
+import { TableOutlined } from "@ant-design/icons";
 import type { MenuProps } from "antd";
-import { Breadcrumb, Layout, Menu, theme } from "antd";
+import { Layout, Menu } from "antd";
+import { FormattedMessage } from "react-intl";
 
 type MenuItem = Required<MenuProps>["items"][number];
-const { Header, Content, Footer, Sider } = Layout;
+const { Sider } = Layout;
 
 function getItem(
   label: React.ReactNode,
@@ -32,7 +26,7 @@ interface Props {}
 
 const items: MenuItem[] = [
   getItem(
-    "Products",
+    <FormattedMessage id="product" />,
     "1",
     <Link to="/products">
       <TableOutlined />
@@ -53,7 +47,6 @@ const items: MenuItem[] = [
 
 const SideBar = ({}: Props) => {
   const [collapsed, setCollapsed] = useState(false);
- 
 
   return (
     <Sider
