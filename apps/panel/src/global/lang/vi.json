@@ -9,5 +9,9 @@
     "product.create.category": "Danh mục",
     "product.create.section.general": "Thông tin cơ bản",
     "product.create.section.general.description": "Bước đầu tiên để tạo sản phẩm",
-    "product.create.section.organize": "Phân loại"
+    "product.create.section.organize": "Phân loại",
+    "category.modal.create.title": "Tạo danh mục mới",
+
+    "description": "Mô tả",
+    "name": "Tên"
 }

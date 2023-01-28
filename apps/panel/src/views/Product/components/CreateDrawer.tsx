@@ -14,7 +14,7 @@ interface Props {
   toggleModal: (modal: PRODUCT_MODAL) => void;
 }
 
-const CreateDrawer: React.FC<Props> = ({ open, onClose }) => {
+const CreateDrawer: React.FC<Props> = ({ open, toggleModal, onClose }) => {
   const methods = useForm();
 
   const onFinish = (a: any) => {
@@ -120,7 +120,12 @@ const CreateDrawer: React.FC<Props> = ({ open, onClose }) => {
                   <label className="text-sm font-semibold">
                     <FormattedMessage id="product.create.category" />
                   </label>
-                  <Button size="small">+</Button>
+                  <Button
+                    onClick={() => toggleModal(PRODUCT_MODAL.CATEGORY_CREATE)}
+                    size="small"
+                  >
+                    +
+                  </Button>
                 </div>
                 <Select
                   name="details"
