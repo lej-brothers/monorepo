@@ -16,7 +16,7 @@ const CustomStrategy = passportCustom.Strategy;
 
 const RedisStore = connectRedis(session);
 const app = express();
-const port = 3000;
+const port = 4000;
 
 mongoose.set("strictQuery", false);
 mongoose.connect(MONGO_URL);
@@ -40,7 +40,7 @@ app.use(passport.session());
 passport.use(
   "authtoken",
   new CustomStrategy(function (req, callback) {
-    const isValid = req.body.token === SECRET;
+    const isValid = req.body?.token === SECRET;
     if (isValid) callback(new Error("Authentication Failed"));
     callback(null);
   })
