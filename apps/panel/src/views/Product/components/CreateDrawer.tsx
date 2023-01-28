@@ -4,12 +4,14 @@ import { Drawer, Collapse, theme, Button } from "antd";
 import { FormattedMessage } from "react-intl";
 import { CaretRightOutlined } from "@ant-design/icons";
 import { Input, Textarea, Select } from "../../../components";
+import { PRODUCT_MODAL } from "../constants";
 
 const { Panel } = Collapse;
 
 interface Props {
   open: boolean;
   onClose: () => void;
+  toggleModal: (modal: PRODUCT_MODAL) => void;
 }
 
 const CreateDrawer: React.FC<Props> = ({ open, onClose }) => {
