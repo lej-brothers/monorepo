@@ -1,10 +1,9 @@
 import React from "react";
 import { useForm, FormProvider } from "react-hook-form";
-import { Drawer, Collapse, theme } from "antd";
+import { Drawer, Collapse, theme, Button } from "antd";
 import { FormattedMessage } from "react-intl";
 import { CaretRightOutlined } from "@ant-design/icons";
-import { Input } from "../../../components";
-import Textarea from "../../../components/Textarea";
+import { Input, Textarea, Select } from "../../../components";
 
 const { Panel } = Collapse;
 
@@ -30,7 +29,7 @@ const CreateDrawer: React.FC<Props> = ({ open, onClose }) => {
       <FormProvider {...methods}>
         <Collapse
           bordered={false}
-          defaultActiveKey={["1"]}
+          defaultActiveKey={["1", "2"]}
           style={{ background: "transparent" }}
           expandIcon={({ isActive }) => (
             <CaretRightOutlined rotate={isActive ? 90 : 0} />
@@ -38,9 +37,11 @@ const CreateDrawer: React.FC<Props> = ({ open, onClose }) => {
         >
           <Panel
             header={
-              <h1 className="text-base font-bold">
-                <FormattedMessage id="product.create.section.general" />
-              </h1>
+              <div>
+                <h1 className="text-base font-bold">
+                  <FormattedMessage id="product.create.section.general" />
+                </h1>
+              </div>
             }
             key="1"
           >
@@ -49,7 +50,11 @@ const CreateDrawer: React.FC<Props> = ({ open, onClose }) => {
                 <label className="text-sm font-semibold">
                   <FormattedMessage id="product.create.name" />
                 </label>
-                <Input className="mt-2" name="title" placeholder="Robusta LangBiang" />
+                <Input
+                  className="mt-2"
+                  name="title"
+                  placeholder="Robusta LangBiang"
+                />
               </div>
               <div>
                 <label className="text-sm font-semibold">
@@ -81,23 +86,52 @@ const CreateDrawer: React.FC<Props> = ({ open, onClose }) => {
                 <Input
                   name="details"
                   className="mt-2"
-                  addonBefore={'/'}
+                  addonBefore={"/"}
                   placeholder="robusta-langbiang"
+                />
+              </div>
+              <div>
+                <label className="text-sm font-semibold">
+                  <FormattedMessage id="product.create.price" />
+                </label>
+                <Input
+                  type="number"
+                  name="details"
+                  className="mt-2"
+                  addonAfter={"VND"}
+                  placeholder="120000"
+                />
+              </div>
+            </div>
+          </Panel>
+          <Panel
+            header={
+              <h1 className="text-base font-bold">
+                <FormattedMessage id="product.create.section.organize" />
+              </h1>
+            }
+            key="2"
+          >
+            <div className="grid mb-4 grid-cols-2 gap-4">
+              <div className="flex flex-col">
+                <div className="flex items-center justify-between">
+                  <label className="text-sm font-semibold">
+                    <FormattedMessage id="product.create.category" />
+                  </label>
+                  <Button size="small">+</Button>
+                </div>
+                <Select
+                  name="details"
+                  className="mt-2"
+                  placeholder="Category"
+                  mode="multiple"
+                  suffixIcon="+"
                 />
               </div>
             </div>
           </Panel>
         </Collapse>
       </FormProvider>
-
-      {/* <Form {...LAUOUT} layout="vertical" form={form} onFinish={onFinish}>
-        <Form.Item
-          name="title"
-          label={<FormattedMessage id="product.create.name" />}
-        >
-          <Input allowClear style={{ maxWidth: 300 }} />
-        </Form.Item>
-      </Form> */}
     </Drawer>
   );
 };
