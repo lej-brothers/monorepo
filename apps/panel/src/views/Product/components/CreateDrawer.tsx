@@ -4,6 +4,7 @@ import { Drawer, Collapse, theme } from "antd";
 import { FormattedMessage } from "react-intl";
 import { CaretRightOutlined } from "@ant-design/icons";
 import { Input } from "../../../components";
+import Textarea from "../../../components/Textarea";
 
 const { Panel } = Collapse;
 
@@ -43,12 +44,12 @@ const CreateDrawer: React.FC<Props> = ({ open, onClose }) => {
             }
             key="1"
           >
-            <div className="grid mb-2 grid-cols-2 gap-4">
+            <div className="grid mb-4 grid-cols-2 gap-4">
               <div>
                 <label className="text-sm font-semibold">
                   <FormattedMessage id="product.create.name" />
                 </label>
-                <Input name="title" placeholder="Robusta" />
+                <Input className="mt-2" name="title" placeholder="Robusta LangBiang" />
               </div>
               <div>
                 <label className="text-sm font-semibold">
@@ -56,15 +57,34 @@ const CreateDrawer: React.FC<Props> = ({ open, onClose }) => {
                 </label>
                 <Input
                   name="details"
+                  className="mt-2"
                   placeholder="high acidity, roasted nuts,.."
                 />
               </div>
             </div>
-            <div>
+            <div className="mb-4">
               <label className="text-sm font-semibold">
                 <FormattedMessage id="product.create.description" />
               </label>
-              <Input name="description" placeholder="Từ vùng núi LangBiang ở Lâm Đồng.." />
+              <Textarea
+                rows={4}
+                className="mt-2"
+                name="description"
+                placeholder="Từ vùng núi LangBiang ở Lâm Đồng.."
+              />
+            </div>
+            <div className="grid mb-4 grid-cols-2 gap-4">
+              <div>
+                <label className="text-sm font-semibold">
+                  <FormattedMessage id="product.create.slug" />
+                </label>
+                <Input
+                  name="details"
+                  className="mt-2"
+                  addonBefore={'/'}
+                  placeholder="robusta-langbiang"
+                />
+              </div>
             </div>
           </Panel>
         </Collapse>

@@ -3,6 +3,7 @@
     "product.create.title": "Tạo sản phẩm mới",
     "product.create.name": "Tên sản phẩm",
     "product.create.description": "Mô tả sản phẩm",
+    "product.create.slug": "Đường dẫn",
     "product.create.details": "Notes",
     "product.create.section.general": "Thông tin cơ bản"
 }
