@@ -8,7 +8,11 @@ import REDIS_CLIENT from "./configs/redis";
 import MINIO from "./configs/minio";
 
 import mongoose from "mongoose";
+import passport from "passport";
 import ApplicationRouter from "./controllers/index.router";
+
+import passportCustom from "passport-custom";
+const CustomStrategy = passportCustom.Strategy;
 
 const RedisStore = connectRedis(session);
 const app = express();
@@ -19,6 +23,8 @@ mongoose.connect(MONGO_URL);
 MINIO.getBucketNotification("lej-marketplace");
 app.use(cors({ origin: "*" }));
 
+app.use(passport.initialize());
+
 app.use(
   session({
     genid: () => uuidv4(),
@@ -27,6 +33,16 @@ app.use(
     resave: false,
     saveUninitialized: true,
     cookie: { secure: false },
+  })
+);
+app.use(passport.session());
+
+passport.use(
+  "authtoken",
+  new CustomStrategy(function (req, callback) {
+    const isValid = req.body.token === SECRET;
+    if (isValid) callback(new Error("Authentication Failed"));
+    callback(null);
   })
 );
 
