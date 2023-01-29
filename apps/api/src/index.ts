@@ -1,3 +1,4 @@
+import pino from 'express-pino-logger'
 import connectRedis from "connect-redis";
 import cors from "cors";
 import express from "express";
@@ -27,6 +28,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors({ origin: "*" }));
 
 app.use(passport.initialize());
+app.use(pino({}))
 
 passport.use(
   "authtoken",

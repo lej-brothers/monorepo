@@ -4,7 +4,7 @@ import AuthorizationModule from "../modules/authorization";
 const authLoader = () => {
   const authenticated = AuthorizationModule.isAuthorized();
   if (!authenticated) throw redirect("/auth");
-  return null;
+  return {};
 };
 
 export default authLoader;
