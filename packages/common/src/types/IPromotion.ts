@@ -1,17 +1,15 @@
 import { IProduct } from "./IProduct";
-import { IImage } from "./IImage";
-import { ILocaleMember } from "./ILocale";
 import { ICategory } from "./ICategory";
 
 export interface IPromotion {
-  _id: string;
+  _id?: string;
   /**
    * Promotion title locale
    *
    * @type {IPromotionTitle[]}
    * @memberof IPromotion
    */
-  title: IPromotionTitle[];
+  title: string;
 
   /**
    * Code for user to input
@@ -27,7 +25,7 @@ export interface IPromotion {
    * @type {IPromotionDescription[]}
    * @memberof IPromotion
    */
-  description: IPromotionDescription[];
+  description: string;
 
   /**
    * @type {Date}
@@ -76,5 +74,3 @@ export interface IPromotion {
    */
   promoPrice: number;
 }
-export interface IPromotionDescription extends ILocaleMember {}
-export interface IPromotionTitle extends ILocaleMember {}

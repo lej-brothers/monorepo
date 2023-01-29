@@ -1,7 +1,7 @@
 import { IProduct } from "./IProduct";
 
 export interface IWarehourse {
-  _id: string;
+  _id?: string;
   /**
    * Price of product
    *

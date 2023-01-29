@@ -1,7 +1,6 @@
 import { Schema, Document, model, PaginateModel } from "mongoose";
 import paginate from "mongoose-paginate-v2";
 
-import { LocaleMemberSchema } from "./locale.model";
 import { ImageSchema } from "./images.model";
 import { ICategory } from "common";
 
@@ -9,9 +8,9 @@ interface ICategoryDocument extends Omit<ICategory, "_id">, Document {}
 
 const CategorySchema = new Schema(
   {
-    name: [LocaleMemberSchema],
+    name: String,
     slug: { type: String, unique: true, required: true },
-    description: [LocaleMemberSchema],
+    description: String,
     image: ImageSchema,
     products: [{ type: Schema.Types.ObjectId, ref: "Products" }],
   },

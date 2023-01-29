@@ -2,7 +2,7 @@ import { IImage } from '../types/IImage';
 import CARRIER_STATUS from "../constants/CARRIER_STATUS";
 
 export interface ICarrier {
-  _id: string;
+  _id?: string;
   name: string;
   email?: string;
   numberOfDeliveries?: number;

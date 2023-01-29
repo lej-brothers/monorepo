@@ -1,14 +1,13 @@
 import { IPromotion } from "common";
 import { Document, PaginateModel, Schema, model } from "mongoose";
 import paginate from "mongoose-paginate-v2";
-import { LocaleMemberSchema } from "./locale.model";
 
 export interface IPromotionDocument extends Omit<IPromotion, "_id">, Document {}
 
 export const PromotionSchema = new Schema(
   {
-    title: [LocaleMemberSchema],
-    description: [LocaleMemberSchema],
+    title: String,
+    description: String,
     code: String,
     activeFrom: Date,
     activeTo: Date,
