@@ -6,7 +6,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { useForm, FormProvider } from "react-hook-form";
 import { Input } from "../../components";
 import AuthorizationModule from "../../modules/authorization";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const authFormSchema = yup.object().shape({
   token: yup.string().required(),
