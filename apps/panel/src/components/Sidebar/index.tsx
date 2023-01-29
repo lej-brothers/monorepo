@@ -22,8 +22,6 @@ function getItem(
   } as MenuItem;
 }
 
-interface Props {}
-
 const items: MenuItem[] = [
   getItem(
     <FormattedMessage id="product" />,
@@ -45,7 +43,7 @@ const items: MenuItem[] = [
   // getItem("Files", "9", <FileOutlined />),
 ];
 
-const SideBar = ({}: Props) => {
+const SideBar = () => {
   const [collapsed, setCollapsed] = useState(false);
 
   return (

@@ -12,6 +12,9 @@
     "product.create.section.organize": "Phân loại",
     "category.modal.create.title": "Tạo danh mục mới",
 
+    "auth.login": "Đăng nhập",
+    "auth.token.placeholder": "Nhập mã quản trị viên của bạn tại đây",
+
     "description": "Mô tả",
     "name": "Tên"
 }

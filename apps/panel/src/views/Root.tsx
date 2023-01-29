@@ -1,12 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Layout } from "antd";
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 
 import { SideBar } from "../components";
 
 const { Content, Footer } = Layout;
 
 const Root: React.FC = () => {
+  const nativate = useNavigate()
+
+  useEffect(() => {
+    nativate("/products");
+  }, []);
+
   return (
     <Layout style={{ minHeight: "100vh" }}>
       <SideBar />

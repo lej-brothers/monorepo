@@ -1,6 +1,6 @@
 import React from "react";
 import { useForm, FormProvider } from "react-hook-form";
-import { Drawer, Collapse, theme, Button } from "antd";
+import { Drawer, Collapse, Button } from "antd";
 import { FormattedMessage } from "react-intl";
 import { CaretRightOutlined } from "@ant-design/icons";
 import { Input, Textarea, Select } from "../../../components";
@@ -16,10 +16,6 @@ interface Props {
 
 const CreateDrawer: React.FC<Props> = ({ open, toggleModal, onClose }) => {
   const methods = useForm();
-
-  const onFinish = (a: any) => {
-    console.log(a);
-  };
 
   return (
     <Drawer
@@ -144,8 +140,3 @@ const CreateDrawer: React.FC<Props> = ({ open, toggleModal, onClose }) => {
 };
 
 export default CreateDrawer;
-
-const LAUOUT = {
-  labelCol: { span: 4 },
-  wrapperCol: { span: 20 },
-};

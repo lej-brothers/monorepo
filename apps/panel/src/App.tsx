@@ -1,4 +1,7 @@
 import React from "react";
+import { RecoilRoot } from "recoil";
+import RecoilNexus from "recoil-nexus";
+
 import { RouterProvider } from "react-router-dom";
 import router from "./routers/index";
 import Global from "./global/styles/reset";
@@ -8,10 +11,13 @@ import messagesinVi from "./global/lang/vi.json";
 
 function App() {
   return (
-    <IntlProvider messages={messagesinVi} locale="vi">
-      <Global />
-      <RouterProvider router={router} />
-    </IntlProvider>
+    <RecoilRoot>
+      <RecoilNexus />
+      <IntlProvider messages={messagesinVi} locale="vi">
+        <Global />
+        <RouterProvider router={router} />
+      </IntlProvider>
+    </RecoilRoot>
   );
 }
 
