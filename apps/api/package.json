@@ -28,6 +28,7 @@
     "passport": "^0.6.0",
     "passport-auth-token": "^1.0.1",
     "passport-custom": "^1.1.1",
+    "passport-local": "^1.0.0",
     "redis": "^4.5.1",
     "slug": "^8.2.2",
     "ts-node-dev": "^2.0.0",

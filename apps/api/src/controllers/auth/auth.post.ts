@@ -4,7 +4,7 @@ import { body } from "express-validator";
 const validations = [body("token")];
 
 const controller = async (req: Request, res: Response) => {
-  res.send();
+  res.send(req.isAuthenticated());
 };
 
 export default { validations, controller };

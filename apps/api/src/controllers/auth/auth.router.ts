@@ -7,7 +7,6 @@ const router = Router({});
 
 router.post(
   "/",
-  assertRequestInput(PostAuth.validations),
   passport.authenticate("authtoken", {
     failureMessage: "Authentication Failed",
   }),

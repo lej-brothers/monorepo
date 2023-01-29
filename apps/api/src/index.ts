@@ -10,6 +10,7 @@ import MINIO from "./configs/minio";
 import mongoose from "mongoose";
 import passport from "passport";
 import ApplicationRouter from "./controllers/index.router";
+import bodyParser from 'body-parser'
 
 import passportCustom from "passport-custom";
 const CustomStrategy = passportCustom.Strategy;
@@ -21,9 +22,28 @@ const port = 4000;
 mongoose.set("strictQuery", false);
 mongoose.connect(MONGO_URL);
 MINIO.getBucketNotification("lej-marketplace");
+app.use(express.urlencoded({extended:false}));
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors({ origin: "*" }));
 
 app.use(passport.initialize());
+
+passport.use(
+  "authtoken",
+  new CustomStrategy((req, callback) => {
+    const isValid = req.headers['token'] === SECRET;
+    if (!isValid) callback(new Error("Authentication Failed"));
+    callback(null, { active: true });
+  })
+);
+
+passport.serializeUser(function(user, done) {
+  done(null, {});
+});
+
+passport.deserializeUser(function(user, done) {
+  done(null, {});
+});
 
 app.use(
   session({
@@ -37,14 +57,6 @@ app.use(
 );
 app.use(passport.session());
 
-passport.use(
-  "authtoken",
-  new CustomStrategy(function (req, callback) {
-    const isValid = req.body?.token === SECRET;
-    if (isValid) callback(new Error("Authentication Failed"));
-    callback(null);
-  })
-);
 
 app.use(ApplicationRouter);
 
