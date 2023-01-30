@@ -1,13 +1,12 @@
 import React from "react";
-import { useRecoilValue } from "recoil";
 import { useForm, FormProvider } from "react-hook-form";
 import { Drawer, Collapse, Button } from "antd";
 import { FormattedMessage } from "react-intl";
 import { CaretRightOutlined } from "@ant-design/icons";
 import { Input, Textarea, Select } from "../../../components";
 import { PRODUCT_MODAL } from "../constants";
-import categoryQuery from "../../../atoms/categories.atom";
-import { ICategory } from "common";
+import { ICategory, IProductCreate } from "common";
+import useCategories from "../../../utils/useCategories";
 
 const { Panel } = Collapse;
 
@@ -18,8 +17,10 @@ interface Props {
 }
 
 const CreateDrawer: React.FC<Props> = ({ open, toggleModal, onClose }) => {
-  const methods = useForm();
-  const categories: ICategory[] = useRecoilValue(categoryQuery).docs;
+  const methods = useForm<IProductCreate>();
+  const { data } = useCategories();
+
+  const categories = data?.docs || [];
 
   const categoryOptions = categories.map((category) => ({
     label: category.name,
@@ -91,7 +92,7 @@ const CreateDrawer: React.FC<Props> = ({ open, toggleModal, onClose }) => {
                   <FormattedMessage id="product.create.slug" />
                 </label>
                 <Input
-                  name="details"
+                  name="slug"
                   className="mt-2"
                   addonBefore={"/"}
                   placeholder="robusta-langbiang"
@@ -103,7 +104,7 @@ const CreateDrawer: React.FC<Props> = ({ open, toggleModal, onClose }) => {
                 </label>
                 <Input
                   type="number"
-                  name="details"
+                  name="price"
                   className="mt-2"
                   addonAfter={"VND"}
                   placeholder="120000"
