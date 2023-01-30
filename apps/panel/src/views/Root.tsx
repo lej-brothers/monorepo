@@ -7,11 +7,11 @@ import { SideBar } from "../components";
 const { Content, Footer } = Layout;
 
 const Root: React.FC = () => {
-  const nativate = useNavigate()
+  const nativate = useNavigate();
 
   useEffect(() => {
     nativate("/products");
-  }, []);
+  }, [nativate]);
 
   return (
     <Layout style={{ minHeight: "100vh" }}>

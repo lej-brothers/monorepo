@@ -25,6 +25,7 @@ mongoose.connect(MONGO_URL);
 MINIO.getBucketNotification("lej-marketplace");
 app.use(express.urlencoded({extended:false}));
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(express.json())
 app.use(cors({ origin: "*" }));
 
 app.use(passport.initialize());

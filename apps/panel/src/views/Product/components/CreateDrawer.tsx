@@ -1,10 +1,13 @@
 import React from "react";
+import { useRecoilValue } from "recoil";
 import { useForm, FormProvider } from "react-hook-form";
 import { Drawer, Collapse, Button } from "antd";
 import { FormattedMessage } from "react-intl";
 import { CaretRightOutlined } from "@ant-design/icons";
 import { Input, Textarea, Select } from "../../../components";
 import { PRODUCT_MODAL } from "../constants";
+import categoryQuery from "../../../atoms/categories.atom";
+import { ICategory } from "common";
 
 const { Panel } = Collapse;
 
@@ -16,6 +19,12 @@ interface Props {
 
 const CreateDrawer: React.FC<Props> = ({ open, toggleModal, onClose }) => {
   const methods = useForm();
+  const categories: ICategory[] = useRecoilValue(categoryQuery).docs;
+
+  const categoryOptions = categories.map((category) => ({
+    label: category.name,
+    value: category._id,
+  }));
 
   return (
     <Drawer
@@ -126,6 +135,7 @@ const CreateDrawer: React.FC<Props> = ({ open, toggleModal, onClose }) => {
                 <Select
                   name="details"
                   className="mt-2"
+                  options={categoryOptions}
                   placeholder="Category"
                   mode="multiple"
                   suffixIcon="+"

@@ -1,4 +1,4 @@
-import { IProduct } from "common";
+import { IProductCreate } from "common";
 import { PaginateOptions } from "mongoose";
 import { Product } from "../model/product.model";
 
@@ -12,11 +12,11 @@ const ProductService = {
   async list(params: PaginateOptions) {
     return Product.paginate({}, params);
   },
-  async create(payload: IProduct) {
+  async create(payload: IProductCreate) {
     const product = await Product.create(payload);
     return product;
   },
-  async update(payload: Partial<IProduct>) {
+  async update(payload: Partial<IProductCreate>) {
     return Product.findOneAndUpdate({ _id: payload._id }, payload, {
       timestamps: true,
     });

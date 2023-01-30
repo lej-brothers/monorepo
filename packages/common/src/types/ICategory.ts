@@ -10,3 +10,12 @@ export interface ICategory {
   products: IProduct[];
 }
 
+export interface ICategoryCreate {
+  _id: string;
+  name: string;
+  slug: string;
+  description: string;
+  image?: string;
+}
+
+export interface ICategoryCreate {}

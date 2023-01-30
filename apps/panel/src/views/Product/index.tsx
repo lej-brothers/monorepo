@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { Suspense, useState } from "react";
 import { Container } from "./styles";
 import { Button, Table } from "antd";
 import { PRODUCT_DRAWER, PRODUCT_MODAL } from "./constants";
@@ -19,25 +19,27 @@ const Product: React.FC = () => {
 
   return (
     <>
-      <Container>
-        <div className="flex justify-end mb-2">
-          <Button onClick={openCreateDrawer} size="large">
-            +
-          </Button>
-        </div>
-        <Table />
-      </Container>
+      <Suspense fallback={<>Loading..</>}>
+        <Container>
+          <div className="flex justify-end mb-2">
+            <Button onClick={openCreateDrawer} size="large">
+              +
+            </Button>
+          </div>
+          <Table />
+        </Container>
 
-      <ProductCreateDrawer
-        toggleModal={toggleModal}
-        open={drawer === PRODUCT_DRAWER.CREATE}
-        onClose={onCloseDrawer}
-      />
+        <ProductCreateDrawer
+          toggleModal={toggleModal}
+          open={drawer === PRODUCT_DRAWER.CREATE}
+          onClose={onCloseDrawer}
+        />
 
-      <CategoryCreateModal
-        open={modal === PRODUCT_MODAL.CATEGORY_CREATE}
-        onClose={onCloseModal}
-      />
+        <CategoryCreateModal
+          open={modal === PRODUCT_MODAL.CATEGORY_CREATE}
+          onClose={onCloseModal}
+        />
+      </Suspense>
     </>
   );
 };
