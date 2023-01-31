@@ -5,3 +5,11 @@ export interface IImage {
   height: number;
   orientation: number;
 }
+
+export interface IImageRes {
+  _id?: string;
+  url: string;
+  width: number;
+  height: number;
+  orientation: number;
+}

@@ -8,3 +8,4 @@ export const S3_ENDPOINT = process.env["S3_ENDPOINT"] || "";
 export const S3_PORT = process.env["S3_PORT"] || 30000;
 export const S3_ACCESS = process.env["S3_ACCESS"] || "";
 export const S3_SECRET = process.env["S3_SECRET"] || "";
+export const S3_BUCKET = process.env['S3_BUCKET'] || "lej-marketplace";
