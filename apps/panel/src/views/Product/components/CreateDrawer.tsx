@@ -1,23 +1,36 @@
-import React from "react";
-import { useForm, FormProvider } from "react-hook-form";
-import { Drawer, Collapse, Button } from "antd";
-import { FormattedMessage } from "react-intl";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
 import { CaretRightOutlined } from "@ant-design/icons";
-import { Input, Textarea, Select } from "../../../components";
-import { PRODUCT_MODAL } from "../constants";
-import { ICategory, IProductCreate } from "common";
+import { Button, Collapse, Drawer } from "antd";
+import { IProductCreate } from "common";
+import React from "react";
+import { FormProvider, useForm } from "react-hook-form";
+import { FormattedMessage } from "react-intl";
+import { SLUG_VALIDATE_EX } from "../../../constants/regexs";
+import { Input, Select, Switch, Textarea } from "../../../components";
 import useCategories from "../../../utils/useCategories";
+import { PRODUCT_MODAL } from "../constants";
 
 const { Panel } = Collapse;
 
 interface Props {
   open: boolean;
   onClose: () => void;
+  onSubmit: (data: IProductCreate) => void;
   toggleModal: (modal: PRODUCT_MODAL) => void;
 }
 
-const CreateDrawer: React.FC<Props> = ({ open, toggleModal, onClose }) => {
-  const methods = useForm<IProductCreate>();
+const CreateDrawer: React.FC<Props> = ({
+  open,
+  onSubmit,
+  toggleModal,
+  onClose,
+}) => {
+  const methods = useForm<IProductCreate>({
+    resolver: yupResolver(productCreateSchema),
+  });
+
+  const values = methods.watch();
   const { data } = useCategories();
 
   const categories = data?.docs || [];
@@ -27,8 +40,15 @@ const CreateDrawer: React.FC<Props> = ({ open, toggleModal, onClose }) => {
     value: category._id,
   }));
 
+  const onCreateButtonClick = () => onSubmit(values);
+
   return (
     <Drawer
+      extra={
+        <Button onClick={onCreateButtonClick}>
+          <FormattedMessage id="create" />
+        </Button>
+      }
       title={<FormattedMessage id="product.create.title" />}
       width={720}
       open={open}
@@ -45,10 +65,19 @@ const CreateDrawer: React.FC<Props> = ({ open, toggleModal, onClose }) => {
         >
           <Panel
             header={
-              <div>
+              <div
+                onClick={(event: any) => event.stopPropagation()}
+                className="flex items-center"
+              >
                 <h1 className="text-base font-bold">
                   <FormattedMessage id="product.create.section.general" />
                 </h1>
+                <Switch
+                  checkedChildren="Metch"
+                  unCheckedChildren="Normal"
+                  className="ml-2"
+                  name="isMetch"
+                />
               </div>
             }
             key="1"
@@ -100,13 +129,31 @@ const CreateDrawer: React.FC<Props> = ({ open, toggleModal, onClose }) => {
               </div>
               <div>
                 <label className="text-sm font-semibold">
-                  <FormattedMessage id="product.create.price" />
+                  <FormattedMessage
+                    id={
+                      values.isMetch
+                        ? "product.create.metch_price"
+                        : "product.create.price"
+                    }
+                  />
                 </label>
                 <Input
                   type="number"
                   name="price"
                   className="mt-2"
                   addonAfter={"VND"}
+                  placeholder="120000"
+                />
+              </div>
+              <div>
+                <label className="text-sm font-semibold">
+                  <FormattedMessage id="product.create.count" />
+                </label>
+                <Input
+                  type="number"
+                  name="count"
+                  className="mt-2"
+                  addonAfter={!values.isMetch && "Gram"}
                   placeholder="120000"
                 />
               </div>
@@ -134,7 +181,7 @@ const CreateDrawer: React.FC<Props> = ({ open, toggleModal, onClose }) => {
                   </Button>
                 </div>
                 <Select
-                  name="details"
+                  name="categories"
                   className="mt-2"
                   options={categoryOptions}
                   placeholder="Category"
@@ -151,3 +198,17 @@ const CreateDrawer: React.FC<Props> = ({ open, toggleModal, onClose }) => {
 };
 
 export default CreateDrawer;
+
+const productCreateSchema = yup.object().shape({
+  slug: yup
+    .string()
+    .matches(SLUG_VALIDATE_EX, "Please enter correct slug")
+    .required(),
+  title: yup.string().required(),
+  details: yup.string().required(),
+  description: yup.string().required(),
+  categories: yup.array().of(yup.string()),
+  isMetch: yup.boolean(),
+  price: yup.number().required(),
+  count: yup.number().required(),
+});

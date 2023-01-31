@@ -1,6 +1,6 @@
 import { ICategory } from "./ICategory";
 import { IImage } from "./IImage";
-import { IWarehourse } from "./IWarehouse";
+import { IWarehourse, IWarehourseCreate} from "./IWarehouse";
 
 export type IProduct = {
   _id?: string;
@@ -11,6 +11,7 @@ export type IProduct = {
   description: string;
   categories: ICategory[];
   warehourse: IWarehourse;
+  isMetch: boolean;
 };
 
 export type IProductCreate = {
@@ -22,7 +23,8 @@ export type IProductCreate = {
   description: string;
   categories: string[];
   warehourse: Omit<IWarehourse, "product">;
-};
+  isMetch: boolean;
+} & IWarehourseCreate;
 
 export interface IProductImage {
   url: string;

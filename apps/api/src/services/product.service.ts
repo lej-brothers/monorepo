@@ -1,6 +1,7 @@
 import { IProductCreate } from "common";
 import { PaginateOptions } from "mongoose";
 import { Product } from "../model/product.model";
+import { Warehourse } from "../model/warehourse.model";
 
 const ProductService = {
   async get(id: string) {
@@ -13,7 +14,24 @@ const ProductService = {
     return Product.paginate({}, params);
   },
   async create(payload: IProductCreate) {
-    const product = await Product.create(payload);
+    const product = await Product.create({
+      slug: payload.slug,
+      title: payload.title,
+      details: payload.details,
+      description: payload.description,
+      categories: payload.categories,
+      isMetch: payload.isMetch,
+    });
+
+    const warehourse = await Warehourse.create({
+      price: payload.price,
+      count: payload.count,
+      product: product._id
+    })
+
+    product.warehourse = warehourse._id,
+    await product.save()
+
     return product;
   },
   async update(payload: Partial<IProductCreate>) {

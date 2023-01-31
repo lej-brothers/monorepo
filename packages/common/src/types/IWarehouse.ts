@@ -46,3 +46,8 @@ export interface IWarehourse {
    */
   product: IProduct;
 }
+
+export interface IWarehourseCreate {
+  price: number;
+  count: number;
+}
