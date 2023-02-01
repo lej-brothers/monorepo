@@ -1,17 +1,17 @@
 import path from "path";
 import { Express } from "express";
 import { S3_ENDPOINT, S3_PORT } from "./../configs/secrets";
-import uuid from "uuid";
+import { v4 } from "uuid";
 import { UploadedObjectInfo } from "minio";
 import MINIO from "../configs/minio";
 import { S3_BUCKET } from "../configs/secrets";
-import { Image } from "model/images.model";
+import { Image } from "../model/images.model";
 
 const ImageService = {
   get: (key: string) => `${S3_ENDPOINT}:${S3_PORT}/${S3_BUCKET}/${key}`,
 
   async upload(file: Express.Multer.File) {
-    const key = uuid.v4() + path.extname(file.filename);
+    const key = v4() + path.extname(file.originalname);
     const res: undefined | UploadedObjectInfo = await new Promise(
       async (resolve) => {
         MINIO.putObject(S3_BUCKET, key, file.buffer, (err, result) => {

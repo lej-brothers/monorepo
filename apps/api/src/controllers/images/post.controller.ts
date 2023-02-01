@@ -3,6 +3,7 @@ import ImageService from "../../services/image.service";
 
 const controller = async (req: Request, res: Response) => {
   if (!req.file) return res.status(400).send({ error: "cannot read file" });
+  console.log(req.file);
   const image = await ImageService.upload(req.file);
   if (!image)
     return res.send(400).send({ error: "Cannot Upload Destinated File" });
@@ -14,4 +15,4 @@ const controller = async (req: Request, res: Response) => {
   });
 };
 
-export default { controller }
+export default { controller };

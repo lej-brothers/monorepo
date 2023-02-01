@@ -7,7 +7,7 @@ import React from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { FormattedMessage } from "react-intl";
 import { SLUG_VALIDATE_EX } from "../../../constants/regexs";
-import { Input, Select, Switch, Textarea } from "../../../components";
+import { Input, Select, Switch, Textarea, Uploader } from "../../../components";
 import useCategories from "../../../utils/useCategories";
 import { PRODUCT_MODAL } from "../constants";
 
@@ -156,6 +156,9 @@ const CreateDrawer: React.FC<Props> = ({
                   addonAfter={!values.isMetch && "Gram"}
                   placeholder="120000"
                 />
+              </div>
+              <div>
+                <Uploader onChange={() => {}} />
               </div>
             </div>
           </Panel>
