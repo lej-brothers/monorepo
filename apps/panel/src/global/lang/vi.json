@@ -8,7 +8,7 @@
     "product.create.metch_price": "Giá tiền",
     "product.create.slug": "Đường dẫn",
     "product.create.details": "Notes",
-    "product.create.category": "Danh mục",
+    "product.create.category": "Phân loại",
     "product.create.section.general": "Thông tin cơ bản",
     "product.create.section.general.description": "Bước đầu tiên để tạo sản phẩm",
     "product.create.section.organize": "Phân loại",
@@ -17,7 +17,11 @@
     "auth.login": "Đăng nhập",
     "auth.token.placeholder": "Nhập mã quản trị viên của bạn tại đây",
 
+    "paginate.text": "Đang hiển thị {showing} trên {total}",
+
+    "count": "Số lượng",
     "description": "Mô tả",
+    "update": "Cập nhật",
     "create": "Khởi tạo",
     "name": "Tên"
 }

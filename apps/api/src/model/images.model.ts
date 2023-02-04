@@ -18,4 +18,4 @@ export const ImageSchema = new Schema<IImage>(
   }
 );
 
-export const Image = model<IImageDocument>("images", ImageSchema);
+export const Image = model<IImageDocument>("Images", ImageSchema);

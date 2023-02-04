@@ -1,11 +1,20 @@
-import React, { useCallback, useRef, useState } from "react";
+import type { UploadRequestOption } from "rc-upload/lib/interface";
+
+import React, {
+  ComponentProps,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import update from "immutability-helper";
-import { UploadOutlined } from "@ant-design/icons";
-import { Button, Tooltip, UploadFile, UploadProps } from "antd";
-import { Upload } from "antd";
+import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
+import { Button, Progress, Tooltip, UploadFile, UploadProps } from "antd";
 import { DndProvider, useDrag, useDrop } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import ImageModule from "../../modules/image";
+import { RcFile } from "antd/es/upload";
+import { Upload } from "./styles";
 
 const type = "DragableUploadList";
 
@@ -74,6 +83,7 @@ interface Props {
 
 const Uploader = ({ onChange }: Props) => {
   const [files, setFiles] = useState<UploadFile[]>([]);
+  const [progress, setProgress] = useState<{ [index: number]: number }>({});
 
   const moveRow = useCallback(
     (dragIndex: number, hoverIndex: number) => {
@@ -94,27 +104,62 @@ const Uploader = ({ onChange }: Props) => {
     setFiles(files);
   };
 
+  const onUpload = async (options: UploadRequestOption) => {
+    const { onSuccess, onError, file, onProgress } = options;
+    const index = files.indexOf(file as RcFile);
+
+    const onUploadProgress = (event: any) => {
+      const percent = Math.floor((event.loaded / event.total) * 100);
+      setProgress({ ...progress, [index]: percent });
+
+      if (percent === 100) {
+        setTimeout(() => setProgress({ ...progress, [index]: percent }), 1000);
+      }
+
+      onProgress?.({ percent: (event.loaded / event.total) * 100 });
+    };
+
+    try {
+      const res = await ImageModule.upload(file as RcFile, onUploadProgress);
+      onSuccess?.("Ok");
+      return res._id;
+    } catch (err: any) {
+      onError?.(err);
+    }
+  };
+
+  useEffect(() => {
+    onChange(files.map((file) => file.name));
+  }, [files, onChange]);
+
   return (
     <DndProvider backend={HTML5Backend}>
       <Upload
-        action={async (file) => {
-          const res = await ImageModule.upload(file);
-          console.log(res);
-          return "";
-        }}
-        // action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+        listType="picture-card"
+        className="avatar-uploader"
+        customRequest={onUpload}
         fileList={files}
         onChange={innerOnChange}
-        itemRender={(originNode, file, currFileList) => (
-          <DragableUploadListItem
-            originNode={originNode}
-            file={file}
-            fileList={currFileList}
-            moveRow={moveRow}
-          />
-        )}
+        itemRender={(originNode, file, currFileList) => {
+          const index = currFileList.indexOf(file);
+          return (
+            <>
+              <DragableUploadListItem
+                originNode={originNode}
+                file={file}
+                fileList={currFileList}
+                moveRow={moveRow}
+              />
+              {progress[index] > 0 ? (
+                <Progress percent={progress[index]} />
+              ) : null}
+            </>
+          );
+        }}
       >
-        <Button icon={<UploadOutlined />}>Click to Upload</Button>
+        <div>
+          <PlusOutlined /> <div style={{ marginTop: 8 }}>Upload</div>
+        </div>
       </Upload>
     </DndProvider>
   );

@@ -2,9 +2,9 @@ import { useQuery } from "react-query";
 import { IProduct, IPaginated } from "common";
 import ProductModule from "../modules/product";
 
-const useProducts = () =>
+const useProducts = (page = 1, limit = 100) =>
   useQuery<IPaginated<IProduct>>("products", () =>
-    ProductModule.list(1, 100)
+    ProductModule.list(page, limit)
   );
 
 export default useProducts;

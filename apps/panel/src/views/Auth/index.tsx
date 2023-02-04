@@ -26,7 +26,7 @@ const Auth: React.FC = () => {
 
   const onOk = async () => {
     const success = await AuthorizationModule.auth(values.token)
-    if (success) navigation(-1)
+    if (success) navigation('/')
   } 
 
   return (

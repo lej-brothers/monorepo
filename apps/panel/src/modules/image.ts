@@ -1,14 +1,15 @@
 import requester from "../utils/requester";
 
 const ImageModule = {
-  async upload(file: File) {
+  async upload(file: File, onUploadProgress: (event: any) => void) {
     const form = new FormData();
     form.set("upload", file);
 
-    const response = await requester.post("/image", form);
-    console.log(response);
+    const response = await requester.post("/image", form, {
+      onUploadProgress,
+    });
 
-    return response;
+    return response.data;
   },
 };
 
