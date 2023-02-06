@@ -4,14 +4,6 @@ import { ICategory } from "./ICategory";
 export interface IPromotion {
   _id?: string;
   /**
-   * Promotion title locale
-   *
-   * @type {IPromotionTitle[]}
-   * @memberof IPromotion
-   */
-  title: string;
-
-  /**
    * Code for user to input
    *
    * @type {string}
@@ -73,4 +65,10 @@ export interface IPromotion {
    * @memberof IPromotion
    */
   promoPrice: number;
+}
+
+export interface IPromotionCreate
+  extends Omit<IPromotion, "categories" | "products"> {
+  categories: string[];
+  products: string[];
 }

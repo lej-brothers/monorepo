@@ -6,9 +6,8 @@ export interface IPromotionDocument extends Omit<IPromotion, "_id">, Document {}
 
 export const PromotionSchema = new Schema(
   {
-    title: String,
-    description: String,
     code: String,
+    description: String,
     activeFrom: Date,
     activeTo: Date,
     products: [{ type: Schema.Types.ObjectId, ref: "Products" }],

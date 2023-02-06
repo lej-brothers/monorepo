@@ -1,7 +1,6 @@
 import { Router } from "express";
-import PostAuth from "./auth.post";
+import PostAuth from "./get.controller";
 import passport from "passport";
-import { assertRequestInput } from "../../middlewares/assertRequestInput";
 
 const router = Router({});
 

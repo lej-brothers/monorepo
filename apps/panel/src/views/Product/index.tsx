@@ -54,78 +54,76 @@ const Product: React.FC = () => {
 
   return (
     <>
-      <Suspense fallback={<>Loading..</>}>
-        <Container>
-          <div className="flex justify-end mb-2">
-            <Button onClick={openCreateDrawer} size="large">
-              +
-            </Button>
-          </div>
-          <Table pagination={false} dataSource={products}>
-            <Column
-              title={<FormattedMessage id="product.create.name" />}
-              dataIndex="title"
-            />
-            <Column
-              title={<FormattedMessage id="product.create.category" />}
-              dataIndex="categories"
-              render={(categories: ICategory[]) => {
-                return (
-                  <>
-                    {categories.map((category) => (
-                      <Tag color="blue" key={category._id}>
-                        {category.name}
-                      </Tag>
-                    ))}
-                  </>
-                );
-              }}
-            />
-            <Column
-              title={<FormattedMessage id="count" />}
-              dataIndex={["warehourse", "count"]}
-              render={(count: number) => count.toLocaleString("en-US")}
-            />
-            <Column
-              title={<FormattedMessage id="product.create.metch_price" />}
-              dataIndex={["warehourse", "price"]}
-              render={(price: number) => price.toLocaleString("en-US")}
-            />
-          </Table>
-          <div className="mt-2 flex justify-end">
-            <Pagination
-              current={page}
-              pageSize={limit}
-              pageSizeOptions={[10, 20, 30]}
-              defaultPageSize={20}
-              defaultCurrent={1}        
-              total={data?.totalDocs || 0}
-              showTotal={(showing) => (
-                <div className="h-full flex items-center mt-1">
-                  <FormattedMessage
-                    id="paginate.text"
-                    values={{ showing, total: data?.totalDocs || 0 }}
-                  />
-                </div>
-              )}
-              responsive
+      <Container>
+        <div className="flex justify-end mb-2">
+          <Button onClick={openCreateDrawer} size="large">
+            +
+          </Button>
+        </div>
+        <Table pagination={false} dataSource={products}>
+          <Column
+            title={<FormattedMessage id="product.create.name" />}
+            dataIndex="title"
+          />
+          <Column
+            title={<FormattedMessage id="product.create.category" />}
+            dataIndex="categories"
+            render={(categories: ICategory[]) => {
+              return (
+                <>
+                  {categories.map((category) => (
+                    <Tag color="blue" key={category._id}>
+                      {category.name}
+                    </Tag>
+                  ))}
+                </>
+              );
+            }}
+          />
+          <Column
+            title={<FormattedMessage id="count" />}
+            dataIndex={["warehourse", "count"]}
+            render={(count: number) => count.toLocaleString("en-US")}
+          />
+          <Column
+            title={<FormattedMessage id="product.create.metch_price" />}
+            dataIndex={["warehourse", "price"]}
+            render={(price: number) => price.toLocaleString("en-US")}
+          />
+        </Table>
+        <div className="mt-2 flex justify-end">
+          <Pagination
+            current={page}
+            pageSize={limit}
+            onChange={onChange}
+            pageSizeOptions={[10, 20, 30]}
+            defaultPageSize={20}
+            defaultCurrent={1}
+            total={data?.totalDocs || 0}
+            showTotal={(showing) => (
+              <div className="h-full flex items-center mt-1">
+                <FormattedMessage
+                  id="paginate.text"
+                  values={{ showing, total: data?.totalDocs || 0 }}
+                />
+              </div>
+            )}
+            responsive
+          />
+        </div>
+      </Container>
 
-            />
-          </div>
-        </Container>
+      <ProductCreateDrawer
+        toggleModal={toggleModal}
+        onSubmit={onCreateProduct}
+        open={drawer === PRODUCT_DRAWER.CREATE}
+        onClose={onCloseDrawer}
+      />
 
-        <ProductCreateDrawer
-          toggleModal={toggleModal}
-          onSubmit={onCreateProduct}
-          open={drawer === PRODUCT_DRAWER.CREATE}
-          onClose={onCloseDrawer}
-        />
-
-        <CategoryCreateModal
-          open={modal === PRODUCT_MODAL.CATEGORY_CREATE}
-          onClose={onCloseModal}
-        />
-      </Suspense>
+      <CategoryCreateModal
+        open={modal === PRODUCT_MODAL.CATEGORY_CREATE}
+        onClose={onCloseModal}
+      />
     </>
   );
 };

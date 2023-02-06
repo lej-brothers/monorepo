@@ -9,6 +9,7 @@ import Root from "../views/Root";
 import Product from "../views/Product";
 import Auth from "../views/Auth";
 import authLoader from "../utils/authLoader";
+import Promotion from "../views/Promotion";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -18,6 +19,11 @@ const router = createBrowserRouter(
         loader={authLoader}
         path="/products"
         element={<Product />}
+      />
+      <Route
+        loader={authLoader}
+        path="/promotions"
+        element={<Promotion />}
       />
     </Route>
   )

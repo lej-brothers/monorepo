@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { TableOutlined } from "@ant-design/icons";
+import { AppstoreOutlined, GiftOutlined } from "@ant-design/icons";
 import type { MenuProps } from "antd";
 import { Layout, Menu } from "antd";
 import { FormattedMessage } from "react-intl";
@@ -27,7 +27,14 @@ const items: MenuItem[] = [
     <FormattedMessage id="product" />,
     "1",
     <Link to="/products">
-      <TableOutlined />
+      <AppstoreOutlined />
+    </Link>
+  ),
+  getItem(
+    <FormattedMessage id="promotion" />,
+    "2",
+    <Link to="/promotions">
+      <GiftOutlined />
     </Link>
   ),
   // getItem("Option 2", "2", <DesktopOutlined />),
