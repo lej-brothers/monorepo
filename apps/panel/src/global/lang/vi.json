@@ -19,6 +19,8 @@
 
     "paginate.text": "Đang hiển thị {showing} trên {total}",
 
+    "code": "Mã",
+    "valid": "Thời gian hiệu lực",
     "promotion": "Khuyến mãi",
     "count": "Số lượng",
     "description": "Mô tả",

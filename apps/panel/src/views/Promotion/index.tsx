@@ -1,10 +1,13 @@
-import { Button, Pagination, Table } from "antd";
+import { Button, Pagination, PaginationProps, Table } from "antd";
 import React, { useState } from "react";
 import { FormattedMessage } from "react-intl";
 import { Container } from "./styles";
-import { useQueryClient } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 import { PROMOTION_MODAL } from "./constants";
 import usePromotions from "../../utils/usePromotions";
+import { CreateModal } from "./components";
+import { IPromotion, IPromotionCreate } from "common";
+import PromotionModule from "../../modules/promotion";
 
 const { Column } = Table;
 
@@ -14,6 +17,11 @@ const Promotions: React.FC = () => {
   const [{ page, limit }, setPaginate] = useState({ page: 1, limit: 20 });
 
   const { data } = usePromotions(page, limit);
+
+  const createMutation = useMutation<IPromotion, unknown, IPromotionCreate>(
+    "create-promotion",
+    PromotionModule.create
+  );
 
   /**
    * MAPPED VALUES
@@ -26,6 +34,17 @@ const Promotions: React.FC = () => {
   const openCreateModal = () => setModal(PROMOTION_MODAL.CREATE);
 
   const onClose = () => setModal(PROMOTION_MODAL.NONE);
+
+  const onCreatePromotion = async (payload: IPromotionCreate) => {
+    await createMutation.mutateAsync(payload);
+    await queryClient.refetchQueries(["promotions"], { active: true });
+    onClose();
+  };
+
+  const onChange: PaginationProps["onChange"] = (page, limit) => {
+    setPaginate({ page, limit });
+  };
+
 
   /**
    * MAIN RETURN
@@ -47,6 +66,7 @@ const Promotions: React.FC = () => {
         <Pagination
           current={page}
           pageSize={limit}
+          onChange={onChange}
           pageSizeOptions={[10, 20, 30]}
           defaultPageSize={20}
           defaultCurrent={1}
@@ -62,6 +82,11 @@ const Promotions: React.FC = () => {
           responsive
         />
       </div>
+      <CreateModal
+        open={modal === PROMOTION_MODAL.CREATE}
+        onOk={onCreatePromotion}
+        onClose={onClose}
+      />
     </Container>
   );
 };

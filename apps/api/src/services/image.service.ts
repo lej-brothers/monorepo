@@ -8,7 +8,7 @@ import { S3_BUCKET } from "../configs/secrets";
 import { Image } from "../model/images.model";
 
 const ImageService = {
-  get: (key: string) => `${S3_ENDPOINT}:${S3_PORT}/${S3_BUCKET}/${key}`,
+  get: (key: string) => `http://${S3_ENDPOINT}:${S3_PORT}/${S3_BUCKET}/${key}`,
 
   async upload(file: Express.Multer.File) {
     const key = v4() + path.extname(file.originalname);

@@ -9,7 +9,7 @@ const validations = [
   body("details").isString(),
   body("description").isString(),
   body("categories").isArray().isMongoId(),
-  body("images"),
+  body("images").isArray(),
 ];
 
 const controller = async (req: Request, res: Response) => {

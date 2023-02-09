@@ -3,6 +3,7 @@ import { PaginateOptions } from "mongoose";
 import { Product } from "../model/product.model";
 import { Warehourse } from "../model/warehourse.model";
 import CategoryService from "./category.service";
+import ImageService from "./image.service";
 
 const ProductService = {
   async get(id: string) {
@@ -12,16 +13,32 @@ const ProductService = {
     return Product.findOne({ slug });
   },
   async list(params: PaginateOptions) {
-    return Product.paginate(
+    const products = await Product.paginate(
       {},
-      { ...params, populate: ["warehourse", "categories"] }
+      {
+        ...params,
+        populate: ["warehourse", "categories", "images"],
+        lean: true,
+      }
     );
+
+    products.docs = products.docs.map((product) => {
+      product.images = product.images.map((image) => ({
+        ...image,
+        url: ImageService.get(image.key),
+      }));
+
+      return product;
+    });
+
+    return products;
   },
   async create(payload: IProductCreate) {
     const product = await Product.create({
       slug: payload.slug,
       title: payload.title,
       details: payload.details,
+      images: payload.images,
       description: payload.description,
       categories: payload.categories,
       isMetch: payload.isMetch,

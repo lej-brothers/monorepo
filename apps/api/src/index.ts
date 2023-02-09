@@ -1,4 +1,3 @@
-import pino from 'express-pino-logger'
 import connectRedis from "connect-redis";
 import cors from "cors";
 import express from "express";
@@ -14,6 +13,7 @@ import ApplicationRouter from "./controllers/index.router";
 import bodyParser from 'body-parser'
 
 import passportCustom from "passport-custom";
+import { logRequest } from './middlewares/logger';
 const CustomStrategy = passportCustom.Strategy;
 
 const RedisStore = connectRedis(session);
@@ -29,7 +29,7 @@ app.use(express.json())
 app.use(cors({ origin: "*" }));
 
 app.use(passport.initialize());
-app.use(pino({}))
+app.use(logRequest)
 
 passport.use(
   "authtoken",

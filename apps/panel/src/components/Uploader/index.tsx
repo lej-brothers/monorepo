@@ -121,15 +121,14 @@ const Uploader = ({ onChange }: Props) => {
 
     try {
       const res = await ImageModule.upload(file as RcFile, onUploadProgress);
-      onSuccess?.("Ok");
-      return res._id;
+      onSuccess?.(res._id);
     } catch (err: any) {
       onError?.(err);
     }
   };
 
   useEffect(() => {
-    onChange(files.map((file) => file.name));
+    onChange(files.map((file) => file.response));
   }, [files, onChange]);
 
   return (

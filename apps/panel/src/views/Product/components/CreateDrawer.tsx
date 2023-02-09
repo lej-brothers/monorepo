@@ -160,8 +160,8 @@ const CreateDrawer: React.FC<Props> = ({
             </div>
             <div>
               <Uploader
-                onChange={(e) => {
-                  console.log(e);
+                onChange={(ids) => {
+                  methods.setValue("images", ids);
                 }}
               />
             </div>

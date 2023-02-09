@@ -11,6 +11,18 @@ const ProductModule = {
     const res = await requester.get("/products", { params });
     return res.data;
   },
+
+  options: async (page: number, limit: number): Promise<IPaginated<IProduct>> => {
+    const params = new URLSearchParams({
+      page: String(page),
+      limit: String(limit),
+      type: 'option',
+    });
+
+    const res = await requester.get("/products", { params });
+    return res.data;
+  },
+
   create: async (product: IProductCreate): Promise<IProduct> => {
     const res = await requester.post("/products", product);
     return res.data;
