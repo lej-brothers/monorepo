@@ -1,12 +1,22 @@
-import { Select as AntdSelect, Col, Modal, Row, Tag } from "antd";
+import {
+  Select as AntdSelect,
+  Button,
+  Col,
+  DatePicker,
+  Modal,
+  Row,
+  Tag,
+  Tooltip,
+} from "antd";
 import { IPromotionCreate } from "common";
+import { InfoCircleOutlined } from "@ant-design/icons";
 import type { CustomTagProps } from "rc-select/lib/BaseSelect";
 import React from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { FormattedMessage } from "react-intl";
 import { Input, Select, Textarea } from "../../../../components";
 import useProductOptions from "../../../../utils/useProductOptions";
-import { DatePicker } from "antd";
+import { PROMOTION_MODAL } from "../../constants";
 
 const { RangePicker } = DatePicker;
 
@@ -16,9 +26,10 @@ interface Props {
   open: boolean;
   onClose: () => void;
   onOk: (payload: IPromotionCreate) => Promise<void>;
+  toggleModal: (modal: PROMOTION_MODAL) => void;
 }
 
-const CreateModal: React.FC<Props> = ({ open, onOk, onClose }) => {
+const CreateModal: React.FC<Props> = ({ toggleModal, open, onOk, onClose }) => {
   const methods = useForm<IPromotionCreate>();
   const values = methods.watch();
 
@@ -40,6 +51,11 @@ const CreateModal: React.FC<Props> = ({ open, onOk, onClose }) => {
     });
     return pre;
   }, {} as any);
+
+  const categoryOptions = Object.keys(categories).map((name) => ({
+    label: categories[name],
+    value: name,
+  }));
 
   /**
    * EVENT HANDLERS
@@ -83,7 +99,7 @@ const CreateModal: React.FC<Props> = ({ open, onOk, onClose }) => {
             <Input name="code" placeholder="THUHIGH" />
           </div>
           <div className="flex flex-col">
-            <label className="text-sm font-semibold">
+            <label className="text-sm mb-2 font-semibold">
               <FormattedMessage id="product" />
             </label>
             <Select
@@ -94,7 +110,7 @@ const CreateModal: React.FC<Props> = ({ open, onOk, onClose }) => {
               name="products"
             >
               {Object.keys(categories).map((categoryId) => (
-                <OptGroup label={categories[categoryId]}>
+                <OptGroup key={categoryId} label={categories[categoryId]}>
                   {options
                     .filter((o) =>
                       o.categories.find(
@@ -110,7 +126,7 @@ const CreateModal: React.FC<Props> = ({ open, onOk, onClose }) => {
                         }}
                         label={option.title}
                         value={option._id}
-                        key={option._id}
+                        key={option._id + categoryId}
                       >
                         <Row gutter={32}>
                           <Col span={6}>
@@ -135,6 +151,28 @@ const CreateModal: React.FC<Props> = ({ open, onOk, onClose }) => {
               ))}
             </Select>
           </div>
+
+          <div className="flex flex-col">
+            <div className="flex items-center justify-between">
+              <label className="text-sm font-semibold">
+                <FormattedMessage id="product.create.category" />
+              </label>
+              <Button
+                onClick={() => toggleModal(PROMOTION_MODAL.CATEGORY_CREATE)}
+                size="small"
+              >
+                +
+              </Button>
+            </div>
+            <Select
+              name="categories"
+              className="mt-2"
+              options={categoryOptions}
+              placeholder="Category"
+              mode="multiple"
+              suffixIcon="+"
+            />
+          </div>
         </div>
         <div className="mb-4">
           <label className="text-sm font-semibold">
@@ -142,18 +180,42 @@ const CreateModal: React.FC<Props> = ({ open, onOk, onClose }) => {
           </label>
           <Textarea name="description" placeholder="Thứ 2 là ngày đầu tuần" />
         </div>
-        <div className="flex mb-4 flex-col">
-          <label className="text-sm mb-2 font-semibold">
-            <FormattedMessage id="valid" />
-          </label>
-          <RangePicker
-            onChange={(values) => {
-              if (values?.[0])
-                methods.setValue("activeFrom", new Date(values[0].date()));
-              if (values?.[1])
-                methods.setValue("activeTo", new Date(values[1].date()));
-            }}
-          />
+        <div className="grid mb-4 grid-cols-2 gap-4">
+          <div className="flex mb-4 flex-col">
+            <label className="text-sm mb-2 font-semibold">
+              <FormattedMessage id="valid" />
+            </label>
+            <RangePicker
+              onChange={(values) => {
+                if (values?.[0])
+                  methods.setValue(
+                    "activeFrom",
+                    new Date(values[0].toISOString())
+                  );
+                if (values?.[1])
+                  methods.setValue(
+                    "activeTo",
+                    new Date(values[1].toISOString())
+                  );
+              }}
+            />
+          </div>
+          <div className="flex mb-4 flex-col">
+            <label className="text-sm mb-2 font-semibold">
+              <FormattedMessage id="limit" />
+            </label>
+            <Input name="purchasesLimit" type="number" />
+          </div>
+
+          <div className="flex mb-4 flex-col">
+            <label className="flex items-center text-sm mb-2 font-semibold">
+              <FormattedMessage id="price_drop" />
+              <Tooltip title={<FormattedMessage id="price_drop.tooltip" />}>
+                <InfoCircleOutlined className="ml-1" />
+              </Tooltip>
+            </label>
+            <Input name="promoPrice" placeholder="100000" />
+          </div>
         </div>
       </FormProvider>
     </Modal>

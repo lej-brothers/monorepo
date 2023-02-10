@@ -8,6 +8,7 @@ import usePromotions from "../../utils/usePromotions";
 import { CreateModal } from "./components";
 import { IPromotion, IPromotionCreate } from "common";
 import PromotionModule from "../../modules/promotion";
+import CategoryCreateModal from "../Product/components/CategoryCreateModal";
 
 const { Column } = Table;
 
@@ -45,7 +46,6 @@ const Promotions: React.FC = () => {
     setPaginate({ page, limit });
   };
 
-
   /**
    * MAIN RETURN
    */
@@ -58,8 +58,22 @@ const Promotions: React.FC = () => {
       </div>
       <Table pagination={false} dataSource={promotions}>
         <Column
-          title={<FormattedMessage id="product.create.name" />}
+          title={<FormattedMessage id="code" />}
           dataIndex="code"
+        />
+        <Column
+          title={<FormattedMessage id="description" />}
+          dataIndex="description"
+        />
+        <Column
+          title={<FormattedMessage id="price_drop" />}
+          dataIndex="promoPrice"
+          render={(value: number) => value < 1 ? `${value * 100}%` : `${value} VND`}
+        />
+        <Column
+          title={<FormattedMessage id="limit" />}
+          dataIndex="purchasesLimit"
+          render={(value: number, record: IPromotion) => value === 0 ? `♾️` : `${record.purchasesCount || 0}/${value}`}
         />
       </Table>
       <div className="mt-2 flex justify-end">
@@ -83,8 +97,13 @@ const Promotions: React.FC = () => {
         />
       </div>
       <CreateModal
+        toggleModal={setModal}
         open={modal === PROMOTION_MODAL.CREATE}
         onOk={onCreatePromotion}
+        onClose={onClose}
+      />
+      <CategoryCreateModal
+        open={modal === PROMOTION_MODAL.CATEGORY_CREATE}
         onClose={onClose}
       />
     </Container>
