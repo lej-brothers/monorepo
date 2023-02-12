@@ -1,5 +1,10 @@
 import { createAction } from "@reduxjs/toolkit";
 import ActionTypes from "./actions.type";
+import { IOrder } from "common";
+
+export const setOrder = createAction(ActionTypes.SET, (order: IOrder) => ({
+  payload: order,
+}));
 
 export const getOrder = createAction(ActionTypes.GET);
 

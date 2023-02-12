@@ -1,4 +1,5 @@
 enum ActionTypes {
+  SET = 'ORDERS/SET',
   GET = "ORDERS/GET",
   ADD_ITEM = "ORDERS/ADD-ITEM",
   REMOVE_ITEM = "ORDERS/REMOVE_ITEM",
