@@ -1,5 +1,5 @@
 import { ORDER_STATUS } from "../constants/ORDER_STATUS";
-import { IProduct } from "./IProduct";
+import { IOrderProduct, IProduct } from "./IProduct";
 import { IPromotion } from "./IPromotion";
 
 export interface IOrder {
@@ -19,12 +19,10 @@ export interface IOrder {
   /**
    * Same as for user, it's not a reference but copy of data about products
    *
-   * @type {IOrderProductCreateObject[]}
+   * @type {IOrderProduct[]}
    * @memberof IOrder
    */
-  products: IProduct[];
-
-  productNotes: string[],
+  products: IOrderProduct[];
 
   /**
    * Status of the Order ()

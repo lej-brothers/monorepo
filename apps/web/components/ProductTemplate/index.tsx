@@ -1,7 +1,7 @@
 import Image from "next/image";
 import React, { useEffect, useMemo } from "react";
 
-import ScrollArea from 'react-scrollbar';
+import ScrollArea from "react-scrollbar";
 import { Collapse } from "@mui/material";
 import { IProduct } from "common";
 import { useForm } from "react-hook-form";
@@ -10,6 +10,7 @@ import BeanIcon from "../../public/coffee-beans-icon.png";
 import Ratio from "../Ratio";
 import ImageGallery from "../ImageGallery";
 import format from "../../utils/format";
+import useOrder from "../../hooks/useOrder";
 
 type ProductInfoProps = {
   product: IProduct;
@@ -28,7 +29,9 @@ const ProductInfo: React.FC<ProductInfoProps> = ({ product }) => {
     defaultValues: { grind: GRIND_SIZE.NONE, weight: 100, quantity: 1 },
   });
 
-  const { quantity, shouldGrind, grind, weight } = methods.watch();
+  const { quantity, shouldGrind, grind, weight, notes } = methods.watch();
+
+  const { addProduct } = useOrder();
 
   // EVENT HANDLERS
   const updateShouldGrind = (shouldGrind: boolean) => () => {
@@ -45,6 +48,16 @@ const ProductInfo: React.FC<ProductInfoProps> = ({ product }) => {
 
   const decreaseQuantity = () => {
     methods.setValue("quantity", quantity - 1);
+  };
+
+  const add = () => {
+    addProduct({
+      _id: product._id,
+      slug: product.slug,
+      price: product.warehourse.price,
+      quantity: quantity * (weight / 100),
+      notes: notes,
+    });
   };
 
   return (
@@ -181,7 +194,7 @@ const ProductInfo: React.FC<ProductInfoProps> = ({ product }) => {
             </div>
             <div className="flex-1 flex justify-center items-center">
               <button
-                onClick={() => {}}
+                onClick={add}
                 className="bg-white text-black font-medium py-2 px-4 rounded-full"
               >
                 Thêm vào giỏ hàng

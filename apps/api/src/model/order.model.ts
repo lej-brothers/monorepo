@@ -6,7 +6,7 @@ export interface IOrderDocument extends Omit<IOrder, "_id">, Document {}
 export const OrderSchema = new Schema(
   {
     sessionId: String,
-    products: [{ type: Schema.Types.ObjectId, ref: "Products" }],
+    products: [Object],
     /**
      * @type {ORDER_STATUS}
      * */
@@ -22,4 +22,4 @@ export const OrderSchema = new Schema(
   }
 );
 
-export const Order = model<IOrderDocument>("Orders", OrderSchema, 'orders');
+export const Order = model<IOrderDocument>("Orders", OrderSchema, "orders");

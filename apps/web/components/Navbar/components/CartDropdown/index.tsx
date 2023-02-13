@@ -8,7 +8,7 @@ interface Props {
 
 const CartDropdown = ({ children }: Props) => {
 
-  return <Dropdown menu={{ items: ITEMS }} >{children}</Dropdown>;
+  return <Dropdown menu={{ items: [] }} >{children}</Dropdown>;
 };
 
 export default CartDropdown;

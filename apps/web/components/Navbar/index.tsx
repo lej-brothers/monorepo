@@ -10,14 +10,18 @@ import { CartDropdown } from "./components";
 import { useDispatch, useSelector } from "react-redux";
 import { getOrder } from "../../reducers/order/actions";
 import { IStore } from "../../types/IStore";
+import useOrder from "../../hooks/useOrder";
+import Link from "next/link";
 // import CartDropdown from "@modules/layout/components/cart-dropdown"
 
 const Navbar = () => {
-  const dispatch = useDispatch();
   const { pathname } = useRouter();
   const [isHome, setIsHome] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const order = useSelector((state: IStore) => state.order);
+
+  const { order } = useOrder();
+
+  const products = order?.products || [];
 
   //useEffect that detects if window is scrolled > 5px on the Y axis
   useEffect(() => {
@@ -42,16 +46,16 @@ const Navbar = () => {
     pathname === "/" ? setIsHome(true) : setIsHome(false);
   }, [pathname]);
 
-  useEffect(() => {
-    dispatch(getOrder());
-  }, []);
-
   if (isMobile) {
     return <></>;
   }
 
   return (
-    <header className={`absolute ${isScrolled ? 'inset-y-[10px]': 'inset-y-[10px]'}  z-50 flex justify-center items-center w-full h-[122px]`}>
+    <header
+      className={`absolute ${
+        isScrolled ? "inset-y-[10px]" : "inset-y-[10px]"
+      }  z-50 flex justify-center items-center w-full h-[122px]`}
+    >
       <nav
         style={{
           background: "rgb(255,255,255,0.2)",
@@ -60,24 +64,32 @@ const Navbar = () => {
         className="flex max-w-2xl backdrop-blur-2xl w-full h-[77px] rounded-full"
       >
         <div className="flex flex-1 justify-center items-center">
-          <Image src={LeJCompactLogo} width={39} height={42} alt="lej-logo" />
+          <Link href="/">
+            <Image src={LeJCompactLogo} width={39} height={42} alt="lej-logo" />
+          </Link>
         </div>
         <div className="flex justify-start space-x-5 items-center flex-[4]">
-          <button className="btn px-8 bg-white rounded-full h-[54px] flex justify-center items-center">
-            Sản phẩm
-          </button>
-          <button className="btn px-8 bg-white rounded-full h-[54px] flex justify-center items-center">
-            Về chúng tôi
-          </button>
+          <Link href="/products">
+            <button className="btn px-8 bg-white rounded-full h-[54px] flex justify-center items-center">
+              Sản phẩm
+            </button>
+          </Link>
+          <Link href="/about">
+            <button className="btn px-8 bg-white rounded-full h-[54px] flex justify-center items-center">
+              Về chúng tôi
+            </button>
+          </Link>
           <button className="btn bg-white rounded-full h-[54px] w-[54px] flex justify-center items-center">
-            <FaSearch />
+            <FaSearch size={20} />
           </button>
           <CartDropdown>
-            <button className="btn bg-white rounded-full h-[54px] w-[54px] flex justify-center items-center">
-              <Badge size="small" count={order?.products?.length || 0}>
-                <FaShoppingCart />
-              </Badge>
-            </button>
+            <Link href="/orders">
+              <button className="btn bg-white rounded-full h-[54px] w-[54px] flex justify-center items-center">
+                <Badge size="small" count={products.length || 0}>
+                  <FaShoppingCart size={20} />
+                </Badge>
+              </button>
+            </Link>
           </CartDropdown>
         </div>
       </nav>

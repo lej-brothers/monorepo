@@ -14,6 +14,7 @@ interface Params extends ParsedUrlQuery {
 
 const ProductPage = () => {
   const router = useRouter();
+  
   const { slug } = router.query;
 
   const { data } = useProduct(slug as string);
