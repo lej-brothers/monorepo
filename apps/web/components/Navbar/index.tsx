@@ -1,13 +1,15 @@
 import Image from "next/image";
 import { isMobile } from "react-device-detect";
+import { Badge } from "antd";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { FaSearch, FaShoppingCart } from "react-icons/fa";
 
 import LeJCompactLogo from "../../public/lej-compact-logo.png";
 import { CartDropdown } from "./components";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getOrder } from "../../reducers/order/actions";
+import { IStore } from "../../types/IStore";
 // import CartDropdown from "@modules/layout/components/cart-dropdown"
 
 const Navbar = () => {
@@ -15,6 +17,7 @@ const Navbar = () => {
   const { pathname } = useRouter();
   const [isHome, setIsHome] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const order = useSelector((state: IStore) => state.order);
 
   //useEffect that detects if window is scrolled > 5px on the Y axis
   useEffect(() => {
@@ -48,7 +51,7 @@ const Navbar = () => {
   }
 
   return (
-    <header className="absolute inset-y-[55px] z-50 flex justify-center items-center w-full h-[122px]">
+    <header className={`absolute ${isScrolled ? 'inset-y-[25px]': 'inset-y-[35px]'}  z-50 flex justify-center items-center w-full h-[122px]`}>
       <nav
         style={{
           background: "rgb(255,255,255,0.2)",
@@ -71,7 +74,9 @@ const Navbar = () => {
           </button>
           <CartDropdown>
             <button className="btn bg-white rounded-full h-[54px] w-[54px] flex justify-center items-center">
-              <FaShoppingCart />
+              <Badge size="small" count={order?.products?.length || 0}>
+                <FaShoppingCart />
+              </Badge>
             </button>
           </CartDropdown>
         </div>

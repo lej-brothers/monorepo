@@ -1,6 +1,6 @@
 import { ICategory } from "./ICategory";
 import { IImage } from "./IImage";
-import { IWarehourse, IWarehourseCreate} from "./IWarehouse";
+import { IWarehourse, IWarehourseCreate } from "./IWarehouse";
 
 export type IProduct = {
   _id?: string;
@@ -11,6 +11,7 @@ export type IProduct = {
   description: string;
   categories: ICategory[];
   warehourse: IWarehourse;
+  isHighlight: boolean;
   isMetch: boolean;
 };
 
@@ -23,12 +24,10 @@ export type IProductCreate = {
   description: string;
   categories: string[];
   warehourse: Omit<IWarehourse, "product">;
+  isHighlight: boolean;
   isMetch: boolean;
 } & IWarehourseCreate;
 
-export interface IProductImage {
-  url: string;
-  width: number;
-  height: number;
-  orientation: number;
-}
+export type IProductParams = Partial<
+  Pick<IProductCreate, "categories" | "isMetch" | "isHighlight">
+>;

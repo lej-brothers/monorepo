@@ -15,6 +15,8 @@ export const ProductSchema = new Schema(
     categories: [{ type: Schema.Types.ObjectId, ref: "categories" }],
     warehourse: { type: Schema.Types.ObjectId, ref: "warehourses" },
     images: [{ type: Schema.Types.ObjectId, ref: "Images" }],
+    isHighlight: Boolean,
+    isMetch: Boolean,
   },
   {
     toObject: { virtuals: true },
