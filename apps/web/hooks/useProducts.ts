@@ -20,7 +20,10 @@ const useProducts = (
   const params = queryString.stringify(options);
   return useQuery<IPaginated<IProduct>>(
     "products" + params.toString(),
-    () => ProductModule.list(page, limit, options),
+    () =>
+      ProductModule.list(page, limit, {
+        ...options,
+      }),
     query
   );
 };

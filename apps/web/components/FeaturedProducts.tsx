@@ -8,37 +8,16 @@ import useCategories from "../hooks/useCategories";
 import Product from "./Product";
 
 const FeaturedProducts = () => {
-  const { data: categoryData } = useCategories();
-  const categories = categoryData?.docs || [];
+  const { data: robustaData } = useProducts(1, 5, {
+    categories: 'robusta',
+  });
 
-  const haveRobusta = categories.find(
-    (category) => category.slug === "robusta"
-  )?._id;
-
-  const haveArabrica = categories.find(
-    (category) => category.slug === "robusta"
-  )?._id;
-
-  const { data: robustaData } = useProducts(
-    1,
-    5,
-    {
-      categories: haveRobusta ? [haveRobusta] : [],
-    },
-    { enabled: !!haveRobusta }
-  );
-
-  const { data: arabricaData } = useProducts(
-    1,
-    5,
-    {
-      categories: haveArabrica ? [haveArabrica] : [],
-    },
-    { enabled: !!haveArabrica }
-  );
+  const { data: arabicaData } = useProducts(1, 5, {
+    categories: 'arabica',
+  });
 
   const robustaProducts = robustaData?.docs || [];
-  const arabricaProducts = arabricaData?.docs || []
+  const arabicaProducts = arabicaData?.docs || [];
 
   return (
     <>
@@ -70,7 +49,7 @@ const FeaturedProducts = () => {
         <br />
         <span className="text-[#81BFCC]">Handbrew and Coldbrew</span>
       </span>
-      {arabricaProducts.map((item) => (
+      {arabicaProducts.map((item) => (
         <div key={item._id} className="my-10 w-[332px] mb-[80px]">
           <Product product={item} />
         </div>

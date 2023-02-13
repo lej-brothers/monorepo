@@ -1,5 +1,6 @@
 import { Document, PaginateModel, Schema, model } from "mongoose";
 import paginate from "mongoose-paginate-v2";
+import aggregatePaginate from 'mongoose-aggregate-paginate-v2';
 
 import { IProduct } from "common";
 import { ImageSchema } from "./images.model";
@@ -29,6 +30,7 @@ export const ProductSchema = new Schema(
 );
 
 ProductSchema.plugin(paginate);
+ProductSchema.plugin(aggregatePaginate)
 
 export const Product = model<IProductDocument, PaginateModel<IProductDocument>>(
   "Products",

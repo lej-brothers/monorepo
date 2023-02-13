@@ -24,6 +24,8 @@ export interface IOrder {
    */
   products: IProduct[];
 
+  productNotes: string[],
+
   /**
    * Status of the Order ()
    *

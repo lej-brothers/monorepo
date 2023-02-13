@@ -10,8 +10,24 @@ const ProductService = {
     return Product.findById(id);
   },
   async getBySlug(slug: string) {
-    return Product.findOne({ slug });
+    const product = await Product.findOne({ slug })
+      .populate("warehourse")
+      .populate("images")
+      .populate("categories")
+      .lean();
+
+    product!.images = product!.images.map((image) => ({
+      ...image,
+      url: ImageService.get(image.key),
+    }));
+
+    return product;
   },
+
+  async getHandlers() {
+    return Product.find({}).select("slug");
+  },
+
   async list(params: PaginateOptions) {
     const products = await Product.paginate(
       {},
@@ -33,6 +49,44 @@ const ProductService = {
 
     return products;
   },
+
+  async listByCategory(params: PaginateOptions, categories: string[]) {
+    const categoryIds = (
+      await Promise.all(
+        categories.map((category) => CategoryService.getBySlug(category))
+      )
+    ).map((category) => category!._id);
+
+    const products = await Product.paginate(
+      { categories: { $in: categoryIds } },
+      {
+        ...params,
+        populate: ["warehourse", "categories", "images"],
+        lean: true,
+      }
+    );
+
+    products.docs = products.docs.map((product) => {
+      product.images = product.images.map((image) => ({
+        ...image,
+        url: ImageService.get(image.key),
+      }));
+
+      return product;
+    });
+
+    products.docs = products.docs.filter(
+      (doc) =>
+        !!doc.categories.filter((category) =>
+          categories.includes(category.slug)
+        ).length
+    );
+
+    products.totalDocs = products.docs.length;
+
+    return products;
+  },
+
   async create(payload: IProductCreate) {
     const product = await Product.create({
       slug: payload.slug,

@@ -1,6 +1,7 @@
 import { IProduct } from "common";
 import Image from "next/image";
 import Link from "next/link";
+import format from "../../utils/format";
 
 interface Props {
   className?: string;
@@ -9,6 +10,9 @@ interface Props {
 }
 
 const Product = ({ className = "", product, price }: Props) => {
+
+  const formatedPrice = format('vi-VN', 'VND', (price || product.warehourse.price) as number)
+
   return (
     <Link href={`/products/${product.slug}`} passHref>
       <div
@@ -27,7 +31,7 @@ const Product = ({ className = "", product, price }: Props) => {
         <div className="flex-1 flex flex-col -translate-x-8">
           <h3 className="font-medium mb-2 text-base">{product.title}</h3>
           <p className="text-base text-gray-500">
-            {price || product.warehourse.price}
+            {product.isMetch ? `${formatedPrice} VND` : `${formatedPrice} VND / 100g` }
           </p>
         </div>
       </div>

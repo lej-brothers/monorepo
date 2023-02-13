@@ -9,7 +9,6 @@ export default function Web() {
   const products = useProducts();
 
   const first3 = products.data?.docs?.slice(0, 3);
-  console.log(first3);
 
   return (
     <div>
@@ -32,7 +31,7 @@ export default function Web() {
           <FeaturedProducts />
         </div>
       </section>
-      
+
       <section className="flex justify-center bg-black">
         <div className="flex flex-col justify-center items-center bg-white w-full max-w-3xl h-[100%] py-12">
           <Collection />

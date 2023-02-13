@@ -3,6 +3,10 @@ import requester from "../configs/requester";
 import queryString from "query-string";
 
 const ProductModule = {
+  get: async (handle: string) => {
+    const res = await requester.get(`/products/${handle}`);
+    return res.data;
+  },
   list: async (
     page: number,
     limit: number,
@@ -14,7 +18,9 @@ const ProductModule = {
       ...options,
     });
 
-    const res = await requester.get(params ? `/products?${params}` : "/products");
+    const res = await requester.get(
+      params ? `/products?${params}` : "/products"
+    );
     return res.data;
   },
 
@@ -29,6 +35,11 @@ const ProductModule = {
     });
 
     const res = await requester.get("/products", { params });
+    return res.data;
+  },
+
+  handles: async () => {
+    const res = await requester.get("/products/handlers");
     return res.data;
   },
 

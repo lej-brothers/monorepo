@@ -7,6 +7,7 @@ import { motion } from "framer-motion";
 import { IProduct } from "common";
 
 import CoffeeTopImage from "../public/coffee-top.png";
+import format from "../utils/format";
 
 export const NEXT_POSITION: { [key: number]: number } = {
   1: 2,
@@ -61,6 +62,9 @@ const ProductRotator = ({ products }: Props) => {
       : position[products[2]._id!] === 1
       ? products[2]
       : products[0];
+
+      const formatedPrice = format('vi-VN', 'VND', (highlightedProduct.warehourse.price) as number)
+
 
   const onNext = () => {
     setPosition({
@@ -146,7 +150,7 @@ const ProductRotator = ({ products }: Props) => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
           >
-            {highlightedProduct.warehourse.price}
+            {`${formatedPrice} VND / 100g`}
           </motion.p>
         </div>
         <div className="flex justify-center items-center flex-1">
