@@ -1,6 +1,7 @@
 import Image from "next/image";
 import React, { useEffect, useMemo } from "react";
 
+import ScrollArea from 'react-scrollbar';
 import { Collapse } from "@mui/material";
 import { IProduct } from "common";
 import { useForm } from "react-hook-form";
@@ -67,12 +68,12 @@ const ProductInfo: React.FC<ProductInfoProps> = ({ product }) => {
             {/* <ImageGallery images={product.images} /> */}
           </div>
         </div>
-        <div className="relative flex-1 flex flex-col pt-11 py-[20px] justify-start px-[100px]">
-          <p className="test-sm mb-3 text-[#CC81AE]">
+        <div className="relative flex-1 flex flex-col py-[20px] justify-center px-[100px]">
+          <p className="test-sm mb-1 text-[#CC81AE]">
             {product.categories[0].name}
           </p>
           <p className="mb-3 text-4xl">{product.title}</p>
-          <p className="text-gray-500 mb-3">{product.description}</p>
+          <p className="text-gray-500 mb-1">{product.description}</p>
           {/** SHOULD GRIND */}
           <p className="text-xl mb-2">Mức xay:</p>
           <div className="flex mb-5">
@@ -167,7 +168,7 @@ const ProductInfo: React.FC<ProductInfoProps> = ({ product }) => {
             />
           </div>
 
-          <div className="absolute text-white p-4 flex bg-black bottom-0 rounded-t-2xl left-0 right-0 w-[80%] mx-auto h-[100px]">
+          <div className="absolute text-white p-4 flex bg-black bottom-0 rounded-t-2xl left-0 right-0 w-[80%] mx-auto h-[80px]">
             <div className="flex-1 flex justify-center flex-col pl-10">
               <p className="font-medium mb-1">Thành tiền:</p>
               <p className="text-2xl">

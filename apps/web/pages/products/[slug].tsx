@@ -6,6 +6,7 @@ import { dehydrate, QueryClient, useQuery } from "react-query";
 import useProduct from "../../hooks/useProduct";
 import ProductModule from "../../modules/product.module";
 import ProductTemplate from "../../components/ProductTemplate";
+import Layout from "../../components/Layout";
 
 interface Params extends ParsedUrlQuery {
   handle: string;
@@ -27,13 +28,15 @@ const ProductPage = () => {
 };
 
 ProductPage.getLayout = (page: ReactElement) => {
-  return { page };
+  return <Layout>{page}</Layout>;
 };
 
 export const getStaticPaths: GetStaticPaths<Params> = async () => {
   const handles = await ProductModule.handles();
   return {
-    paths: handles.map((handles: any) => handles.slug).map((slug: string) => ({ params: { slug } })),
+    paths: handles
+      .map((handles: any) => handles.slug)
+      .map((slug: string) => ({ params: { slug } })),
     fallback: true,
   };
 };

@@ -51,16 +51,16 @@ const Navbar = () => {
   }
 
   return (
-    <header className={`absolute ${isScrolled ? 'inset-y-[25px]': 'inset-y-[35px]'}  z-50 flex justify-center items-center w-full h-[122px]`}>
+    <header className={`absolute ${isScrolled ? 'inset-y-[10px]': 'inset-y-[10px]'}  z-50 flex justify-center items-center w-full h-[122px]`}>
       <nav
         style={{
           background: "rgb(255,255,255,0.2)",
           boxShadow: "0px 5px 18px 2px rgb(0,0,0,0.1)",
         }}
-        className="flex max-w-2xl backdrop-blur-2xl w-full h-[88px] rounded-full"
+        className="flex max-w-2xl backdrop-blur-2xl w-full h-[77px] rounded-full"
       >
         <div className="flex flex-1 justify-center items-center">
-          <Image src={LeJCompactLogo} width={47} height={52} alt="lej-logo" />
+          <Image src={LeJCompactLogo} width={39} height={42} alt="lej-logo" />
         </div>
         <div className="flex justify-start space-x-5 items-center flex-[4]">
           <button className="btn px-8 bg-white rounded-full h-[54px] flex justify-center items-center">

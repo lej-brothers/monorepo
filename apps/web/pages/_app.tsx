@@ -6,19 +6,18 @@ import { queryClient } from "../configs/queryClient";
 import Global from "../global";
 import createStore from "../store";
 
-import VoidModule from "../modules/void.module";
-
 import "tailwindcss/tailwind.css";
 
 const store = createStore();
 
 export default function MyApp({ Component, pageProps }: AppProps): JSX.Element {
+  const getLayout = (Component as any).getLayout || ((page: any) => page)
 
   return (
     <Provider store={store.store}>
       <PersistGate loading={null} persistor={store.persistor}>
         <QueryClientProvider client={queryClient}>
-          <Component {...pageProps} />
+          {getLayout(<Component {...pageProps} />)}
           <Global />
         </QueryClientProvider>
       </PersistGate>
