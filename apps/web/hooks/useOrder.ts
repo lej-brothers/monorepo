@@ -1,10 +1,12 @@
+import { IStore } from "./../types/IStore";
 import { IOrder, IOrderProduct } from "common";
 import OrderModule from "../modules/order.module";
 import { useMutation, useQuery } from "react-query";
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { toggleOrderDrawer } from "../reducers/order/actions";
 
 const useOrder = () => {
-  const [openDrawer, setOpenDrawer] = useState(false);
   const { data, refetch, isLoading } = useQuery("order", OrderModule.get, {
     keepPreviousData: true,
   });
@@ -25,8 +27,6 @@ const useOrder = () => {
     await refetch();
   };
 
-  const toggle = () => setOpenDrawer((previous) => !previous);
-
   const removeProduct = async (id: string) => {
     const cleanedProducts = orderData.products.filter(
       (product) => product._id !== id
@@ -38,8 +38,7 @@ const useOrder = () => {
   };
 
   return {
-    toggle,
-    openDrawer,
+    open,
     isLoading,
     order: orderData,
     addProduct,

@@ -10,8 +10,6 @@ import "regenerator-runtime/runtime";
 
 import rootReducer from "./reducers";
 
-import { orderSagas } from "./reducers/order/sagas";
-
 const persistConfig = {
   key: "root",
   storage,
@@ -26,8 +24,6 @@ export default () => {
     composeWithDevTools(applyMiddleware(sagaMiddleware))
   );
   let persistor = persistStore(store);
-
-  sagaMiddleware.run(orderSagas);
 
   return { store, persistor };
 };

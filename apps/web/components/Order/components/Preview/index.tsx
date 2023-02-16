@@ -1,24 +1,26 @@
 import { IOrder } from "common";
 import OrderProduct from "../Product";
 import format from "../../../../utils/format";
+import { ORDER_TABS } from "../../constants";
 
 interface Props {
   order: IOrder;
+  onChange: (key: ORDER_TABS) => void;
 }
 
-const Preview = ({ order }: Props) => {
-
+const Preview = ({ order, onChange }: Props) => {
   const products = order.products || [];
 
   const totalPrice = products.reduce((pre, cur) => {
-    return pre + cur.price
-  }, 0)
+    return pre + cur.price;
+  }, 0);
 
-  const totalPriceFormatted = format('vi-VN', 'VND', totalPrice)
+  const totalPriceFormatted = format("vi-VN", "VND", totalPrice);
 
+  const onNext = () => onChange(ORDER_TABS.PAYMENT);
 
   return (
-    <div className="h-full">
+    <>
       <div className="px-[74px]">
         <p className="text-4xl">Giỏ hàng</p>
         {order.products.map((product) => (
@@ -35,13 +37,16 @@ const Preview = ({ order }: Props) => {
             <p className="font-light text-xl">{totalPriceFormatted} VND</p>
           </div>
           <div>
-            <button className="rounded-full h-full px-[55px] py-[12px] bg-white text-black">
+            <button
+              onClick={onNext}
+              className="rounded-full h-full px-[55px] py-[12px] bg-white text-black"
+            >
               Thanh Toán
             </button>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

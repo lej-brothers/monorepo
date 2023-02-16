@@ -1,9 +1,5 @@
 enum ActionTypes {
-  SET = 'ORDERS/SET',
-  GET = "ORDERS/GET",
-  ADD_ITEM = "ORDERS/ADD-ITEM",
-  REMOVE_ITEM = "ORDERS/REMOVE_ITEM",
-  ADD_PROMOTION = "ORDERS/ADD-PROMOTION",
+  TOGGLE = "ORDERS/TOGGLE",
 }
 
 export default ActionTypes;

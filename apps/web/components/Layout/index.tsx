@@ -1,3 +1,5 @@
+"use client";
+
 import React, { ReactNode } from "react";
 import Navbar from "../Navbar";
 import { OrderDrawer } from "../Order/components/";

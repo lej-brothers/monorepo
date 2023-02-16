@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import { isMobile } from "react-device-detect";
 import { Badge } from "antd";
@@ -6,20 +8,22 @@ import { useEffect, useState } from "react";
 import { FaSearch, FaShoppingCart } from "react-icons/fa";
 
 import LeJCompactLogo from "../../public/lej-compact-logo.png";
-import { CartDropdown } from "./components";
-import { useDispatch, useSelector } from "react-redux";
-import { getOrder } from "../../reducers/order/actions";
-import { IStore } from "../../types/IStore";
 import useOrder from "../../hooks/useOrder";
 import Link from "next/link";
+import { useDispatch } from "react-redux";
+import { toggleOrderDrawer } from "../../reducers/order/actions";
 // import CartDropdown from "@modules/layout/components/cart-dropdown"
 
 const Navbar = () => {
+  const dispatch = useDispatch();
   const { pathname } = useRouter();
   const [isHome, setIsHome] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-
   const { order } = useOrder();
+
+  const toggle = () => {
+    dispatch(toggleOrderDrawer());
+  };
 
   const products = order?.products || [];
 
@@ -82,15 +86,14 @@ const Navbar = () => {
           <button className="btn bg-white rounded-full h-[54px] w-[54px] flex justify-center items-center">
             <FaSearch size={20} />
           </button>
-          <CartDropdown>
-            <Link href="/orders">
-              <button className="btn bg-white rounded-full h-[54px] w-[54px] flex justify-center items-center">
-                <Badge size="small" count={products.length || 0}>
-                  <FaShoppingCart size={20} />
-                </Badge>
-              </button>
-            </Link>
-          </CartDropdown>
+          <button
+            onClick={toggle}
+            className="btn bg-white rounded-full h-[54px] w-[54px] flex justify-center items-center"
+          >
+            <Badge size="small" count={products.length || 0}>
+              <FaShoppingCart size={20} />
+            </Badge>
+          </button>
         </div>
       </nav>
     </header>

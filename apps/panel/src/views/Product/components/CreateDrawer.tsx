@@ -1,9 +1,9 @@
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { CaretRightOutlined } from "@ant-design/icons";
-import { Button, Collapse, Drawer, Upload } from "antd";
+import { Button, Collapse, Drawer } from "antd";
 import { IProductCreate } from "common";
-import React, { useEffect } from "react";
+import React from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { FormattedMessage } from "react-intl";
 import { SLUG_VALIDATE_EX } from "../../../constants/regexs";

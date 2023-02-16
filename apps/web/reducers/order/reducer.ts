@@ -3,9 +3,9 @@ import { IStore } from "../../types/IStore";
 
 import * as actions from "./actions";
 
-const orderReducer = createReducer<IStore>({} as IStore, (builder) => {
-  builder.addCase(actions.setOrder, (state, action) => {
-    state.order = { ...action.payload };
+const orderReducer = createReducer<IStore["order"]>(false, (builder) => {
+  builder.addCase(actions.toggleOrderDrawer, (state, _) => {
+    state = !state;
     return state;
   });
 });
