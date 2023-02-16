@@ -7,16 +7,23 @@ import format from "../../utils/format";
 import OrderProduct from "../OrderCard/components/OrderProduct";
 import Preview from "./components/Preview";
 import styled from "styled-components";
+import { ORDER_TABS } from "./constants";
+import Payment from "./components/Payment";
 
 const Order = () => {
   const { order, isLoading } = useOrder();
 
   const TABS: TabsProps["items"] = [
     {
-      label: "",
-      key: "preview",
+      label: ORDER_TABS.PREVIEW,
+      key: ORDER_TABS.PREVIEW,
       children: <Preview order={order} />,
     },
+    {
+      label: ORDER_TABS.PAYMENT,
+      key: ORDER_TABS.PAYMENT,
+      children: <Payment />
+    }
   ];
 
   return (
@@ -29,12 +36,10 @@ const Order = () => {
 
       <Tabs
         animated
-        className="h-full"
         renderTabBar={() => <></>}
-        popupClassName="h-full"
-        defaultActiveKey="preview"
+        defaultActiveKey={ORDER_TABS.PREVIEW}
         items={TABS}
-      ></Tabs>
+      />
     </Container>
   );
 };
