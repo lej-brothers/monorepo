@@ -37,7 +37,7 @@ const Ratio = ({
 
   return (
     <div
-      className={`flex min-w-[150px] justify-between items-center flex-nowrap ${className}`}
+      className={`flex justify-between items-center flex-nowrap ${className}`}
     >
       <div
         onClick={onMinus}

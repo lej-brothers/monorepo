@@ -9,6 +9,10 @@ import createStore from "../store";
 import { Suspense } from "react";
 import "tailwindcss/tailwind.css";
 import Loading from "../components/Loading";
+import { IntlProvider } from "react-intl";
+
+import messagesinVi from "../languages/vi.json";
+import { sfPro } from "./sf-pro.font";
 
 const store = createStore();
 
@@ -18,12 +22,14 @@ export default function MyApp({ Component, pageProps }: AppProps): JSX.Element {
   return (
     <Provider store={store.store}>
       <PersistGate loading={null} persistor={store.persistor}>
-        <QueryClientProvider client={queryClient}>
-          <Suspense fallback={<Loading />}>
-            {getLayout(<Component {...pageProps} />)}
-            <Global />
-          </Suspense>
-        </QueryClientProvider>
+        <IntlProvider messages={messagesinVi} locale="vi">
+          <QueryClientProvider client={queryClient}>
+            <Suspense fallback={<Loading />}>
+              {getLayout(<Component {...pageProps} />)}
+              <Global />
+            </Suspense>
+          </QueryClientProvider>
+        </IntlProvider>
       </PersistGate>
     </Provider>
   );
