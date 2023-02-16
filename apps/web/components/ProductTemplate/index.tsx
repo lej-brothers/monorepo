@@ -1,14 +1,12 @@
 import Image from "next/image";
 import React, { useEffect, useMemo } from "react";
 
-import ScrollArea from "react-scrollbar";
 import { Collapse } from "@mui/material";
 import { IProduct } from "common";
 import { useForm } from "react-hook-form";
 import GRIND_SIZE from "../../constants/grindSize";
 import BeanIcon from "../../public/coffee-beans-icon.png";
 import Ratio from "../Ratio";
-import ImageGallery from "../ImageGallery";
 import format from "../../utils/format";
 import useOrder from "../../hooks/useOrder";
 

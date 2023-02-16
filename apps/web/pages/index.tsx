@@ -1,9 +1,10 @@
-import Navbar from "../components/Navbar";
 import CoffeeTop from "../public/coffee-top.png";
 import ProductRotator from "../components/ProductRotator";
 import useProducts from "../hooks/useProducts";
 import Collection from "../components/Collection";
 import FeaturedProducts from "../components/FeaturedProducts";
+import { ReactElement } from "react";
+import Layout from "../components/Layout";
 
 export default function Web() {
   const products = useProducts();
@@ -11,8 +12,7 @@ export default function Web() {
   const first3 = products.data?.docs?.slice(0, 3);
 
   return (
-    <div>
-      <Navbar />
+    <>
       <section
         style={{
           backgroundRepeat: "no-repeat",
@@ -37,6 +37,10 @@ export default function Web() {
           <Collection />
         </div>
       </section>
-    </div>
+    </>
   );
 }
+
+Web.getLayout = (page: ReactElement) => {
+  return <Layout>{page}</Layout>;
+};

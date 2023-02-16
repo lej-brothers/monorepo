@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { IProduct } from "common";
 import Image from "next/image";
 import Link from "next/link";
@@ -26,18 +27,17 @@ const Product = ({ className = "", product, price, children }: Props) => {
         } rounded flex justify-center ${className}`}
       >
         <div className="basis-[122px] h-full relative">
-          <Image
-            className={`absolute ${children ? "" : "-top-8 left-0"}`}
+          <img
+            className={`absolute ${children ? "" : "-top-6 left-0"}`}
             src={product.images[0].url!}
             alt={product.title}
-            width={122}
-            height={166}
+            width="80%"
           />
         </div>
 
-        <div className="flex-1 flex flex-col justify-start ml-2">
+        <div className="flex-1 flex flex-col justify-start">
           <h3 className="font-medium mb-2 text-base">{product.title}</h3>
-          <p className="text-base text-gray-500">
+          <p className="text-sm text-gray-500">
             {price
               ? price
               : product.isMetch

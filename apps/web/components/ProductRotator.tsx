@@ -1,12 +1,9 @@
 /* eslint-disable @next/next/no-img-element */
 
-import { useEffect, useState } from "react";
-// import { FaAngleLeft, FaAngleRight } from "react-icons/fa"
-// import { useFeaturedProductsQuery } from "@lib/hooks/use-layout-data"
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { IProduct } from "common";
 
-import CoffeeTopImage from "../public/coffee-top.png";
 import format from "../utils/format";
 
 export const NEXT_POSITION: { [key: number]: number } = {

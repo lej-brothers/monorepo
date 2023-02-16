@@ -6,19 +6,23 @@ import { queryClient } from "../configs/queryClient";
 import Global from "../global";
 import createStore from "../store";
 
+import { Suspense } from "react";
 import "tailwindcss/tailwind.css";
+import Loading from "../components/Loading";
 
 const store = createStore();
 
 export default function MyApp({ Component, pageProps }: AppProps): JSX.Element {
-  const getLayout = (Component as any).getLayout || ((page: any) => page)
+  const getLayout = (Component as any).getLayout || ((page: any) => page);
 
   return (
     <Provider store={store.store}>
       <PersistGate loading={null} persistor={store.persistor}>
         <QueryClientProvider client={queryClient}>
-          {getLayout(<Component {...pageProps} />)}
-          <Global />
+          <Suspense fallback={<Loading />}>
+            {getLayout(<Component {...pageProps} />)}
+            <Global />
+          </Suspense>
         </QueryClientProvider>
       </PersistGate>
     </Provider>

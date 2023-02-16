@@ -1,9 +1,13 @@
 import { IOrder, IOrderProduct } from "common";
 import OrderModule from "../modules/order.module";
 import { useMutation, useQuery } from "react-query";
+import { useState } from "react";
 
 const useOrder = () => {
-  const { data, refetch, isLoading } = useQuery("order", OrderModule.get);
+  const [openDrawer, setOpenDrawer] = useState(false);
+  const { data, refetch, isLoading } = useQuery("order", OrderModule.get, {
+    keepPreviousData: true,
+  });
 
   const orderData = data!;
 
@@ -21,6 +25,8 @@ const useOrder = () => {
     await refetch();
   };
 
+  const toggle = () => setOpenDrawer((previous) => !previous);
+
   const removeProduct = async (id: string) => {
     const cleanedProducts = orderData.products.filter(
       (product) => product._id !== id
@@ -31,7 +37,14 @@ const useOrder = () => {
     await refetch();
   };
 
-  return { isLoading, order: orderData, addProduct, removeProduct };
+  return {
+    toggle,
+    openDrawer,
+    isLoading,
+    order: orderData,
+    addProduct,
+    removeProduct,
+  };
 };
 
 export default useOrder;
