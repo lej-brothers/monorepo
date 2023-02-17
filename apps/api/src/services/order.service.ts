@@ -1,12 +1,19 @@
+import { customAlphabet } from "nanoid";
 import { IOrder, ORDER_STATUS } from "common";
 import { Order } from "../model/order.model";
 
-import ProductService from "./product.service";
+import { ALPHABET } from "../constants/alphabet";
+
+const nanoid = customAlphabet(ALPHABET, 12);
 
 const OrderService = {
   async get(sessionId: string) {
     const order = await Order.findOne({ sessionId });
     if (!order) return this.create(sessionId);
+    return order;
+  },
+  async getByCode(code: string) {
+    const order = await Order.findOne({ code });
     return order;
   },
   async getById(orderId: string) {
@@ -20,6 +27,7 @@ const OrderService = {
   async create(sessionId: string) {
     const order = await Order.create({
       sessionId,
+      code: nanoid(),
       status: ORDER_STATUS.Draft,
       isPaid: false,
     });

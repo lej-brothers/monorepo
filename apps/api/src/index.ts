@@ -1,21 +1,19 @@
+import bodyParser from "body-parser";
 import connectRedis from "connect-redis";
 import cors from "cors";
 import express from "express";
 import session from "express-session";
-import { v4 as uuidv4 } from "uuid";
-import { MONGO_URL, SECRET } from "./configs/secrets";
-import REDIS_CLIENT from "./configs/redis";
-import MINIO from "./configs/minio";
-
 import mongoose from "mongoose";
 import passport from "passport";
-import ApplicationRouter from "./controllers/index.router";
-import bodyParser from "body-parser";
-
 import passportCustom from "passport-custom";
-import { logRequest } from "./middlewares/logger";
-import assetOrder from "./middlewares/assetOrder";
+import { v4 as uuidv4 } from "uuid";
+import MINIO from "./configs/minio";
 import { logger } from "./configs/pino";
+import REDIS_CLIENT from "./configs/redis";
+import { MONGO_URL, SECRET } from "./configs/secrets";
+import ApplicationRouter from "./controllers/index.router";
+import assetOrder from "./middlewares/assetOrder";
+import { logRequest } from "./middlewares/logger";
 const CustomStrategy = passportCustom.Strategy;
 
 const RedisStore = connectRedis(session);

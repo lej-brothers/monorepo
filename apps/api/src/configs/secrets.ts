@@ -9,3 +9,4 @@ export const S3_PORT = process.env["S3_PORT"] || 30000;
 export const S3_ACCESS = process.env["S3_ACCESS"] || "";
 export const S3_SECRET = process.env["S3_SECRET"] || "";
 export const S3_BUCKET = process.env['S3_BUCKET'] || "lej-marketplace";
+export const SENDGRID_API_KEY = process.env['SENDGRID_API_KEY'] || '';
