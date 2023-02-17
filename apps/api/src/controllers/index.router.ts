@@ -5,6 +5,7 @@ import ProductRouter from "./products/_.router";
 import ImageRouter from "./images/_.router";
 import VoidRouter from "./void.router";
 import OrderRouter from "./order/_.router";
+import IPNRouter from "./ipn/_.router";
 import PromotionRouter from "./promotions/_.router";
 import AuthRouter from "./auth/_.router";
 
@@ -12,6 +13,7 @@ const router = Router({});
 
 router.use("/void", VoidRouter);
 router.use("/products", ProductRouter);
+router.use("/ipn", IPNRouter);
 router.use("/orders", OrderRouter);
 router.use("/promotions", PromotionRouter);
 router.use("/categories", CategoryRouter);
