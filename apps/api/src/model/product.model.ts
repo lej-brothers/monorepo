@@ -22,10 +22,7 @@ export const ProductSchema = new Schema(
   {
     toObject: { virtuals: true },
     toJSON: { virtuals: true },
-    timestamps: {
-      createdAt: "created_at", // Use `created_at` to store the created date
-      updatedAt: "updated_at", // and `updated_at` to store the last updated date
-    },
+    timestamps: true,
   }
 );
 

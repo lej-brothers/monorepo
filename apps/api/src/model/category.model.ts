@@ -14,10 +14,7 @@ const CategorySchema = new Schema(
     products: [{ type: Schema.Types.ObjectId, ref: "Products" }],
   },
   {
-    timestamps: {
-      createdAt: "created_at", // Use `created_at` to store the created date
-      updatedAt: "updated_at", // and `updated_at` to store the last updated date
-    },
+    timestamps: true,
   }
 );
 

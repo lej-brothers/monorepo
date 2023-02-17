@@ -13,7 +13,7 @@ import { toggleOrderDrawer } from "../../reducers/order/actions";
 const Order = () => {
   const dispatch = useDispatch();
   const [tab, setTab] = useState(ORDER_TABS.PREVIEW);
-  const { order, isLoading } = useOrder();
+  const { order } = useOrder();
 
   const toggle = () => dispatch(toggleOrderDrawer());
 

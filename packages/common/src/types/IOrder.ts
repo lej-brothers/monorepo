@@ -1,3 +1,4 @@
+import { IMomo } from "./IMomo";
 import { ORDER_STATUS } from "../constants/ORDER_STATUS";
 import { IOrderProduct, IProduct } from "./IProduct";
 import { IPromotion } from "./IPromotion";
@@ -44,4 +45,6 @@ export interface IOrder {
    * Promotions applied into this order
    */
   promotions: IPromotion[];
+
+  momo: IMomo;
 }

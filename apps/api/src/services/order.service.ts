@@ -9,6 +9,10 @@ const OrderService = {
     if (!order) return this.create(sessionId);
     return order;
   },
+  async getById(orderId: string) {
+    const order = await Order.findById(orderId);
+    return order;
+  },
   async update(order: IOrder) {
     const updated = await Order.findOneAndUpdate({ _id: order._id }, order);
     return updated;

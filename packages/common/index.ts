@@ -1,4 +1,5 @@
 /* TYPES */
+export * from './src/types/IMomo'
 export * from "./src/types/IOrder";
 export * from "./src/types/ICategory";
 export * from "./src/types/IWarehouse";
