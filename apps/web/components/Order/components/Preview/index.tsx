@@ -17,7 +17,7 @@ const Preview = ({ order, onChange }: Props) => {
 
   const totalPriceFormatted = format("vi-VN", "VND", totalPrice);
 
-  const onNext = () => onChange(ORDER_TABS.PAYMENT);
+  const onNext = () => onChange(ORDER_TABS.USER_INFO);
 
   return (
     <>

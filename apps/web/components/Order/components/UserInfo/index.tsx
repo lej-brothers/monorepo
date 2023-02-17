@@ -1,0 +1,55 @@
+import { AiFillCaretLeft, AiFillCaretRight } from "react-icons/ai";
+import Input from "../../../Input";
+import { ORDER_TABS } from "../../constants";
+
+interface Props {
+  onChange: (key: ORDER_TABS) => void;
+}
+
+const UserInfo = ({ onChange }: Props) => {
+  const onPrevious = () => onChange(ORDER_TABS.PREVIEW);
+
+  const onNext = () => onChange(ORDER_TABS.PAYMENT);
+
+  return (
+    <>
+      <div className="px-[74px]">
+        <p className="text-4xl pb-[24px]">Thông tin của bạn</p>
+
+        <label className="text-base">Tên nhận hàng</label>
+        <Input className="mt-[8px] mb-[16px]" />
+
+        <label className="text-base">Email</label>
+        <Input className="mt-[8px] mb-[16px]" />
+
+        <label className="text-base">Số điện thoại</label>
+        <Input className="mt-[8px] mb-[16px]" />
+
+        <label className="text-base">Địa chỉ nhận hàng</label>
+        <Input className="mt-[8px] mb-[16px]" />
+
+        {/* FOOTER */}
+        <div className="absolute text-white flex bg-black bottom-0 rounded-t-2xl left-0 right-0 w-full h-[100px]">
+          <div className="flex justify-end mx-[64px] my-[28px] text-white w-full">
+            <button
+              onClick={onPrevious}
+              className="flex items-center mr-3 justify-center rounded-full p-5 bg-white text-black"
+            >
+              <AiFillCaretLeft className="mr-1" size={16} />
+              Giỏ hàng
+            </button>
+
+            <button
+              onClick={onNext}
+              className=" flex items-center justify-center rounded-full p-5 bg-white text-black"
+            >
+              Thanh toán <AiFillCaretRight className="ml-1" size={16} />
+            </button>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+};
+
+export default UserInfo;

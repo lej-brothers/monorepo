@@ -1,5 +1,5 @@
 import { Collapse } from "antd";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Input from "../../../Input";
 import Radio from "./components/Radio";
 import { PAYMENT_METHODS } from "./constants";
@@ -10,25 +10,14 @@ const { Panel } = Collapse;
 const Payment = () => {
   const [method, setMethod] = useState(PAYMENT_METHODS.BANKING);
 
-  const onChangeMethod = (key: string | string[]) =>
-    setMethod(key[1] as PAYMENT_METHODS);
+  const onChangeMethod = (key: string | string[]) => {
+    if (key[1]) setMethod(key[1] as PAYMENT_METHODS);
+  };
 
   return (
     <>
       <div className="px-[74px]">
-        <p className="text-4xl pb-[24px]">Thông tin của bạn</p>
-
-        <label className="text-base">Tên nhận hàng</label>
-        <Input className="mt-[8px] mb-[16px]" />
-
-        <label className="text-base">Email</label>
-        <Input className="mt-[8px] mb-[16px]" />
-
-        <label className="text-base">Số điện thoại</label>
-        <Input className="mt-[8px] mb-[16px]" />
-
-        <label className="text-base">Địa chỉ nhận hàng</label>
-        <Input className="mt-[8px] mb-[16px]" />
+        <p className="text-4xl pb-[24px]">Thanh toán</p>
 
         <label className="text-base">Chọn hình thức thanh toán</label>
         <Collapse
@@ -47,9 +36,7 @@ const Payment = () => {
             key={PAYMENT_METHODS.BANKING}
             style={PANEL_STYLE[`${method === PAYMENT_METHODS.BANKING}`]}
           >
-            <div className="flex flex-col">
-              
-            </div>
+            <div className="flex flex-col"></div>
           </Panel>
           <Panel
             header={
