@@ -79,3 +79,12 @@ export interface IMomoIPNPayload {
   extraData: string;
   signature: string;
 }
+
+export interface IMomoIPNResponse {
+  status: number;
+  message: string;
+  amount: number;
+  partnerRefId: string;
+  momoTransId: string;
+  signature: string;
+}
