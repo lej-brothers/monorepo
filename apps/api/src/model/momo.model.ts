@@ -5,12 +5,12 @@ export interface IMomoDocument extends Omit<IMomo, "_id">, Document {}
 
 export const MomoSchema = new Schema<IMomo>(
   {
-    order: { type: Schema.Types.ObjectId, ref: "orders" },
-    momoTransId: String,
+    order: { type: Schema.Types.ObjectId, ref: "orders", unique: true },
+    transId: String,
   },
   {
     timestamps: true,
   }
 );
 
-export const Order = model<IMomoDocument>("Momo", MomoSchema, "momo");
+export const Momo = model<IMomoDocument>("Momo", MomoSchema, "momo");

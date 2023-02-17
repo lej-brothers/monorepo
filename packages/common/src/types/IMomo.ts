@@ -3,8 +3,12 @@ import { IOrder } from "./IOrder";
 export interface IMomo {
   _id: string;
   order: IOrder;
+  transId: string;
+}
 
-  momoTransId: string;
+export interface IMomoCreate {
+  order: string;
+  transId: string;
 }
 
 export interface IMomoItem {
@@ -34,7 +38,7 @@ export interface IMomoUserInfo {
   email: string;
 }
 
-export interface IMomoCreate {
+export interface IMomoCreatePayload {
   partnerCode: string;
   partnerName: string;
   storeId?: string;
@@ -64,7 +68,7 @@ export interface IMomoIPNPayload {
   partnerUserId: string;
   orderType: "momo_wallet";
   transId: string;
-  resultCode: string;
+  resultCode: number;
   message: string;
   payType: string;
   responseTime: string;
