@@ -8,7 +8,10 @@ const MomoService = {
     const momo = await Momo.create({
       order: payload.order,
       transId: payload.transId,
+      amount: payload.amount,
+      currency: payload.currency,
     });
+
     const order = await Order.findById(payload.order);
     if (!order) return false;
 
@@ -25,6 +28,8 @@ const MomoService = {
     const _ = await MomoService.create({
       order: payload.orderId,
       transId: payload.transId,
+      amount: Number(payload.amount),
+      currency: "VND",
     });
 
     // Change paid status

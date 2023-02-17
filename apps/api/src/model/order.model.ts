@@ -6,6 +6,7 @@ export interface IOrderDocument extends Omit<IOrder, "_id">, Document {}
 export const OrderSchema = new Schema(
   {
     sessionId: String,
+    code: { type: String, unique: true },
     products: [Object],
     /**
      * @type {ORDER_STATUS}

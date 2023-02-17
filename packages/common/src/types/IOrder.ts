@@ -18,6 +18,11 @@ export interface IOrder {
   sessionId: string;
 
   /**
+   * Short ID for this order
+   */
+  code: string;
+
+  /**
    * Same as for user, it's not a reference but copy of data about products
    *
    * @type {IOrderProduct[]}

@@ -4,11 +4,15 @@ export interface IMomo {
   _id: string;
   order: IOrder;
   transId: string;
+  amount: number;
+  currency: string;
 }
 
 export interface IMomoCreate {
   order: string;
   transId: string;
+  amount: number;
+  currency: string;
 }
 
 export interface IMomoItem {
