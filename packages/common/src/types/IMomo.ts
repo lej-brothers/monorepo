@@ -63,6 +63,19 @@ export interface IMomoCreatePayload {
   signature: string;
 }
 
+export interface IMomoCreateResponse {
+  partnerCode: string;
+  requestId: string;
+  orderId: string;
+  amount: number;
+  responseTime: number;
+  message: string;
+  resultCode: string;
+  payUrl: string;
+  deeplink: string;
+  qrCodeUrl: string;
+}
+
 export interface IMomoIPNPayload {
   partnerCode: string;
   orderId: string;

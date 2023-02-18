@@ -11,7 +11,6 @@ const OrderDrawer = () => {
   const open = useSelector((state: IStore) => state.order);
 
   const toggle = () => {
-    console.log(open)
     dispatch(toggleOrderDrawer());
   };
 
