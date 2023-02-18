@@ -8,7 +8,6 @@ interface Props {
 
 const UserInfo = ({ onChange }: Props) => {
   const onPrevious = () => onChange(ORDER_TABS.PREVIEW);
-
   const onNext = () => onChange(ORDER_TABS.PAYMENT);
 
   return (

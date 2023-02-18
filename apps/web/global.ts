@@ -1,5 +1,5 @@
 import { createGlobalStyle } from "styled-components";
-import { sfPro } from "./pages/sf-pro.font";
+import { sfPro } from "./sf-pro.font";
 
 export default createGlobalStyle`
     @tailwind base;

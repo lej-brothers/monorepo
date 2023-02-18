@@ -9,6 +9,7 @@ import { toggleOrderDrawer } from "../reducers/order/actions";
 const useOrder = () => {
   const { data, refetch, isLoading } = useQuery("order", OrderModule.get, {
     keepPreviousData: true,
+    refetchOnReconnect: false,
   });
 
   const orderData = data!;

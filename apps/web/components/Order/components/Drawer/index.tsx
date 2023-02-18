@@ -1,5 +1,3 @@
-"use client";
-
 import { Drawer } from "antd";
 import Order from "../..";
 import { useDispatch, useSelector } from "react-redux";

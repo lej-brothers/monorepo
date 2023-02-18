@@ -34,7 +34,7 @@ const Order = () => {
     {
       label: ORDER_TABS.PAYMENT,
       key: ORDER_TABS.PAYMENT,
-      children: <Payment />,
+      children: <Payment onChange={setTab} />,
     },
   ];
 

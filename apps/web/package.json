@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev --port 4001",
     "build": "next build",
-    "start": "next start",
+    "start": "next start --port 4001",
     "lint": "next lint"
   },
   "dependencies": {
@@ -31,6 +31,7 @@
     "redux-devtools-extension": "^2.13.9",
     "redux-persist": "^6.0.0",
     "redux-saga": "^1.2.2",
+    "sharp": "^0.31.3",
     "styled-components": "^5.3.6",
     "ui": "workspace:*",
     "usehooks-ts": "^2.9.1"

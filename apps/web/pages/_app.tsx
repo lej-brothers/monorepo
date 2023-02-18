@@ -12,7 +12,6 @@ import Loading from "../components/Loading";
 import { IntlProvider } from "react-intl";
 
 import messagesinVi from "../languages/vi.json";
-import { sfPro } from "./sf-pro.font";
 
 const store = createStore();
 

@@ -1,14 +1,22 @@
 import { Collapse } from "antd";
-import { useEffect, useState } from "react";
-import Input from "../../../Input";
+import { useState } from "react";
+import { AiFillCaretLeft, AiFillCaretRight } from "react-icons/ai";
 import Radio from "./components/Radio";
 import { PAYMENT_METHODS } from "./constants";
 import { PANEL_STYLE } from "./styles";
+import { ORDER_TABS } from "../../constants";
 
 const { Panel } = Collapse;
 
-const Payment = () => {
+interface Props {
+  onChange: (tab: ORDER_TABS) => void;
+}
+
+const Payment = ({ onChange }: Props) => {
   const [method, setMethod] = useState(PAYMENT_METHODS.BANKING);
+
+  const onPrevious = () => onChange(ORDER_TABS.USER_INFO);
+  const onNext = () => onChange(ORDER_TABS.DONE);
 
   const onChangeMethod = (key: string | string[]) => {
     if (key[1]) setMethod(key[1] as PAYMENT_METHODS);
@@ -50,6 +58,26 @@ const Payment = () => {
             <p>asdadasd</p>
           </Panel>
         </Collapse>
+
+        {/* FOOTER */}
+        <div className="absolute text-white flex bg-black bottom-0 rounded-t-2xl left-0 right-0 w-full h-[100px]">
+          <div className="flex justify-end mx-[64px] my-[28px] text-white w-full">
+            <button
+              onClick={onPrevious}
+              className="flex items-center mr-3 justify-center rounded-full p-5 bg-white text-black"
+            >
+              <AiFillCaretLeft className="mr-1" size={16} />
+              Giỏ hàng
+            </button>
+
+            <button
+              onClick={onNext}
+              className=" flex items-center justify-center rounded-full p-5 bg-white text-black"
+            >
+              Thanh toán <AiFillCaretRight className="ml-1" size={16} />
+            </button>
+          </div>
+        </div>
       </div>
     </>
   );
