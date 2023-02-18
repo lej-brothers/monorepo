@@ -13,15 +13,18 @@ const OrderService = {
     return order;
   },
   async getByCode(code: string) {
-    const order = await Order.findOne({ code });
+    const order = await Order.findOne({ code }).populate("momo");
     return order;
   },
   async getById(orderId: string) {
-    const order = await Order.findById(orderId);
+    const order = await Order.findById(orderId).populate("momo");
     return order;
   },
   async update(order: IOrder) {
-    const updated = await Order.findOneAndUpdate({ _id: order._id }, order);
+    const updated = await Order.findOneAndUpdate(
+      { _id: order._id },
+      order
+    ).populate("momo");
     return updated;
   },
   async create(sessionId: string) {
