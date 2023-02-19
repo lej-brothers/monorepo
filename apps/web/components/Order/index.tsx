@@ -1,18 +1,21 @@
 import type { TabsProps } from "antd";
 import { Button, Tabs } from "antd";
-import { AiOutlineClose } from "react-icons/ai";
-import useOrder from "../../hooks/useOrder";
-import Preview from "./components/Preview";
-import styled from "styled-components";
-import { ORDER_TABS } from "./constants";
-import Payment from "./components/Payment";
+import { IMomoForm } from "common";
 import { useEffect, useState } from "react";
+import { FormProvider, useForm } from "react-hook-form";
+import { AiOutlineClose } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
+import styled from "styled-components";
+import useOrder from "../../hooks/useOrder";
 import { toggleOrderDrawer } from "../../reducers/order/actions";
-import UserInfo from "./components/UserInfo";
 import { IStore } from "../../types/IStore";
+import Payment from "./components/Payment";
+import Preview from "./components/Preview";
+import UserInfo from "./components/UserInfo";
+import { ORDER_TABS } from "./constants";
 
 const Order = () => {
+  const methods = useForm<IMomoForm>();
   const dispatch = useDispatch();
   const open = useSelector((store: IStore) => store.order);
   const [tab, setTab] = useState(ORDER_TABS.PREVIEW);
@@ -43,22 +46,24 @@ const Order = () => {
   }, [open]);
 
   return (
-    <Container className="flex flex-col h-full">
-      <div className="flex justify-end mt-[46px] mr-[46px]">
-        <Button onClick={toggle} type="text">
-          <AiOutlineClose size={18} />
-        </Button>
-      </div>
+    <FormProvider {...methods}>
+      <Container className="flex flex-col h-full">
+        <div className="flex justify-end mt-[46px] mr-[46px]">
+          <Button onClick={toggle} type="text">
+            <AiOutlineClose size={18} />
+          </Button>
+        </div>
 
-      <Tabs
-        animated
-        activeKey={tab}
-        destroyInactiveTabPane
-        onChange={(key) => setTab(key as ORDER_TABS)}
-        renderTabBar={() => <></>}
-        items={TABS}
-      />
-    </Container>
+        <Tabs
+          animated
+          activeKey={tab}
+          destroyInactiveTabPane
+          onChange={(key) => setTab(key as ORDER_TABS)}
+          renderTabBar={() => <></>}
+          items={TABS}
+        />
+      </Container>
+    </FormProvider>
   );
 };
 

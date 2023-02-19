@@ -1,14 +1,30 @@
 import { AiFillCaretLeft, AiFillCaretRight } from "react-icons/ai";
 import Input from "../../../Input";
 import { ORDER_TABS } from "../../constants";
+import { useFormContext } from "react-hook-form";
+import { IMomoForm } from "common";
+import { useEffect } from "react";
+import useOrder from "../../../../hooks/useOrder";
 
 interface Props {
   onChange: (key: ORDER_TABS) => void;
 }
 
 const UserInfo = ({ onChange }: Props) => {
+  const methods = useFormContext<IMomoForm>();
+  const { order } = useOrder();
+
   const onPrevious = () => onChange(ORDER_TABS.PREVIEW);
   const onNext = () => onChange(ORDER_TABS.PAYMENT);
+
+  useEffect(() => {
+    const total = order.products.reduce((pre, cur) => {
+      return pre + cur.quantity;
+    }, 0);
+
+    methods.setValue("deliveryInfo.deliveryFee", "0 VND");
+    methods.setValue("deliveryInfo.quantity", `${total}`);
+  }, [order.products]);
 
   return (
     <>
@@ -16,16 +32,19 @@ const UserInfo = ({ onChange }: Props) => {
         <p className="text-4xl pb-[24px]">Thông tin của bạn</p>
 
         <label className="text-base">Tên nhận hàng</label>
-        <Input className="mt-[8px] mb-[16px]" />
+        <Input name="userInfo.name" className="mt-[8px] mb-[16px]" />
 
         <label className="text-base">Email</label>
-        <Input className="mt-[8px] mb-[16px]" />
+        <Input name="userInfo.email" className="mt-[8px] mb-[16px]" />
 
         <label className="text-base">Số điện thoại</label>
-        <Input className="mt-[8px] mb-[16px]" />
+        <Input name="userInfo.phoneNumber" className="mt-[8px] mb-[16px]" />
 
         <label className="text-base">Địa chỉ nhận hàng</label>
-        <Input className="mt-[8px] mb-[16px]" />
+        <Input
+          name="deliveryInfo.deliveryAddress"
+          className="mt-[8px] mb-[16px]"
+        />
 
         {/* FOOTER */}
         <div className="absolute text-white flex bg-black bottom-0 rounded-t-2xl left-0 right-0 w-full h-[100px]">
