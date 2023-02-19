@@ -6,11 +6,13 @@ export interface IMomo {
   transId: string;
   amount: number;
   currency: string;
+  userInfo: IMomoUserInfo;
+  deliveryInfo: IMomoDeliveryInfo;
 }
 
 export interface IMomoCreate {
   order: string;
-  transId: string;
+  transId?: string;
   amount: number;
   currency: string;
 }
@@ -18,16 +20,16 @@ export interface IMomoCreate {
 export interface IMomoItem {
   id: string;
   name: string;
-  description: string;
-  category: string;
-  imageUrl: string;
-  manufacturer: string;
+  description?: string;
+  category?: string;
+  imageUrl?: string;
+  manufacturer?: string;
   price: number;
   currency: "VND";
   quantity: number;
-  unit: string;
+  unit?: string;
   totalPrice: string;
-  taxAmount: string;
+  taxAmount?: string;
 }
 
 export interface IMomoDeliveryInfo {
@@ -50,7 +52,7 @@ export interface IMomoCreatePayload {
   amount: number;
   orderId: string;
   orderInfo: string;
-  orderGroupId: string;
+  orderGroupId?: string;
   redirectUrl: string;
   ipnUrl: string; // server
   requestType: "captureWallet";
@@ -62,6 +64,8 @@ export interface IMomoCreatePayload {
   lang: "vi" | "en";
   signature: string;
 }
+
+export type IMomoForm = Pick<IMomoCreatePayload, "deliveryInfo" | "userInfo">;
 
 export interface IMomoCreateResponse {
   partnerCode: string;

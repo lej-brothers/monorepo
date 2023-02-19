@@ -14,6 +14,7 @@ export const OrderSchema = new Schema(
     status: Number,
     isPaid: Boolean,
     promotions: [{ type: Schema.Types.ObjectId, ref: "promotions" }],
+    deliveryInfo: Object,
 
     momo: { type: Schema.Types.ObjectId, ref: "momo" },
   },

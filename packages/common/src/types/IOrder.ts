@@ -39,6 +39,12 @@ export interface IOrder {
   status?: ORDER_STATUS;
 
   /**
+   * Delivery Info
+   */
+
+  deliveryInfo?: IOrderDeliveryInfo;
+
+  /**
    * Either user paid for this order or not
    *
    * @type {boolean}
@@ -52,4 +58,11 @@ export interface IOrder {
   promotions: IPromotion[];
 
   momo: IMomo;
+}
+
+export interface IOrderDeliveryInfo {
+  name: string;
+  email: string;
+  phone: string;
+  address: string;
 }

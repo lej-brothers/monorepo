@@ -13,7 +13,7 @@ import {
   ORDER_STATUS,
 } from "common";
 import { Momo } from "../model/momo.model";
-import { Order } from "../model/order.model";
+import { IOrderDocument, Order } from "../model/order.model";
 import OrderService from "./order.service";
 import hmac from "../utils/hmac";
 import { momoRequester } from "../configs/requester";
@@ -35,7 +35,9 @@ const MomoService = {
     return momo;
   },
 
-  create: async (payload: IMomoCreatePayload) => {
+  create: async (
+    payload: Omit<IMomoCreatePayload, "ipnUrl" | "redirectUrl" | "signature">
+  ) => {
     /**
      * Setup Signature Payload
      */
@@ -68,6 +70,25 @@ const MomoService = {
       signature,
     });
 
+    const _ = await MomoService.init({
+      order: payload.orderId,
+      amount: Number(payload.amount),
+      currency: "VND",
+    });
+
+    /**
+     * Save changes to database
+     */
+
+    const order = await OrderService.getById(payload.orderId);
+
+    order.deliveryInfo = {
+      name: payload.userInfo.name,
+      email: payload.userInfo.email,
+      phone: payload.userInfo.phoneNumber,
+      address: payload.deliveryInfo.deliveryAddress,
+    };
+
     return response.data as IMomoCreateResponse;
   },
 
@@ -75,13 +96,6 @@ const MomoService = {
     const order = await OrderService.getById(payload.orderId);
     if (!order) return false;
     if (payload.resultCode !== 0) return false;
-
-    const _ = await MomoService.init({
-      order: payload.orderId,
-      transId: payload.transId,
-      amount: Number(payload.amount),
-      currency: "VND",
-    });
 
     // Change paid status
     order.isPaid = true;

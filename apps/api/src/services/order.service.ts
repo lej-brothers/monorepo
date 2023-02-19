@@ -1,6 +1,6 @@
 import { customAlphabet } from "nanoid";
 import { IOrder, ORDER_STATUS } from "common";
-import { Order } from "../model/order.model";
+import { IOrderDocument, Order } from "../model/order.model";
 
 import { ALPHABET } from "../constants/alphabet";
 
@@ -18,7 +18,7 @@ const OrderService = {
   },
   async getById(orderId: string) {
     const order = await Order.findById(orderId).populate("momo");
-    return order;
+    return order as any as IOrderDocument;
   },
   async update(order: IOrder) {
     const updated = await Order.findOneAndUpdate(
