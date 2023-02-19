@@ -9,7 +9,7 @@ interface Props {
 }
 
 const Preview = ({ order, onChange }: Props) => {
-  const products = order.products || [];
+  const products = order?.products || [];
 
   const totalPrice = products.reduce((pre, cur) => {
     return pre + cur.price;
@@ -23,7 +23,7 @@ const Preview = ({ order, onChange }: Props) => {
     <>
       <div className="px-[74px]">
         <p className="text-4xl">Giỏ hàng</p>
-        {order.products.map((product) => (
+        {products.map((product) => (
           <div key={product._id} className="my-6">
             <OrderProduct product={product} />
           </div>

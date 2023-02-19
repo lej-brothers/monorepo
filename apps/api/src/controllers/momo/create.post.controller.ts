@@ -1,4 +1,4 @@
-import { IMomoItem } from "common";
+import { IMomoItem, IOrderProduct, IProduct } from "common";
 import { Request, Response } from "express";
 import { MOMO_PARTNER_CODE } from "../../configs/secrets";
 import { IProductDocument } from "../../model/product.model";
@@ -14,11 +14,14 @@ const controller = async (req: Request, res: Response) => {
   if (!order) return res.status(400).send();
 
   const orderProducts = order.products;
-  const products = await Promise.all(
-    orderProducts.map(({ _id, ...rest }) => {
-      const product = ProductService.get(_id!) as any as IProductDocument;
+
+  const products: any[] = await Promise.all(
+    orderProducts.map(async ({ _id, ...rest }) => {
+      const product = (await ProductService.get(
+        _id!
+      )) as any as IProductDocument;
       return {
-        ...product,
+        ...product.toJSON(),
         ...rest,
       };
     })
@@ -26,14 +29,17 @@ const controller = async (req: Request, res: Response) => {
 
   /** MOMO PAYLOADS */
   const items: IMomoItem[] = products.map((product) => ({
-    id: product._id,
+    id: String(product._id),
     name: product.title,
     description: product.description,
-    category: product.categories.join(","),
+    category: product.categories
+      ?.map((category: any) => category.slug)
+      .join(","),
     price: product.price,
     currency: "VND",
     quantity: product.quantity,
-    totalPrice: `${product.price * product.quantity}`,
+    totalPrice: product.price * product.quantity,
+    imageUrl: product.images[0].url
   }));
 
   const amount = items.reduce((pre, cur) => {
@@ -43,10 +49,10 @@ const controller = async (req: Request, res: Response) => {
   const data = await MomoService.create({
     partnerCode: MOMO_PARTNER_CODE,
     partnerName: `LeJ'Cafe`,
-    requestId: order._id,
+    requestId: String(order._id),
     amount: amount,
-    orderId: order._id,
-    orderInfo: order._id,
+    orderId: String(order._id),
+    orderInfo: String(order._id),
     requestType: "captureWallet",
     extraData: "",
     items: items,

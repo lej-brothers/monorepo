@@ -14,16 +14,19 @@ const UserInfo = ({ onChange }: Props) => {
   const methods = useFormContext<IMomoForm>();
   const { order } = useOrder();
 
+  const products = order?.products || [];
+
   const onPrevious = () => onChange(ORDER_TABS.PREVIEW);
   const onNext = () => onChange(ORDER_TABS.PAYMENT);
 
   useEffect(() => {
-    const total = order.products.reduce((pre, cur) => {
+    const total = products.reduce((pre, cur) => {
       return pre + cur.quantity;
     }, 0);
 
-    methods.setValue("deliveryInfo.deliveryFee", "0 VND");
+    methods.setValue("deliveryInfo.deliveryFee", "0");
     methods.setValue("deliveryInfo.quantity", `${total}`);
+    
   }, [order.products]);
 
   return (

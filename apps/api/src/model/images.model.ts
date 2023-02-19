@@ -19,7 +19,7 @@ export const ImageSchema = new Schema<IImage>(
 );
 
 ImageSchema.virtual("url").get((doc) => {
-  return ImageService.get(doc.key);
+  if (doc?.key) return ImageService.get(doc.key);
 });
 
 export const Image = model<IImageDocument>("Images", ImageSchema);

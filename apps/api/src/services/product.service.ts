@@ -7,7 +7,10 @@ import ImageService from "./image.service";
 
 const ProductService = {
   async get(id: string) {
-    return Product.findById(id);
+    return Product.findById(id)
+      .populate("warehourse")
+      .populate("images")
+      .populate("categories");
   },
   async getBySlug(slug: string) {
     const product = await Product.findOne({ slug })

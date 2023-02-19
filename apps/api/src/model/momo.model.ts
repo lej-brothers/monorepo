@@ -15,4 +15,4 @@ export const MomoSchema = new Schema<IMomo>(
   }
 );
 
-export const Momo = model<IMomoDocument>("Momo", MomoSchema, "momo");
+export const Momo = model<IMomoDocument>("Momo", MomoSchema);

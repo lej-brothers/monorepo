@@ -1,10 +1,20 @@
 import { Collapse } from "antd";
-import { useState } from "react";
+import {
+  IMomoCreateResponse,
+  IMomoDeliveryInfo,
+  IMomoForm,
+  IMomoUserInfo,
+} from "common";
+import { useEffect, useState } from "react";
+import { useFormContext } from "react-hook-form";
 import { AiFillCaretLeft, AiFillCaretRight } from "react-icons/ai";
+import QRCode from "react-qr-code";
+import { useMutation } from "react-query";
+import MomoModule from "../../../../modules/momo.module";
+import { ORDER_TABS } from "../../constants";
 import Radio from "./components/Radio";
 import { PAYMENT_METHODS } from "./constants";
 import { PANEL_STYLE } from "./styles";
-import { ORDER_TABS } from "../../constants";
 
 const { Panel } = Collapse;
 
@@ -13,7 +23,17 @@ interface Props {
 }
 
 const Payment = ({ onChange }: Props) => {
+  const { mutate, data: momoData } = useMutation<
+    IMomoCreateResponse,
+    unknown,
+    {
+      userInfo: IMomoUserInfo;
+      deliveryInfo: IMomoDeliveryInfo;
+    }
+  >("payment-create-momo", MomoModule.create);
+  const methods = useFormContext<IMomoForm>();
   const [method, setMethod] = useState(PAYMENT_METHODS.BANKING);
+  const { userInfo, deliveryInfo } = methods.watch();
 
   const onPrevious = () => onChange(ORDER_TABS.USER_INFO);
   const onNext = () => onChange(ORDER_TABS.DONE);
@@ -21,6 +41,15 @@ const Payment = ({ onChange }: Props) => {
   const onChangeMethod = (key: string | string[]) => {
     if (key[1]) setMethod(key[1] as PAYMENT_METHODS);
   };
+
+  useEffect(() => {
+    switch (method) {
+      case PAYMENT_METHODS.MOMO: {
+        if (momoData) break;
+        mutate({ userInfo, deliveryInfo });
+      }
+    }
+  }, [method]);
 
   return (
     <>
@@ -55,7 +84,7 @@ const Payment = ({ onChange }: Props) => {
             key={PAYMENT_METHODS.MOMO}
             style={PANEL_STYLE[`${method === PAYMENT_METHODS.MOMO}`]}
           >
-            <p>asdadasd</p>
+            <QRCode value={momoData?.qrCodeUrl || ""} />
           </Panel>
         </Collapse>
 

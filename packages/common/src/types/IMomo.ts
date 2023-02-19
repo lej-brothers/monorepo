@@ -28,7 +28,7 @@ export interface IMomoItem {
   currency: "VND";
   quantity: number;
   unit?: string;
-  totalPrice: string;
+  totalPrice: number;
   taxAmount?: string;
 }
 

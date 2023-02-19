@@ -16,7 +16,7 @@ export const OrderSchema = new Schema(
     promotions: [{ type: Schema.Types.ObjectId, ref: "promotions" }],
     deliveryInfo: Object,
 
-    momo: { type: Schema.Types.ObjectId, ref: "momo" },
+    momo: { type: Schema.Types.ObjectId, ref: "Momo" },
   },
   {
     timestamps: true,

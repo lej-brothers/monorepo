@@ -65,10 +65,22 @@ const MomoService = {
      * Request response from MOMO Create API
      */
 
-    const response = await momoRequester.post("/create", {
+    const data = {
+      redirectUrl: `${FE_HOST}?orderID=${payload.orderId}`,
+      ipnUrl: `${HOST}/ipn/momo`,
       ...payload,
       signature,
+    };
+
+    console.log(data);
+
+    const response = await momoRequester.post("/create", data, {
+      headers: { "Content-Type": "application/json" },
     });
+
+    console.log(response.data);
+
+    if (response.status !== 200) return null;
 
     const _ = await MomoService.init({
       order: payload.orderId,
