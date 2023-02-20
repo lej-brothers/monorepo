@@ -3,8 +3,7 @@ import { Request, Response } from "express";
 import { body } from "express-validator";
 import CartService from "../../../services/cart.service";
 import MomoService from "../../../services/momo.service";
-import ProductService from "../../../services/product.service";
-import OrderService from "services/order.service";
+import OrderService from "../../../services/order.service";
 
 const validations: any = [body("deliveryInfo")];
 
@@ -19,8 +18,9 @@ const controller = async (req: Request, res: Response) => {
     deliveryInfo,
   });
 
-  const response = await MomoService.create(order, cart, deliveryInfo);
-  return response;
+  const response = await MomoService.create(order, cart);
+
+  res.send(response);
 };
 
 export default { validations, controller };

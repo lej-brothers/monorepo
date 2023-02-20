@@ -1,20 +1,19 @@
 import { Collapse } from "antd";
 import {
-  IMomoCreateResponse,
-  IMomoDeliveryInfo,
   IMomoForm,
-  IMomoUserInfo,
+  IMomoCreateResponse,
+  IOrderDeliveryInfo,
   PAYMENT_METHOD,
 } from "common";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { AiFillCaretLeft, AiFillCaretRight } from "react-icons/ai";
 import { useMutation } from "react-query";
-import MomoModule from "../../../../modules/momo.module";
 import { ORDER_TABS } from "../../constants";
 import Radio from "./components/Radio";
 import { PANEL_STYLE } from "./styles";
 import Link from "next/link";
+import OrderModule from "../../../../modules/order.module";
 
 const { Panel } = Collapse;
 
@@ -26,11 +25,8 @@ const Payment = ({ onChange }: Props) => {
   const { mutate, data: momoData } = useMutation<
     IMomoCreateResponse,
     unknown,
-    {
-      userInfo: IMomoUserInfo;
-      deliveryInfo: IMomoDeliveryInfo;
-    }
-  >("payment-create-momo", MomoModule.create);
+    IOrderDeliveryInfo
+  >("payment-create-momo", OrderModule.momo);
   const methods = useFormContext<IMomoForm>();
   const [method, setMethod] = useState(PAYMENT_METHOD.BANKING);
   const { userInfo, deliveryInfo } = methods.watch();
@@ -46,7 +42,12 @@ const Payment = ({ onChange }: Props) => {
     switch (method) {
       case PAYMENT_METHOD.MOMO: {
         if (momoData) break;
-        mutate({ userInfo, deliveryInfo });
+        mutate({
+          name: userInfo.name,
+          email: userInfo.email,
+          phone: userInfo.phoneNumber,
+          address: deliveryInfo.deliveryAddress,
+        });
       }
     }
   }, [method]);

@@ -28,25 +28,23 @@ import ProductService from "./product.service";
 
 const MomoService = {
   init: async (payload: IMomoCreate) => {
-    const momo = await Momo.findOneAndUpdate(
-      {
-        order: payload.order,
-        transId: payload.transId,
-        amount: payload.amount,
-        currency: payload.currency,
-      },
-      { upsert: true }
-    );
+    const momo = await Momo.create({
+      order: payload.order,
+      transId: payload.transId,
+      amount: payload.amount,
+      currency: payload.currency,
+    });
 
     const order = await Order.findById(payload.order);
     if (!order) return false;
 
     (order as any).momo = (momo as any)._id;
+    console.log(order, momo);
     await order.save();
     return momo;
   },
 
-  create: async (order: IOrder, cart: ICart, deliveryInfo: IOrderDeliveryInfo) => {
+  create: async (order: IOrder, cart: ICart) => {
     /** Setup Payload */
     const products: Array<IProduct & ICartProduct> = await Promise.all(
       cart.products.map(async ({ _id, ...rest }) => {
@@ -69,10 +67,6 @@ const MomoService = {
       imageUrl: product.images[0].url,
     }));
 
-    const quantity = items.reduce((pre, cur) => {
-      return pre + cur.quantity;
-    }, 0);
-
     const amount = items.reduce((pre, cur) => {
       return pre + Number(cur.totalPrice);
     }, 0);
@@ -80,7 +74,6 @@ const MomoService = {
     /**
      * Setup Order
      */
-
 
     /**
      * Setup Signature Payload
@@ -132,7 +125,7 @@ const MomoService = {
      * Request response from MOMO Create API
      */
 
-    const data: IMomoCreatePayload = {
+    const data: Partial<IMomoCreatePayload> = {
       partnerCode: MOMO_PARTNER_CODE,
       partnerName: "LeJ'Cafe",
       requestType: "captureWallet",
@@ -141,16 +134,6 @@ const MomoService = {
       orderInfo: String(order._id),
       redirectUrl: `${FE_HOST}?orderID=${String(order._id)}`,
       ipnUrl: `${HOST}/ipn/momo`,
-      deliveryInfo: {
-        quantity: String(quantity),
-        deliveryAddress: deliveryInfo.address,
-        deliveryFee: "0 VND",
-      },
-      userInfo: {
-        name: deliveryInfo.name,
-        email: deliveryInfo.email,
-        phoneNumber: deliveryInfo.phone,
-      },
       lang: "en",
       extraData: "",
       signature,

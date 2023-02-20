@@ -1,6 +1,6 @@
 import { Router } from "express";
 import PostController from "./post.controller";
-import { assertRequestInput } from "middlewares/assertRequestInput";
+import { assertRequestInput } from "../../../middlewares/assertRequestInput";
 
 const router = Router();
 
