@@ -27,12 +27,10 @@ const OrderService = {
     ).populate("momo");
     return updated;
   },
-  async create(sessionId: string) {
+  async create(payload: Partial<IOrder>) {
     const order = await Order.create({
-      sessionId,
+      ...payload,
       code: nanoid(),
-      status: ORDER_STATUS.Draft,
-      isPaid: false,
     });
     return order;
   },

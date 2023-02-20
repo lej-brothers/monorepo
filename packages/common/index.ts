@@ -14,3 +14,4 @@ export * from "./src/types/IImage";
 export * from "./src/constants/ORDER_STATUS";
 export * from "./src/constants/CARRIER_STATUS";
 export * from "./src/constants/ORDER_CARRIER_STATUS";
+export * from './src/constants/PAYMENT_METHOD'

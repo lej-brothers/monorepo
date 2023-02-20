@@ -1,16 +1,18 @@
 import { IProductCreate } from "common";
 import { PaginateOptions } from "mongoose";
-import { Product } from "../model/product.model";
+import { IProductDocument, Product } from "../model/product.model";
 import { Warehourse } from "../model/warehourse.model";
 import CategoryService from "./category.service";
 import ImageService from "./image.service";
 
 const ProductService = {
   async get(id: string) {
-    return Product.findById(id)
+    const product = await Product.findById(id)
       .populate("warehourse")
       .populate("images")
       .populate("categories");
+
+      return product as IProductDocument;
   },
   async getBySlug(slug: string) {
     const product = await Product.findOne({ slug })

@@ -18,16 +18,15 @@ type ProductForm = {
   notes: string;
   shouldGrind: boolean;
   grind: GRIND_SIZE;
-  weight: number;
   quantity: number;
 };
 
 const ProductInfo: React.FC<ProductInfoProps> = ({ product }) => {
   const methods = useForm<ProductForm>({
-    defaultValues: { grind: GRIND_SIZE.NONE, weight: 100, quantity: 1 },
+    defaultValues: { grind: GRIND_SIZE.NONE, quantity: 1 },
   });
 
-  const { quantity, shouldGrind, grind, weight, notes } = methods.watch();
+  const { quantity, shouldGrind, grind, notes } = methods.watch();
 
   const { addProduct } = useCart();
 
@@ -156,19 +155,6 @@ const ProductInfo: React.FC<ProductInfoProps> = ({ product }) => {
           </Collapse>
 
           <div className="flex justify-between w-[360px] flex-nowrap items-center mb-2">
-            <p className="text-xl mr-9">Trọng lượng:</p>
-            <Ratio
-              min={100}
-              max={1000}
-              step={100}
-              value={weight}
-              format={(value) => `${value} gr`}
-              onChange={(num) => methods.setValue("weight", num)}
-              className="w-[180px]"
-            />
-          </div>
-
-          <div className="flex justify-between w-[360px] flex-nowrap items-center mb-2">
             <p className="text-xl mr-9">Số lượng:</p>
             <Ratio
               min={1}
@@ -185,11 +171,7 @@ const ProductInfo: React.FC<ProductInfoProps> = ({ product }) => {
             <div className="flex-1 flex justify-center flex-col pl-10">
               <p className="font-medium mb-1">Thành tiền:</p>
               <p className="text-2xl">
-                {format(
-                  "vi-VN",
-                  "VND",
-                  product.warehourse.price * quantity * (weight / 100)
-                )}
+                {format("vi-VN", "VND", product.warehourse.price * quantity)}
               </p>
             </div>
             <div className="flex-1 flex justify-center items-center">

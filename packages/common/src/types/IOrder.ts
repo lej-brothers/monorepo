@@ -1,6 +1,7 @@
 import { IMomo } from "./IMomo";
 import { ORDER_STATUS } from "../constants/ORDER_STATUS";
 import { ICart } from "./ICart";
+import { PAYMENT_METHOD } from "../..";
 
 export interface IOrder {
   _id?: string;
@@ -21,7 +22,12 @@ export interface IOrder {
    * @type {ORDER_STATUS}
    * @memberof IOrder
    */
-  status?: ORDER_STATUS;
+  status: ORDER_STATUS;
+
+  /**
+   * 
+   */
+  method: PAYMENT_METHOD
 
   /**
    * Delivery Info

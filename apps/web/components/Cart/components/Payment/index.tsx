@@ -4,16 +4,15 @@ import {
   IMomoDeliveryInfo,
   IMomoForm,
   IMomoUserInfo,
+  PAYMENT_METHOD,
 } from "common";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { AiFillCaretLeft, AiFillCaretRight } from "react-icons/ai";
-import QRCode from "react-qr-code";
 import { useMutation } from "react-query";
 import MomoModule from "../../../../modules/momo.module";
 import { ORDER_TABS } from "../../constants";
 import Radio from "./components/Radio";
-import { PAYMENT_METHODS } from "./constants";
 import { PANEL_STYLE } from "./styles";
 import Link from "next/link";
 
@@ -33,19 +32,19 @@ const Payment = ({ onChange }: Props) => {
     }
   >("payment-create-momo", MomoModule.create);
   const methods = useFormContext<IMomoForm>();
-  const [method, setMethod] = useState(PAYMENT_METHODS.BANKING);
+  const [method, setMethod] = useState(PAYMENT_METHOD.BANKING);
   const { userInfo, deliveryInfo } = methods.watch();
 
   const onPrevious = () => onChange(ORDER_TABS.USER_INFO);
   const onNext = () => onChange(ORDER_TABS.DONE);
 
   const onChangeMethod = (key: string | string[]) => {
-    if (key[1]) setMethod(key[1] as PAYMENT_METHODS);
+    if (key[1]) setMethod(key[1] as PAYMENT_METHOD);
   };
 
   useEffect(() => {
     switch (method) {
-      case PAYMENT_METHODS.MOMO: {
+      case PAYMENT_METHOD.MOMO: {
         if (momoData) break;
         mutate({ userInfo, deliveryInfo });
       }
@@ -71,8 +70,8 @@ const Payment = ({ onChange }: Props) => {
                 Chuyển khoản ngân hàng
               </p>
             }
-            key={PAYMENT_METHODS.BANKING}
-            style={PANEL_STYLE[`${method === PAYMENT_METHODS.BANKING}`]}
+            key={PAYMENT_METHOD.BANKING}
+            style={PANEL_STYLE[`${method === PAYMENT_METHOD.BANKING}`]}
           >
             <div className="flex flex-col"></div>
           </Panel>
@@ -82,8 +81,8 @@ const Payment = ({ onChange }: Props) => {
                 Thanh toán qua Momo
               </p>
             }
-            key={PAYMENT_METHODS.MOMO}
-            style={PANEL_STYLE[`${method === PAYMENT_METHODS.MOMO}`]}
+            key={PAYMENT_METHOD.MOMO}
+            style={PANEL_STYLE[`${method === PAYMENT_METHOD.MOMO}`]}
           >
             <div className="flex flex-col justify-center items-center w-full h-full p-4">
               <p className="mb-3">

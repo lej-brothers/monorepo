@@ -6,26 +6,37 @@ import {
   MOMO_SECRET_KEY,
 } from "./../configs/secrets";
 import {
+  ICart,
+  ICartProduct,
   IMomoCreate,
   IMomoCreatePayload,
   IMomoCreateResponse,
   IMomoIPNPayload,
+  IMomoItem,
+  IOrder,
+  IOrderDeliveryInfo,
+  IProduct,
   ORDER_STATUS,
+  PAYMENT_METHOD,
 } from "common";
 import { Momo } from "../model/momo.model";
-import { IOrderDocument, Order } from "../model/order.model";
+import { Order } from "../model/order.model";
 import OrderService from "./order.service";
 import hmac from "../utils/hmac";
 import { momoRequester } from "../configs/requester";
+import ProductService from "./product.service";
 
 const MomoService = {
   init: async (payload: IMomoCreate) => {
-    const momo = await Momo.findOneAndUpdate({
-      order: payload.order,
-      transId: payload.transId,
-      amount: payload.amount,
-      currency: payload.currency,
-    }, { upsert: true });
+    const momo = await Momo.findOneAndUpdate(
+      {
+        order: payload.order,
+        transId: payload.transId,
+        amount: payload.amount,
+        currency: payload.currency,
+      },
+      { upsert: true }
+    );
 
     const order = await Order.findById(payload.order);
     if (!order) return false;
@@ -35,9 +46,42 @@ const MomoService = {
     return momo;
   },
 
-  create: async (
-    payload: Omit<IMomoCreatePayload, "ipnUrl" | "redirectUrl" | "signature">
-  ) => {
+  create: async (order: IOrder, cart: ICart, deliveryInfo: IOrderDeliveryInfo) => {
+    /** Setup Payload */
+    const products: Array<IProduct & ICartProduct> = await Promise.all(
+      cart.products.map(async ({ _id, ...rest }) => {
+        const product = await ProductService.get(_id);
+        return { ...product.toJSON(), ...rest, _id } as any;
+      })
+    );
+
+    const items: IMomoItem[] = products.map((product) => ({
+      id: String(product._id),
+      name: product.title,
+      description: product.description,
+      category: product.categories
+        ?.map((category: any) => category.slug)
+        .join(","),
+      price: product.price,
+      currency: "VND",
+      quantity: product.quantity,
+      totalPrice: product.price * product.quantity,
+      imageUrl: product.images[0].url,
+    }));
+
+    const quantity = items.reduce((pre, cur) => {
+      return pre + cur.quantity;
+    }, 0);
+
+    const amount = items.reduce((pre, cur) => {
+      return pre + Number(cur.totalPrice);
+    }, 0);
+
+    /**
+     * Setup Order
+     */
+
+
     /**
      * Setup Signature Payload
      */
@@ -45,14 +89,14 @@ const MomoService = {
     const params = new URLSearchParams();
 
     params.set("accessKey", MOMO_ACCESS_KEY);
-    params.set("amount", String(payload.amount));
+    params.set("amount", String(amount));
     params.set("extraData", "");
     params.set("ipnUrl", `${HOST}/ipn/momo`);
-    params.set("orderId", payload.orderId);
-    params.set("orderInfo", payload.orderId);
+    params.set("orderId", String(order._id));
+    params.set("orderInfo", String(order._id));
     params.set("partnerCode", MOMO_PARTNER_CODE);
-    params.set("redirectUrl", `${FE_HOST}?orderID=${payload.orderId}`);
-    params.set("requestId", payload.requestId);
+    params.set("redirectUrl", `${FE_HOST}?orderID=${String(order._id)}`);
+    params.set("requestId", String(order._id));
     params.set("requestType", "captureWallet");
 
     params.sort();
@@ -61,22 +105,22 @@ const MomoService = {
       "accessKey=" +
       MOMO_ACCESS_KEY +
       "&amount=" +
-      String(payload.amount) +
+      String(amount) +
       "&extraData=" +
       "&ipnUrl=" +
       `${HOST}/ipn/momo` +
       "&orderId=" +
-      payload.orderId +
+      String(order._id) +
       "&orderInfo=" +
-      payload.orderId +
+      String(order._id) +
       "&partnerCode=" +
       MOMO_PARTNER_CODE +
       "&redirectUrl=" +
-      `${FE_HOST}?orderID=${payload.orderId}` +
+      `${FE_HOST}?orderID=${String(order._id)}` +
       "&requestId=" +
-      payload.requestId +
+      String(order._id) +
       "&requestType=" +
-      payload.requestType;
+      "captureWallet";
 
     /**
      * Encrypt with SHA256 standard using MOMO_SECRET_KEY
@@ -88,30 +132,41 @@ const MomoService = {
      * Request response from MOMO Create API
      */
 
-    const data = {
-      redirectUrl: `${FE_HOST}?orderID=${payload.orderId}`,
+    const data: IMomoCreatePayload = {
+      partnerCode: MOMO_PARTNER_CODE,
+      partnerName: "LeJ'Cafe",
+      requestType: "captureWallet",
+      requestId: String(order._id),
+      orderId: String(order._id),
+      orderInfo: String(order._id),
+      redirectUrl: `${FE_HOST}?orderID=${String(order._id)}`,
       ipnUrl: `${HOST}/ipn/momo`,
-      ...payload,
+      deliveryInfo: {
+        quantity: String(quantity),
+        deliveryAddress: deliveryInfo.address,
+        deliveryFee: "0 VND",
+      },
+      userInfo: {
+        name: deliveryInfo.name,
+        email: deliveryInfo.email,
+        phoneNumber: deliveryInfo.phone,
+      },
+      lang: "en",
+      extraData: "",
       signature,
+      amount,
+      items,
     };
-
-    console.log("--------------------RAW SIGNATURE----------------");
-    console.log(rawSignature);
-    console.log("--------------------SIGNATURE----------------");
-    console.log(signature);
 
     const response = await momoRequester.post("/create", data, {
       headers: { "Content-Type": "application/json" },
     });
 
-    console.log("--------------------RESPONSE----------------");
-    console.log(response.data);
-
     if (response.status !== 200) return null;
 
     const _ = await MomoService.init({
-      order: payload.orderId,
-      amount: Number(payload.amount),
+      order: String(order._id),
+      amount: amount,
       currency: "VND",
     });
 
@@ -119,22 +174,17 @@ const MomoService = {
      * Save changes to database
      */
 
-    const order = await OrderService.getById(payload.orderId);
-
-    order.deliveryInfo = {
-      name: payload.userInfo.name,
-      email: payload.userInfo.email,
-      phone: payload.userInfo.phoneNumber,
-      address: payload.deliveryInfo.deliveryAddress,
-    };
-
     return response.data as IMomoCreateResponse;
   },
 
   IPN: async (payload: IMomoIPNPayload) => {
     const order = await OrderService.getById(payload.orderId);
     if (!order) return false;
-    if (payload.resultCode !== 0) return false;
+    if (payload.resultCode !== 0) {
+      order.status = ORDER_STATUS.Cancelled;
+      await order.save();
+      return false;
+    }
 
     // Change paid status
     order.isPaid = true;

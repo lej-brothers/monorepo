@@ -8,6 +8,7 @@ export const OrderSchema = new Schema(
     code: { type: String, unique: true },
     cart: Object,
     status: Number,
+    method: String,
     isPaid: Boolean,
     totalAmount: Number,
     deliveryInfo: Object,
