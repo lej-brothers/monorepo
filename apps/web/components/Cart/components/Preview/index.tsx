@@ -12,7 +12,7 @@ const Preview = ({ cart, onChange }: Props) => {
   const products = cart?.products || [];
 
   const totalPrice = products.reduce((pre, cur) => {
-    return pre + cur.price;
+    return pre + cur.price * cur.quantity;
   }, 0);
 
   const totalPriceFormatted = format("vi-VN", "VND", totalPrice);

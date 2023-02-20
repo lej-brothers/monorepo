@@ -10,6 +10,7 @@ const useCart = () => {
   } = useQuery("cart", CartModule.get, {
     keepPreviousData: true,
     refetchOnReconnect: false,
+    staleTime: 10000,
   });
 
   const { mutateAsync } = useMutation<ICart, unknown, ICart>(
@@ -39,12 +40,25 @@ const useCart = () => {
     await refetch();
   };
 
+  const updateQuantity = async (id: string, quantity: number) => {
+    if (!cartData) return;
+
+    const updatedProducts = cartData.products.map((product) => {
+      if (product._id === id) product.quantity = quantity;
+      return product;
+    });
+
+    await mutateAsync(cartData);
+    await refetch();
+  };
+
   return {
     open,
     isLoading,
     cart: cartData!,
     addProduct,
     removeProduct,
+    updateQuantity,
   };
 };
 

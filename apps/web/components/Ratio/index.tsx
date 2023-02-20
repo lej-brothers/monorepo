@@ -1,4 +1,5 @@
-import { FiPlus, FiMinus } from "react-icons/fi";
+import { FiPlus, FiMinus, FiTrash2 } from "react-icons/fi";
+import { FaTrash } from "react-icons/fa";
 
 interface Props {
   value: number;
@@ -9,11 +10,13 @@ interface Props {
   decreaseCb?: () => void;
   increaseCb?: () => void;
   onChange?: (num: number) => void;
+  onRemove?: () => void;
   className?: string;
 }
 
 const Ratio = ({
   onChange,
+  onRemove,
   decreaseCb,
   increaseCb,
   value,
@@ -35,15 +38,21 @@ const Ratio = ({
     decreaseCb?.();
   };
 
+  const shouldShowRemove = value === 1 && onRemove;
+
   return (
     <div
       className={`flex justify-between items-center flex-nowrap ${className}`}
     >
       <div
-        onClick={onMinus}
+        onClick={shouldShowRemove ? onRemove : onMinus}
         className="flex transition-colors cursor-pointer border-[1px] hover:border-black bg-[#efefef] active:bg-[#d1d0d0] border-white justify-center items-center p-[7px] rounded-full"
       >
-        <FiMinus fontSize={18} />
+        {shouldShowRemove ? (
+          <FaTrash className="m-[4px]" fontSize={14} />
+        ) : (
+          <FiMinus fontSize={18} />
+        )}
       </div>
       <span className="font-thin">{format ? format(value) : value}</span>
       <div

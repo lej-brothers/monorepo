@@ -1,16 +1,16 @@
 /* eslint-disable @next/next/no-img-element */
-import { IOrderProduct } from "common";
 import useProduct from "../../../../hooks/useProduct";
-import Product from "../../../Product";
 import format from "../../../../utils/format";
 import Ratio from "../../../Ratio";
-import Image from "next/image";
+import useCart from "../../../../hooks/useCart";
+import { ICartProduct } from "common";
 
 interface Props {
-  product: IOrderProduct;
+  product: ICartProduct;
 }
 
 const OrderProduct = ({ product }: Props) => {
+  const { removeProduct, addProduct, updateQuantity } = useCart();
   const { data, isLoading } = useProduct(product.slug);
 
   if (isLoading || !data) return <></>;
@@ -18,6 +18,14 @@ const OrderProduct = ({ product }: Props) => {
   const firstImage = data.images[0]!;
 
   const price = format("vi-VN", "VND", product.price * product.quantity);
+
+  const onChange = (newQuantity: number) => {
+    updateQuantity(product._id, newQuantity);
+  };
+
+  const onRemove = () => {
+    removeProduct(product._id);
+  };
 
   return (
     <div className="flex w-[343px] h-[156px] rounded-lg bg-stone-100">
@@ -31,7 +39,15 @@ const OrderProduct = ({ product }: Props) => {
       <div className="flex-1 flex pt-[24px] pl-[24px] flex-col">
         <p className="text-base mb-[12px] font-medium">{data.title}</p>
         <p className="text-sm mb-[12px] text-[#9A9A9A]">{price} VND</p>
-        <Ratio className="w-[159px]" value={100} min={1} max={100} />
+        <Ratio
+          step={1}
+          className="w-[159px]"
+          onRemove={onRemove}
+          onChange={onChange}
+          value={product.quantity}
+          max={100}
+          min={1}
+        />
       </div>
     </div>
   );
