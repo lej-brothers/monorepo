@@ -1,3 +1,3 @@
 export interface IStore {
-  order: boolean;
+  cart: boolean;
 }

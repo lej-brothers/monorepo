@@ -28,13 +28,6 @@ export type IProductCreate = {
   isMetch: boolean;
 } & IWarehourseCreate;
 
-export type IOrderProduct = {
-  _id?: string;
-  slug: string;
-  price: number;
-  quantity: number;
-  notes: string;
-};
 
 export type IProductParams = Partial<
   Pick<IProductCreate, "isMetch" | "isHighlight"> & { categories: string }

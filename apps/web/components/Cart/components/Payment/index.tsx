@@ -15,6 +15,7 @@ import { ORDER_TABS } from "../../constants";
 import Radio from "./components/Radio";
 import { PAYMENT_METHODS } from "./constants";
 import { PANEL_STYLE } from "./styles";
+import Link from "next/link";
 
 const { Panel } = Collapse;
 
@@ -84,7 +85,18 @@ const Payment = ({ onChange }: Props) => {
             key={PAYMENT_METHODS.MOMO}
             style={PANEL_STYLE[`${method === PAYMENT_METHODS.MOMO}`]}
           >
-            <QRCode value={momoData?.qrCodeUrl || ""} />
+            <div className="flex flex-col justify-center items-center w-full h-full p-4">
+              <p className="mb-3">
+                Bạn sẽ được điều hướng đến Momo để tiếp tục
+              </p>
+              <p className="mb-5 text-xl">Số tiền: 100.000 VND</p>
+
+              {momoData?.payUrl && (
+                <Link href={momoData?.payUrl} passHref>
+                  <button>Thanh toán bằng Momo</button>
+                </Link>
+              )}
+            </div>
           </Panel>
         </Collapse>
 

@@ -20,17 +20,17 @@ import { momoRequester } from "../configs/requester";
 
 const MomoService = {
   init: async (payload: IMomoCreate) => {
-    const momo = await Momo.create({
+    const momo = await Momo.findOneAndUpdate({
       order: payload.order,
       transId: payload.transId,
       amount: payload.amount,
       currency: payload.currency,
-    });
+    }, { upsert: true });
 
     const order = await Order.findById(payload.order);
     if (!order) return false;
 
-    (order as any).momo = momo._id;
+    (order as any).momo = (momo as any)._id;
     await order.save();
     return momo;
   },
@@ -52,14 +52,37 @@ const MomoService = {
     params.set("orderInfo", payload.orderId);
     params.set("partnerCode", MOMO_PARTNER_CODE);
     params.set("redirectUrl", `${FE_HOST}?orderID=${payload.orderId}`);
-    params.set("requestId", payload.orderId);
+    params.set("requestId", payload.requestId);
     params.set("requestType", "captureWallet");
+
+    params.sort();
+
+    const rawSignature =
+      "accessKey=" +
+      MOMO_ACCESS_KEY +
+      "&amount=" +
+      String(payload.amount) +
+      "&extraData=" +
+      "&ipnUrl=" +
+      `${HOST}/ipn/momo` +
+      "&orderId=" +
+      payload.orderId +
+      "&orderInfo=" +
+      payload.orderId +
+      "&partnerCode=" +
+      MOMO_PARTNER_CODE +
+      "&redirectUrl=" +
+      `${FE_HOST}?orderID=${payload.orderId}` +
+      "&requestId=" +
+      payload.requestId +
+      "&requestType=" +
+      payload.requestType;
 
     /**
      * Encrypt with SHA256 standard using MOMO_SECRET_KEY
      */
 
-    const signature = hmac(MOMO_SECRET_KEY, params.toString()).toString();
+    const signature = hmac(MOMO_SECRET_KEY, rawSignature);
 
     /**
      * Request response from MOMO Create API
@@ -72,12 +95,16 @@ const MomoService = {
       signature,
     };
 
-    console.log(data);
+    console.log("--------------------RAW SIGNATURE----------------");
+    console.log(rawSignature);
+    console.log("--------------------SIGNATURE----------------");
+    console.log(signature);
 
     const response = await momoRequester.post("/create", data, {
       headers: { "Content-Type": "application/json" },
     });
 
+    console.log("--------------------RESPONSE----------------");
     console.log(response.data);
 
     if (response.status !== 200) return null;

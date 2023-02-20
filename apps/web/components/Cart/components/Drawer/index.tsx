@@ -1,15 +1,15 @@
 import { Drawer } from "antd";
-import Order from "../..";
+import Cart from "../..";
 import { useDispatch, useSelector } from "react-redux";
 import { IStore } from "../../../../types/IStore";
-import { toggleOrderDrawer } from "../../../../reducers/order/actions";
+import { toggleCartDrawer } from "../../../../reducers/cart/actions";
 
-const OrderDrawer = () => {
+const CartDrawer = () => {
   const dispatch = useDispatch();
-  const open = useSelector((state: IStore) => state.order);
+  const open = useSelector((state: IStore) => state.cart);
 
   const toggle = () => {
-    dispatch(toggleOrderDrawer());
+    dispatch(toggleCartDrawer());
   };
 
   return (
@@ -20,9 +20,9 @@ const OrderDrawer = () => {
       headerStyle={{ display: "none" }}
       onClose={toggle}
     >
-      <Order />
+      <Cart />
     </Drawer>
   );
 };
 
-export default OrderDrawer;
+export default CartDrawer;

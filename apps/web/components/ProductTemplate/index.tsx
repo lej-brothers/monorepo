@@ -8,7 +8,7 @@ import GRIND_SIZE from "../../constants/grindSize";
 import BeanIcon from "../../public/coffee-beans-icon.png";
 import Ratio from "../Ratio";
 import format from "../../utils/format";
-import useOrder from "../../hooks/useOrder";
+import useCart from "../../hooks/useCart";
 
 type ProductInfoProps = {
   product: IProduct;
@@ -29,7 +29,7 @@ const ProductInfo: React.FC<ProductInfoProps> = ({ product }) => {
 
   const { quantity, shouldGrind, grind, weight, notes } = methods.watch();
 
-  const { addProduct } = useOrder();
+  const { addProduct } = useCart();
 
   // EVENT HANDLERS
   const updateShouldGrind = (shouldGrind: boolean) => () => {
@@ -50,11 +50,13 @@ const ProductInfo: React.FC<ProductInfoProps> = ({ product }) => {
 
   const add = () => {
     addProduct({
-      _id: product._id,
-      slug: product.slug,
+      _id: product._id!,
+      title: product.title,
+      description: product.description,
       price: product.warehourse.price,
-      quantity: quantity * (weight / 100),
-      notes: notes,
+      quantity: quantity,
+      slug: product.slug,
+      notes,
     });
   };
 

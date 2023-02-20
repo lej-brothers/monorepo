@@ -1,34 +1,19 @@
 import { IMomo } from "./IMomo";
 import { ORDER_STATUS } from "../constants/ORDER_STATUS";
-import { IOrderProduct, IProduct } from "./IProduct";
-import { IPromotion } from "./IPromotion";
+import { ICart } from "./ICart";
 
 export interface IOrder {
   _id?: string;
-
-  /**
-   * Session which created this order.
-   * Note: this is not a reference, but value we put here in the moment when creating an Order.
-   * This is needed because we don't want to allow user to
-   * change this data in his profile later so it effects user orders
-   *
-   * @type {IOrder}
-   * @memberof IOrder
-   */
-  sessionId: string;
-
   /**
    * Short ID for this order
    */
   code: string;
 
   /**
-   * Same as for user, it's not a reference but copy of data about products
-   *
-   * @type {IOrderProduct[]}
-   * @memberof IOrder
+   * An Instance of Cart at the time created this order
    */
-  products: IOrderProduct[];
+
+  cart: ICart;
 
   /**
    * Status of the Order ()
@@ -53,9 +38,9 @@ export interface IOrder {
   isPaid?: boolean;
 
   /**
-   * Promotions applied into this order
+   * Total Amount of VND to complete this Order
    */
-  promotions: IPromotion[];
+  totalAmount: number;
 
   momo: IMomo;
 }

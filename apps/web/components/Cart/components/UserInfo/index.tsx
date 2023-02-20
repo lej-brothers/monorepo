@@ -4,7 +4,7 @@ import { ORDER_TABS } from "../../constants";
 import { useFormContext } from "react-hook-form";
 import { IMomoForm } from "common";
 import { useEffect } from "react";
-import useOrder from "../../../../hooks/useOrder";
+import useCart from "../../../../hooks/useCart";
 
 interface Props {
   onChange: (key: ORDER_TABS) => void;
@@ -12,9 +12,9 @@ interface Props {
 
 const UserInfo = ({ onChange }: Props) => {
   const methods = useFormContext<IMomoForm>();
-  const { order } = useOrder();
+  const { cart } = useCart();
 
-  const products = order?.products || [];
+  const products = cart?.products || [];
 
   const onPrevious = () => onChange(ORDER_TABS.PREVIEW);
   const onNext = () => onChange(ORDER_TABS.PAYMENT);
@@ -27,7 +27,7 @@ const UserInfo = ({ onChange }: Props) => {
     methods.setValue("deliveryInfo.deliveryFee", "0");
     methods.setValue("deliveryInfo.quantity", `${total}`);
     
-  }, [order.products]);
+  }, [cart.products]);
 
   return (
     <>

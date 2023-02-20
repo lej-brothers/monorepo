@@ -3,6 +3,7 @@ import { Router } from "express";
 import CategoryRouter from "./categories/_.router";
 import ProductRouter from "./products/_.router";
 import ImageRouter from "./images/_.router";
+import CartRouter from "./cart/_.router";
 import VoidRouter from "./void.router";
 import OrderRouter from "./order/_.router";
 import IPNRouter from "./ipn/_.router";
@@ -14,6 +15,7 @@ const router = Router({});
 
 router.use("/void", VoidRouter);
 router.use("/products", ProductRouter);
+router.use("/cart", CartRouter);
 router.use("/momo", MomoRouter);
 router.use("/ipn", IPNRouter);
 router.use("/orders", OrderRouter);

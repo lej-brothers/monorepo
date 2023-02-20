@@ -1,7 +1,10 @@
-import crypto from "crypto-js";
+import crypto from "crypto";
 
 function hmac(key: string, data: string) {
-  return crypto.HmacSHA256(data, key);
+  const hmac = crypto.createHmac('sha256', key);
+  const item = hmac.update(data)
+  
+  return item.digest('hex')
 }
 
 export default hmac;

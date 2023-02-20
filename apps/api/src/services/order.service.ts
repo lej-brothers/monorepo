@@ -7,9 +7,9 @@ import { ALPHABET } from "../constants/alphabet";
 const nanoid = customAlphabet(ALPHABET, 12);
 
 const OrderService = {
-  async get(sessionId: string) {
-    const order = await Order.findOne({ sessionId });
-    if (!order) return this.create(sessionId);
+  async get(id: string) {
+    const order = await Order.findById(id);
+    if (!order) return null;
     return order;
   },
   async getByCode(code: string) {

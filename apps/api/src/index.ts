@@ -12,7 +12,7 @@ import { logger } from "./configs/pino";
 import REDIS_CLIENT from "./configs/redis";
 import { MONGO_URL, SECRET } from "./configs/secrets";
 import ApplicationRouter from "./controllers/index.router";
-import assetOrder from "./middlewares/assetOrder";
+import assetCart from "./middlewares/assetCart";
 import { logRequest } from "./middlewares/logger";
 const CustomStrategy = passportCustom.Strategy;
 
@@ -72,7 +72,7 @@ app.use(
   })
 );
 app.use(passport.session());
-app.use(assetOrder);
+app.use(assetCart);
 
 app.use(ApplicationRouter);
 

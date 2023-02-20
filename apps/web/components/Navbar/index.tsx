@@ -8,10 +8,10 @@ import { useEffect, useState } from "react";
 import { FaSearch, FaShoppingCart } from "react-icons/fa";
 
 import LeJCompactLogo from "../../public/lej-compact-logo.png";
-import useOrder from "../../hooks/useOrder";
+import useCart from "../../hooks/useCart";
 import Link from "next/link";
 import { useDispatch } from "react-redux";
-import { toggleOrderDrawer } from "../../reducers/order/actions";
+import { toggleCartDrawer } from "../../reducers/cart/actions";
 // import CartDropdown from "@modules/layout/components/cart-dropdown"
 
 const Navbar = () => {
@@ -19,13 +19,13 @@ const Navbar = () => {
   const { pathname } = useRouter();
   const [isHome, setIsHome] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const { order } = useOrder();
+  const { cart } = useCart();
 
   const toggle = () => {
-    dispatch(toggleOrderDrawer());
+    dispatch(toggleCartDrawer());
   };
 
-  const products = order?.products || [];
+  const products = cart?.products || [];
 
   //useEffect that detects if window is scrolled > 5px on the Y axis
   useEffect(() => {

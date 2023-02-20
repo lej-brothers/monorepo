@@ -5,15 +5,11 @@ export interface IOrderDocument extends Omit<IOrder, "_id">, Document {}
 
 export const OrderSchema = new Schema(
   {
-    sessionId: String,
     code: { type: String, unique: true },
-    products: [Object],
-    /**
-     * @type {ORDER_STATUS}
-     * */
+    cart: Object,
     status: Number,
     isPaid: Boolean,
-    promotions: [{ type: Schema.Types.ObjectId, ref: "promotions" }],
+    totalAmount: Number,
     deliveryInfo: Object,
 
     momo: { type: Schema.Types.ObjectId, ref: "Momo" },

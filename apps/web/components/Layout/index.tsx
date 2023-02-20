@@ -2,7 +2,7 @@
 
 import React, { ReactNode } from "react";
 import Navbar from "../Navbar";
-import { OrderDrawer } from "../Order/components/";
+import { CartDrawer } from "../Cart/components";
 
 const Layout: React.FC<{ children: ReactNode }> = ({ children }) => {
   
@@ -10,7 +10,7 @@ const Layout: React.FC<{ children: ReactNode }> = ({ children }) => {
     <div>
       <Navbar />
       <main className="relative">{children}</main>
-      <OrderDrawer />
+      <CartDrawer />
     </div>
   );
 };

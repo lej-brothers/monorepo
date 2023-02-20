@@ -6,28 +6,28 @@ import { FormProvider, useForm } from "react-hook-form";
 import { AiOutlineClose } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import useOrder from "../../hooks/useOrder";
-import { toggleOrderDrawer } from "../../reducers/order/actions";
+import useCart from "../../hooks/useCart";
+import { toggleCartDrawer } from "../../reducers/cart/actions";
 import { IStore } from "../../types/IStore";
 import Payment from "./components/Payment";
 import Preview from "./components/Preview";
 import UserInfo from "./components/UserInfo";
 import { ORDER_TABS } from "./constants";
 
-const Order = () => {
+const Cart = () => {
   const methods = useForm<IMomoForm>();
   const dispatch = useDispatch();
-  const open = useSelector((store: IStore) => store.order);
+  const open = useSelector((store: IStore) => store.cart);
   const [tab, setTab] = useState(ORDER_TABS.PREVIEW);
-  const { order } = useOrder();
+  const { cart } = useCart();
 
-  const toggle = () => dispatch(toggleOrderDrawer());
+  const toggle = () => dispatch(toggleCartDrawer());
 
   const TABS: TabsProps["items"] = [
     {
       label: ORDER_TABS.PREVIEW,
       key: ORDER_TABS.PREVIEW,
-      children: <Preview order={order} onChange={setTab} />,
+      children: <Preview cart={cart} onChange={setTab} />,
     },
     {
       label: ORDER_TABS.USER_INFO,
@@ -67,7 +67,7 @@ const Order = () => {
   );
 };
 
-export default Order;
+export default Cart;
 
 const Container = styled.div`
   .ant-tabs {

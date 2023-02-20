@@ -1,15 +1,15 @@
-import { IOrder } from "common";
+import { ICart } from "common";
 import OrderProduct from "../Product";
 import format from "../../../../utils/format";
 import { ORDER_TABS } from "../../constants";
 
 interface Props {
-  order: IOrder;
+  cart: ICart;
   onChange: (key: ORDER_TABS) => void;
 }
 
-const Preview = ({ order, onChange }: Props) => {
-  const products = order?.products || [];
+const Preview = ({ cart, onChange }: Props) => {
+  const products = cart?.products || [];
 
   const totalPrice = products.reduce((pre, cur) => {
     return pre + cur.price;

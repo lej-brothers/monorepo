@@ -6,7 +6,7 @@ import { assertRequestInput } from "../../middlewares/assertRequestInput";
 
 const router = Router();
 
-router.get("/", GetController.controller);
+router.get("/:id", GetController.controller);
 router.post(
   "/",
   assertRequestInput(PostController.validations),

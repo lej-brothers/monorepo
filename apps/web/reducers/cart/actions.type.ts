@@ -1,5 +1,5 @@
 enum ActionTypes {
-  TOGGLE = "ORDERS/TOGGLE",
+  TOGGLE = "CART/TOGGLE",
 }
 
 export default ActionTypes;
