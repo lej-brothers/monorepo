@@ -19,7 +19,7 @@ const controller = async (req: Request, res: Response) => {
   });
 
   const response = await MomoService.create(order, cart);
-
+  if (!response) return res.status(504).send()
   res.send(response);
 };
 

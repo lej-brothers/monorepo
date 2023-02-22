@@ -8,7 +8,7 @@ const nanoid = customAlphabet(ALPHABET, 12);
 
 const OrderService = {
   async get(id: string) {
-    const order = await Order.findById(id);
+    const order = await Order.findOne({ _id: id });
     if (!order) return null;
     return order;
   },

@@ -1,8 +1,10 @@
 import bodyParser from "body-parser";
 import connectRedis from "connect-redis";
 import cors from "cors";
+import winston from "winston";
 import express from "express";
 import session from "express-session";
+import expressWinston from "express-winston";
 import mongoose from "mongoose";
 import passport from "passport";
 import passportCustom from "passport-custom";
@@ -13,7 +15,7 @@ import REDIS_CLIENT from "./configs/redis";
 import { MONGO_URL, SECRET } from "./configs/secrets";
 import ApplicationRouter from "./controllers/index.router";
 import assetCart from "./middlewares/assetCart";
-import { logRequest } from "./middlewares/logger";
+
 const CustomStrategy = passportCustom.Strategy;
 
 const RedisStore = connectRedis(session);
@@ -29,7 +31,7 @@ app.use(
     credentials: true,
     origin: "http://localhost:4001",
     methods: ["POST", "PUT", "GET", "OPTIONS", "DELETE", "HEAD"],
-    exposedHeaders: ['set-cookie'],
+    exposedHeaders: ["set-cookie"],
   })
 );
 
@@ -38,7 +40,24 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.json());
 
 app.use(passport.initialize());
-app.use(logRequest);
+
+app.use(
+  expressWinston.logger({
+    transports: [
+      new winston.transports.Console({
+        format: winston.format.printf((log: any) => `${log.level} ${log.message}`),
+      }),
+    ],
+    format: winston.format.combine(
+      winston.format.colorize(),
+      winston.format.json()
+    ),
+    meta: false, // optional: control whether you want to log the meta data about the request (default to true)
+    msg: "[{{req.method}}] [{{res.statusCode}}] {{req.url}}", // optional: customize the default logging message. E.g. "{{res.statusCode}} {{req.method}} {{res.responseTime}}ms {{req.url}}"
+    expressFormat: false, // Use the default Express/morgan request formatting. Enabling this will override any msg if true. Will only output colors with colorize set to true
+    colorize: false, // Color the text and status code, using the Express/morgan color palette (text: gray, status: default green, 3XX cyan, 4XX yellow, 5XX red).
+  })
+);
 
 passport.use(
   "authtoken",

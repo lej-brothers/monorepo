@@ -7,9 +7,10 @@ import { ICartProduct } from "common";
 
 interface Props {
   product: ICartProduct;
+  editable: boolean;
 }
 
-const OrderProduct = ({ product }: Props) => {
+const OrderProduct = ({ product, editable = true }: Props) => {
   const { removeProduct, addProduct, updateQuantity } = useCart();
   const { data, isLoading } = useProduct(product.slug);
 
@@ -39,15 +40,17 @@ const OrderProduct = ({ product }: Props) => {
       <div className="flex-1 flex pt-[24px] pl-[24px] flex-col">
         <p className="text-base mb-[12px] font-medium">{data.title}</p>
         <p className="text-sm mb-[12px] text-[#9A9A9A]">{price} VND</p>
-        <Ratio
-          step={1}
-          className="w-[159px]"
-          onRemove={onRemove}
-          onChange={onChange}
-          value={product.quantity}
-          max={100}
-          min={1}
-        />
+        {editable && (
+          <Ratio
+            step={1}
+            className="w-[159px]"
+            onRemove={onRemove}
+            onChange={onChange}
+            value={product.quantity}
+            max={100}
+            min={1}
+          />
+        )}
       </div>
     </div>
   );

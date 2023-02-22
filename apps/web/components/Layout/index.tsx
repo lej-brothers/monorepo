@@ -3,6 +3,7 @@
 import React, { ReactNode } from "react";
 import Navbar from "../Navbar";
 import { CartDrawer } from "../Cart/components";
+import OrderDrawer from "../Order/Drawer";
 
 const Layout: React.FC<{ children: ReactNode }> = ({ children }) => {
   
@@ -11,6 +12,7 @@ const Layout: React.FC<{ children: ReactNode }> = ({ children }) => {
       <Navbar />
       <main className="relative">{children}</main>
       <CartDrawer />
+      <OrderDrawer />
     </div>
   );
 };

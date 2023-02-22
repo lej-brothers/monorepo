@@ -1,34 +1,43 @@
-import { Collapse } from "antd";
+import { LoadingOutlined } from "@ant-design/icons";
+import { Collapse, Spin } from "antd";
 import {
-  IMomoForm,
   IMomoCreateResponse,
+  IMomoForm,
   IOrderDeliveryInfo,
   PAYMENT_METHOD,
 } from "common";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { AiFillCaretLeft, AiFillCaretRight } from "react-icons/ai";
 import { useMutation } from "react-query";
+import OrderModule from "../../../../modules/order.module";
 import { ORDER_TABS } from "../../constants";
 import Radio from "./components/Radio";
 import { PANEL_STYLE } from "./styles";
-import Link from "next/link";
-import OrderModule from "../../../../modules/order.module";
+import useCart from "../../../../hooks/useCart";
 
 const { Panel } = Collapse;
+
+const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
 interface Props {
   onChange: (tab: ORDER_TABS) => void;
 }
 
 const Payment = ({ onChange }: Props) => {
-  const { mutate, data: momoData } = useMutation<
-    IMomoCreateResponse,
-    unknown,
-    IOrderDeliveryInfo
-  >("payment-create-momo", OrderModule.momo);
+  const {
+    mutate,
+    data: momoData,
+    isLoading: isMomoLoading,
+  } = useMutation<IMomoCreateResponse, unknown, IOrderDeliveryInfo>(
+    "payment-create-momo",
+    OrderModule.momo
+  );
+
+  const { formattedTotalAmount } = useCart();
   const methods = useFormContext<IMomoForm>();
-  const [method, setMethod] = useState(PAYMENT_METHOD.BANKING);
+  const [method, setMethod] = useState(PAYMENT_METHOD.MOMO);
   const { userInfo, deliveryInfo } = methods.watch();
 
   const onPrevious = () => onChange(ORDER_TABS.USER_INFO);
@@ -73,6 +82,7 @@ const Payment = ({ onChange }: Props) => {
             }
             key={PAYMENT_METHOD.BANKING}
             style={PANEL_STYLE[`${method === PAYMENT_METHOD.BANKING}`]}
+            collapsible="disabled"
           >
             <div className="flex flex-col"></div>
           </Panel>
@@ -85,18 +95,27 @@ const Payment = ({ onChange }: Props) => {
             key={PAYMENT_METHOD.MOMO}
             style={PANEL_STYLE[`${method === PAYMENT_METHOD.MOMO}`]}
           >
-            <div className="flex flex-col justify-center items-center w-full h-full p-4">
-              <p className="mb-3">
-                Bạn sẽ được điều hướng đến Momo để tiếp tục
-              </p>
-              <p className="mb-5 text-xl">Số tiền: 100.000 VND</p>
+            {isMomoLoading && (
+              <div className="flex flex-col justify-center items-center w-full h-[140px] p-4">
+                <Spin indicator={antIcon} />{" "}
+              </div>
+            )}
+            {!isMomoLoading && (
+              <div className="flex flex-col justify-center items-center w-full h-[140px] p-4">
+                <p className="mb-3">
+                  Bạn sẽ được điều hướng đến Momo để tiếp tục
+                </p>
+                <p className="mb-5 text-xl">Số tiền: {formattedTotalAmount} VND</p>
 
-              {momoData?.payUrl && (
-                <Link href={momoData?.payUrl} passHref>
-                  <button>Thanh toán bằng Momo</button>
-                </Link>
-              )}
-            </div>
+                {momoData?.payUrl && (
+                  <Link href={momoData?.payUrl} passHref>
+                    <button className="w-full rounded-full hover:bg-pink-500 bg-pink-600 transition-colors text-white px-3 py-2">
+                      Thanh toán với MOMO
+                    </button>
+                  </Link>
+                )}
+              </div>
+            )}
           </Panel>
         </Collapse>
 

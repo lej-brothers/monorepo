@@ -16,4 +16,8 @@ export enum ORDER_STATUS {
    * User cancelled order
    */
   Cancelled = 2,
+  /**
+   * Order is sent to delivery
+   */
+  Delivery = 3,
 }

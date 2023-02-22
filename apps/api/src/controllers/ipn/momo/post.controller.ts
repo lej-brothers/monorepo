@@ -4,6 +4,7 @@ import MomoService from "../../../services/momo.service";
 
 const controller = async (req: Request, res: Response) => {
   const payload = req.body as IMomoIPNPayload;
+  console.log(payload);
   const success = await MomoService.IPN(payload);
   if (!success) return res.status(400).send();
 

@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import { isMobile } from "react-device-detect";
 import { Badge } from "antd";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -49,10 +48,6 @@ const Navbar = () => {
   useEffect(() => {
     pathname === "/" ? setIsHome(true) : setIsHome(false);
   }, [pathname]);
-
-  if (isMobile) {
-    return <></>;
-  }
 
   return (
     <header

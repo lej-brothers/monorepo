@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 export const HOST = process.env["HOST"] || "http://localhost:4000";
-export const FE_HOST = process.env["FE_HOST"] || "http://localhost:3001";
+export const FE_HOST = process.env["FE_HOST"] || "http://localhost:4001";
 export const SECRET = process.env["SECRET"] || "";
 export const MONGO_URL = process.env["MONGO_URL"] || "";
 export const S3_ENDPOINT = process.env["S3_ENDPOINT"] || "";

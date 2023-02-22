@@ -25,6 +25,7 @@
     "express-pino-logger": "^7.0.0",
     "express-session": "^1.17.3",
     "express-validator": "^6.14.3",
+    "express-winston": "^4.2.0",
     "genid": "^0.1.0",
     "immutability-helper": "^3.1.1",
     "minio": "^7.0.32",
@@ -41,7 +42,8 @@
     "redis": "^4.5.1",
     "slug": "^8.2.2",
     "ts-node-dev": "^2.0.0",
-    "uuid": "^9.0.0"
+    "uuid": "^9.0.0",
+    "winston": "^3.8.2"
   },
   "devDependencies": {
     "@types/connect-redis": "^0.0.19",
@@ -51,6 +53,7 @@
     "@types/express": "^4.17.15",
     "@types/express-pino-logger": "^4.0.3",
     "@types/express-session": "^1.17.5",
+    "@types/express-winston": "^4.0.0",
     "@types/immutability-helper": "^2.6.3",
     "@types/minio": "^7.0.15",
     "@types/mongoose": "^5.11.97",
@@ -58,6 +61,7 @@
     "@types/multer": "^1.4.7",
     "@types/slug": "^5.0.3",
     "@types/uuid": "^9.0.0",
+    "@types/winston": "^2.4.4",
     "common": "workspace:^0.0.0",
     "esbuild": "^0.17.3",
     "tsconfig": "workspace:^0.0.0",

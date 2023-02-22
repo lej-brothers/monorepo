@@ -25,7 +25,7 @@ const Preview = ({ cart, onChange }: Props) => {
         <p className="text-4xl">Giỏ hàng</p>
         {products.map((product) => (
           <div key={product._id} className="my-6">
-            <OrderProduct product={product} />
+            <OrderProduct editable={true} product={product} />
           </div>
         ))}
       </div>
