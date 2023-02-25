@@ -25,6 +25,7 @@ import OrderService from "./order.service";
 import hmac from "../utils/hmac";
 import { momoRequester } from "../configs/requester";
 import ProductService from "./product.service";
+import { logger } from "../configs/pino";
 
 const MomoService = {
   init: async (payload: IMomoCreate) => {
@@ -141,11 +142,12 @@ const MomoService = {
       items,
     };
 
-    const response = await momoRequester.post("/create", data, {
-      headers: { "Content-Type": "application/json" },
-    });
+    try {
+      const response = await momoRequester.post("/create", data, {
+        headers: { "Content-Type": "application/json" },
+      });
 
-    if (response.status !== 200) return null;
+      if (response.status !== 200) return null;
 
     const _ = await MomoService.init({
       order: String(order._id),
@@ -158,6 +160,10 @@ const MomoService = {
      */
 
     return response.data as IMomoCreateResponse;
+    } catch (err) {
+      logger.error(err)
+      return null
+    }
   },
 
   IPN: async (payload: IMomoIPNPayload) => {
