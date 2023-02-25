@@ -16,6 +16,8 @@ const UserInfo = ({ onChange }: Props) => {
 
   const products = cart?.products || [];
 
+  const formValid = methods.formState.isValid
+
   const onPrevious = () => onChange(ORDER_TABS.PREVIEW);
   const onNext = () => onChange(ORDER_TABS.PAYMENT);
 
@@ -61,8 +63,9 @@ const UserInfo = ({ onChange }: Props) => {
             </button>
 
             <button
+              disabled={!formValid}
               onClick={onNext}
-              className=" flex items-center justify-center rounded-full p-5 bg-white text-black"
+              className={`${!formValid && 'bg-stone-500'} flex items-center justify-center rounded-full p-5 bg-white text-black`}
             >
               Thanh toán <AiFillCaretRight className="ml-1" size={16} />
             </button>

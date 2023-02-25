@@ -11,11 +11,10 @@ const OrderDrawer: React.FC<Props> = ({}) => {
   const router = useRouter();
   const { orderID } = router.query;
 
-
   const open = !!orderID;
 
   const toggle = () => {
-    router.push(router.basePath)
+    router.push(router.basePath);
   };
 
   return (
@@ -26,12 +25,7 @@ const OrderDrawer: React.FC<Props> = ({}) => {
       headerStyle={{ display: "none" }}
       onClose={toggle}
     >
-      <div className="flex flex-col h-full px-[74px]">
-        <div className="flex justify-end mt-[46px] mr-[46px]">
-          <Button onClick={toggle} type="text">
-            <AiOutlineClose size={18} />
-          </Button>
-        </div>
+      <div className="flex flex-col h-full">
         <Order orderId={orderID as string} />
       </div>
     </Drawer>

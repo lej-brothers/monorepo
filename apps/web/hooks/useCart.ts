@@ -15,15 +15,14 @@ const useCart = () => {
     staleTime: 10000,
   });
 
-
   const totalAmount = useMemo(() => {
-    const product = cartData?.products || []
+    const product = cartData?.products || [];
     return product.reduce((pre, cur) => {
-      return pre + cur.price * cur.quantity
-    }, 0)
-  }, [cartData])
+      return pre + cur.price * cur.quantity;
+    }, 0);
+  }, [cartData]);
 
-  const formattedTotalAmount = format('vi-VN', 'VND', totalAmount)
+  const formattedTotalAmount = format("vi-VN", "VND", totalAmount);
 
   const { mutateAsync } = useMutation<ICart, unknown, ICart>(
     "update-cart",
@@ -60,12 +59,12 @@ const useCart = () => {
       return product;
     });
 
-    await mutateAsync(cartData);
+    await mutateAsync({ ...cartData, products: updatedProducts });
     await refetch();
   };
 
   return {
-    open,
+    open: !!open,
     isLoading,
     totalAmount,
     formattedTotalAmount,

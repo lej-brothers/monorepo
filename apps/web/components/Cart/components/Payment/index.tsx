@@ -23,9 +23,10 @@ const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
 interface Props {
   onChange: (tab: ORDER_TABS) => void;
+  onFinish: () => void;
 }
 
-const Payment = ({ onChange }: Props) => {
+const Payment = ({ onChange, onFinish }: Props) => {
   const {
     mutate,
     data: momoData,
@@ -39,6 +40,9 @@ const Payment = ({ onChange }: Props) => {
   const methods = useFormContext<IMomoForm>();
   const [method, setMethod] = useState(PAYMENT_METHOD.MOMO);
   const { userInfo, deliveryInfo } = methods.watch();
+
+  const shouldShowMomoError =
+    !isMomoLoading && method === PAYMENT_METHOD.MOMO && !momoData;
 
   const onPrevious = () => onChange(ORDER_TABS.USER_INFO);
   const onNext = () => onChange(ORDER_TABS.DONE);
@@ -100,16 +104,28 @@ const Payment = ({ onChange }: Props) => {
                 <Spin indicator={antIcon} />{" "}
               </div>
             )}
-            {!isMomoLoading && (
+            {!isMomoLoading && shouldShowMomoError && (
+              <div className="flex flex-col justify-center items-center w-full h-[140px] p-4">
+                <p className="text-xl text-center text-red-600">
+                  Có lỗi xảy ra với MOMO server, vui lòng thử lại sau
+                </p>
+              </div>
+            )}
+            {!isMomoLoading && !shouldShowMomoError && (
               <div className="flex flex-col justify-center items-center w-full h-[140px] p-4">
                 <p className="mb-3">
                   Bạn sẽ được điều hướng đến Momo để tiếp tục
                 </p>
-                <p className="mb-5 text-xl">Số tiền: {formattedTotalAmount} VND</p>
+                <p className="mb-5 text-xl">
+                  Số tiền: {formattedTotalAmount} VND
+                </p>
 
                 {momoData?.payUrl && (
                   <Link href={momoData?.payUrl} passHref>
-                    <button className="w-full rounded-full hover:bg-pink-500 bg-pink-600 transition-colors text-white px-3 py-2">
+                    <button
+                      onClick={onFinish}
+                      className="w-full rounded-full hover:bg-pink-500 bg-pink-600 transition-colors text-white px-3 py-2"
+                    >
                       Thanh toán với MOMO
                     </button>
                   </Link>
@@ -128,13 +144,6 @@ const Payment = ({ onChange }: Props) => {
             >
               <AiFillCaretLeft className="mr-1" size={16} />
               Giỏ hàng
-            </button>
-
-            <button
-              onClick={onNext}
-              className=" flex items-center justify-center rounded-full p-5 bg-white text-black"
-            >
-              Thanh toán <AiFillCaretRight className="ml-1" size={16} />
             </button>
           </div>
         </div>

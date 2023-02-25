@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { IProduct } from "common";
 
 import format from "../utils/format";
+import Link from "next/link";
 
 export const NEXT_POSITION: { [key: number]: number } = {
   1: 2,
@@ -60,8 +61,11 @@ const ProductRotator = ({ products }: Props) => {
       ? products[2]
       : products[0];
 
-      const formatedPrice = format('vi-VN', 'VND', (highlightedProduct.warehourse.price) as number)
-
+  const formatedPrice = format(
+    "vi-VN",
+    "VND",
+    highlightedProduct.warehourse.price as number
+  );
 
   const onNext = () => {
     setPosition({
@@ -116,7 +120,7 @@ const ProductRotator = ({ products }: Props) => {
       </h3>
 
       <div className="select-none w-full flex mt-8">
-        <div className="flex justify-center space-between items-center flex-1">
+        <div className="flex justify-end items-center flex-1">
           <button
             onClick={onPre}
             className="flex bg-[#F8F8F8] justify-center items-center rounded-xl cursor-pointer w-[40px] h-[40px]"
@@ -124,33 +128,34 @@ const ProductRotator = ({ products }: Props) => {
             {"<"}
           </button>
         </div>
-        <div
-          style={{ flex: "3 1 0" }}
-          className="flex flex-3 grow-0 shrink-0 break-words flex-col justify-center items-center"
-        >
-          <motion.p
-            className="text-[#CC8181] font-normal text-sm mb-1"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
+        <Link href={`/products/${highlightedProduct.slug}`} passHref>
+          <div
+            className="flex w-[300px] grow-0 shrink-0 break-words flex-col justify-center items-center"
           >
-            {highlightedProduct.title}
-          </motion.p>
-          <motion.p
-            className="text-base font-medium mb-1"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-          >
-            {highlightedProduct.description}
-          </motion.p>
-          <motion.p
-            className="text-base text-gray-500"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-          >
-            {`${formatedPrice} VND / 100g`}
-          </motion.p>
-        </div>
-        <div className="flex justify-center items-center flex-1">
+            <motion.p
+              className="text-[#CC8181] font-normal text-sm mb-1"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+            >
+              {highlightedProduct.description}
+            </motion.p>
+            <motion.p
+              className="text-base font-medium mb-1"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+            >
+              {highlightedProduct.title}
+            </motion.p>
+            <motion.p
+              className="text-base text-gray-500"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+            >
+              {`${formatedPrice} VND / 100g`}
+            </motion.p>
+          </div>
+        </Link>
+        <div className="flex justify-start items-center flex-1">
           <button
             onClick={onNext}
             className="flex justify-center items-center bg-[#F8F8F8] rounded-xl cursor-pointer w-[40px] h-[40px]"

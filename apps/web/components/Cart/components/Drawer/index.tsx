@@ -6,7 +6,7 @@ import { toggleCartDrawer } from "../../../../reducers/cart/actions";
 
 const CartDrawer = () => {
   const dispatch = useDispatch();
-  const open = useSelector((state: IStore) => state.cart);
+  const open = useSelector((state: IStore) => state?.cart);
 
   const toggle = () => {
     dispatch(toggleCartDrawer());
@@ -15,7 +15,7 @@ const CartDrawer = () => {
   return (
     <Drawer
       width={535}
-      open={open}
+      open={!!open}
       bodyStyle={{ padding: 0 }}
       headerStyle={{ display: "none" }}
       onClose={toggle}
