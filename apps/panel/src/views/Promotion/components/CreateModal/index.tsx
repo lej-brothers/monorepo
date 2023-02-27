@@ -15,8 +15,8 @@ import React from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { FormattedMessage } from "react-intl";
 import { Input, Select, Textarea } from "../../../../components";
-import useProductOptions from "../../../../utils/useProductOptions";
 import { PROMOTION_MODAL } from "../../constants";
+import { ProductQuery } from "queries";
 
 const { RangePicker } = DatePicker;
 
@@ -33,7 +33,7 @@ const CreateModal: React.FC<Props> = ({ toggleModal, open, onOk, onClose }) => {
   const methods = useForm<IPromotionCreate>();
   const values = methods.watch();
 
-  const { data } = useProductOptions();
+  const { data } = ProductQuery.useProductOptions();
 
   /**
    * MAPPED-VALUES

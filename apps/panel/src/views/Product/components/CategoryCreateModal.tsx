@@ -1,10 +1,10 @@
 import { Modal } from "antd";
-import { useQueryClient, useMutation } from "react-query";
+import { useQueryClient } from "react-query";
 import { useForm, FormProvider } from "react-hook-form";
 import { FormattedMessage } from "react-intl";
 import { Input, Textarea } from "../../../components";
-import { ICategory, ICategoryCreate } from "common";
-import CategoryModule from "../../../services/category";
+import { ICategoryCreate } from "common";
+import { CategoryQuery } from "queries";
 
 interface Props {
   open: boolean;
@@ -16,16 +16,18 @@ const CategoryCreateModal = ({ open, onClose }: Props) => {
   const methods = useForm<ICategoryCreate>();
   const values = methods.watch();
 
-  const { mutate } = useMutation<ICategory, unknown, ICategoryCreate>(
-    "create-category",
-    CategoryModule.create,
-    {
-      onSuccess: async () => {
-        await queryClient.refetchQueries(["categories"], { active: true });
-        onClose();
-      },
-    }
-  );
+  const { mutate } = CategoryQuery.useCreate();
+
+  // const { mutate } = useMutation<ICategory, unknown, ICategoryCreate>(
+  //   "create-category",
+  //   CategoryModule.create,
+  //   {
+  //     onSuccess: async () => {
+  //       await queryClient.refetchQueries(["categories"], { active: true });
+  //       onClose();
+  //     },
+  //   }
+  // );
 
   const onOk = async () => mutate(values);
 

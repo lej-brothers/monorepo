@@ -7,6 +7,10 @@ const OrderService = {
     const response = await requester.get(`/orders/${id}`);
     return response as AxiosResponse<IOrder>;
   },
+  update: async (payload: IOrder) => {
+    const response = await requester.patch(`/orders/${payload._id}`, payload);
+    return response as AxiosResponse<IOrder>;
+  },
   momo: async (deliveryInfo: IOrderDeliveryInfo) => {
     const response = await requester.post("/orders/momo", { deliveryInfo });
     return response as AxiosResponse<IMomoCreateResponse>;

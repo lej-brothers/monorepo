@@ -1,21 +1,13 @@
-import {
-  Button,
-  Pagination,
-  PaginationProps,
-  Table,
-  TablePaginationConfig,
-  Tag,
-} from "antd";
-import React, { Suspense, useState } from "react";
-import { useMutation, useQueryClient } from "react-query";
+import { Button, Pagination, PaginationProps, Table, Tag } from "antd";
+import React, { useState } from "react";
+import { useQueryClient } from "react-query";
 import { PRODUCT_DRAWER, PRODUCT_MODAL } from "./constants";
 import { Container } from "./styles";
-import { ICategory, IProduct, IProductCreate } from "common";
+import { ICategory, IProductCreate } from "common";
 import { FormattedMessage } from "react-intl";
-import ProductModule from "../../services/product";
-import useProducts from "../../utils/useProducts";
 import CategoryCreateModal from "./components/CategoryCreateModal";
 import ProductCreateDrawer from "./components/CreateDrawer";
+import { ProductQuery } from "queries";
 
 const { Column } = Table;
 
@@ -26,12 +18,9 @@ const Product: React.FC = () => {
 
   const [{ page, limit }, setPaginate] = useState({ page: 1, limit: 20 });
 
-  const { data } = useProducts(page, limit);
+  const { data } = ProductQuery.useList(page, limit, {});
 
-  const createMutation = useMutation<IProduct, unknown, IProductCreate>(
-    "create-product",
-    ProductModule.create
-  );
+  const createMutation = ProductQuery.useCreateProduct();
 
   const products = data?.docs || [];
 

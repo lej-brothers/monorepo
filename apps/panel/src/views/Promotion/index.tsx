@@ -2,13 +2,12 @@ import { Button, Pagination, PaginationProps, Table } from "antd";
 import React, { useState } from "react";
 import { FormattedMessage } from "react-intl";
 import { Container } from "./styles";
-import { useMutation, useQueryClient } from "react-query";
+import { useQueryClient } from "react-query";
 import { PROMOTION_MODAL } from "./constants";
-import usePromotions from "../../utils/usePromotions";
 import { CreateModal } from "./components";
 import { IPromotion, IPromotionCreate } from "common";
-import PromotionModule from "../../services/promotion";
 import CategoryCreateModal from "../Product/components/CategoryCreateModal";
+import { PromotionQuery } from "queries";
 
 const { Column } = Table;
 
@@ -17,12 +16,9 @@ const Promotions: React.FC = () => {
   const [modal, setModal] = useState(PROMOTION_MODAL.NONE);
   const [{ page, limit }, setPaginate] = useState({ page: 1, limit: 20 });
 
-  const { data } = usePromotions(page, limit);
+  const { data } = PromotionQuery.useList(page, limit);
 
-  const createMutation = useMutation<IPromotion, unknown, IPromotionCreate>(
-    "create-promotion",
-    PromotionModule.create
-  );
+  const createMutation = PromotionQuery.useCreate();
 
   /**
    * MAPPED VALUES
@@ -57,10 +53,7 @@ const Promotions: React.FC = () => {
         </Button>
       </div>
       <Table pagination={false} dataSource={promotions}>
-        <Column
-          title={<FormattedMessage id="code" />}
-          dataIndex="code"
-        />
+        <Column title={<FormattedMessage id="code" />} dataIndex="code" />
         <Column
           title={<FormattedMessage id="description" />}
           dataIndex="description"
@@ -68,12 +61,16 @@ const Promotions: React.FC = () => {
         <Column
           title={<FormattedMessage id="price_drop" />}
           dataIndex="promoPrice"
-          render={(value: number) => value < 1 ? `${value * 100}%` : `${value} VND`}
+          render={(value: number) =>
+            value < 1 ? `${value * 100}%` : `${value} VND`
+          }
         />
         <Column
           title={<FormattedMessage id="limit" />}
           dataIndex="purchasesLimit"
-          render={(value: number, record: IPromotion) => value === 0 ? `♾️` : `${record.purchasesCount || 0}/${value}`}
+          render={(value: number, record: IPromotion) =>
+            value === 0 ? `♾️` : `${record.purchasesCount || 0}/${value}`
+          }
         />
       </Table>
       <div className="mt-2 flex justify-end">

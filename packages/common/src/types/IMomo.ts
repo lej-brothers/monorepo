@@ -105,3 +105,8 @@ export interface IMomoIPNResponse {
   momoTransId: string;
   signature: string;
 }
+
+export interface MomoCreateProps {
+  userInfo: IMomoUserInfo;
+  deliveryInfo: IMomoDeliveryInfo;
+}

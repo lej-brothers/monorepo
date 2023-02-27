@@ -8,8 +8,8 @@ import { FormProvider, useForm } from "react-hook-form";
 import { FormattedMessage } from "react-intl";
 import { SLUG_VALIDATE_EX } from "../../../constants/regexs";
 import { Input, Select, Switch, Textarea, Uploader } from "../../../components";
-import useCategories from "../../../utils/useCategories";
 import { PRODUCT_MODAL } from "../constants";
+import { CategoryQuery } from "queries";
 
 const { Panel } = Collapse;
 
@@ -31,7 +31,7 @@ const CreateDrawer: React.FC<Props> = ({
   });
 
   const values = methods.watch();
-  const { data } = useCategories();
+  const { data } = CategoryQuery.useList();
 
   const categories = data?.docs || [];
 

@@ -1,6 +1,7 @@
 {
-  "extends": "tsconfig/react-library.json",
+  "extends": "tsconfig/base.json",
   "compilerOptions": {
+    "outDir": "build",
     "target": "ES6",
     "lib": [
       "DOM",
@@ -11,7 +12,7 @@
     ],
   },
   "include": [
-    "."
+    "./src"
   ],
   "browserslist": [
     ">0.2%",

@@ -1,23 +1,22 @@
 import type { UploadRequestOption } from "rc-upload/lib/interface";
 
 import React, {
-  ComponentProps,
   useCallback,
   useEffect,
   useRef,
   useState,
 } from "react";
 import update from "immutability-helper";
-import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
-import { Button, Progress, Tooltip, UploadFile, UploadProps } from "antd";
+import { PlusOutlined } from "@ant-design/icons";
+import { Progress, Tooltip, UploadFile, UploadProps } from "antd";
 import { DndProvider, useDrag, useDrop } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
-import ImageModule from "../../services/image";
 import { RcFile } from "antd/es/upload";
 import { Upload } from "./styles";
+import { ImageService } from "queries";
 
 const type = "DragableUploadList";
-
+ 
 interface DragableUploadListItemProps {
   originNode: React.ReactElement<
     any,
@@ -120,7 +119,7 @@ const Uploader = ({ onChange }: Props) => {
     };
 
     try {
-      const res = await ImageModule.upload(file as RcFile, onUploadProgress);
+      const res = await ImageService.upload(file as RcFile, onUploadProgress);
       onSuccess?.(res._id);
     } catch (err: any) {
       onError?.(err);

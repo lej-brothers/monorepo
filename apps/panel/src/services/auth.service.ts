@@ -1,19 +1,12 @@
-import requester from "../utils/requester";
+import { AuthService as BaseAuthService } from "queries";
 
-const AuthorizationService = {
-  isAuthorized() {
-    const state = sessionStorage.getItem("auth");
-    return state === 'true';
-  },
 
-  async auth(token: string) {
-    const response = await requester.post("/auth", {}, { headers: { token } });
-    if (response.status === 200) {
-      sessionStorage.setItem("auth", 'true');
-      return true;
-    }
-    return false;
+const AuthService = {
+  ...BaseAuthService,
+  isAuthorized: () => {
+    const auth = sessionStorage.getItem("auth");
+    return auth === "true";
   },
 };
 
-export default AuthorizationService;
+export default AuthService;

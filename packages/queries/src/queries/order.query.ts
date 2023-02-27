@@ -1,4 +1,4 @@
-import { IOrderDeliveryInfo } from "./../../../common/src/types/IOrder";
+import { IOrder ,IOrderDeliveryInfo } from "common";
 import { useMutation, useQuery } from "react-query";
 import OrderService from "../services/order.service";
 
@@ -13,6 +13,17 @@ const OrderQuery = {
       }
     });
   },
+
+  useUpdateOrder: () => {
+    return useMutation("updateOrder", async (payload: IOrder) => {
+      try {
+        const res = await OrderService.update(payload)
+      } catch (error) {
+        return Promise.reject(error)
+      }
+    })
+  }
+  ,
   useCreateMomo: () => {
     return useMutation(
       "createMomoOrder",
