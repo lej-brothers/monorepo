@@ -20,7 +20,7 @@ const CategoryQuery = {
     });
   },
 
-  useCreate: async () => {
+  useCreate: () => {
     return useMutation("createCategory", async (payload: ICategoryCreate) => {
       try {
         const res = await CategoryService.create(payload);
