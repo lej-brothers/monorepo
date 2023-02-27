@@ -1,5 +1,6 @@
 import { IOrder } from "common";
-import { Document, Schema, model } from "mongoose";
+import { Document, PaginateModel, Schema, model } from "mongoose";
+import paginate from "mongoose-paginate-v2";
 
 export interface IOrderDocument extends Omit<IOrder, "_id">, Document {}
 
@@ -12,7 +13,6 @@ export const OrderSchema = new Schema(
     isPaid: Boolean,
     totalAmount: Number,
     deliveryInfo: Object,
-
     momo: { type: Schema.Types.ObjectId, ref: "Momo" },
   },
   {
@@ -20,4 +20,10 @@ export const OrderSchema = new Schema(
   }
 );
 
-export const Order = model<IOrderDocument>("Orders", OrderSchema, "orders");
+OrderSchema.plugin(paginate);
+
+export const Order = model<IOrderDocument, PaginateModel<IOrderDocument>>(
+  "Orders",
+  OrderSchema,
+  "orders"
+);

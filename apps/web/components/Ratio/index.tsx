@@ -28,12 +28,16 @@ const Ratio = ({
 }: Props) => {
   const onPlus = () => {
     const isValid = between(value + step, min, max);
+    if (!isValid) return;
+
     onChange?.(isValid ? value + step : value);
     increaseCb?.();
   };
 
   const onMinus = () => {
     const isValid = between(value - step, min, max);
+    if (!isValid) return;
+
     onChange?.(isValid ? value - step : value);
     decreaseCb?.();
   };

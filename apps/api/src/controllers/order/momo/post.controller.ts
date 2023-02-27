@@ -19,13 +19,11 @@ const controller = async (req: Request, res: Response) => {
   });
 
   const response = await MomoService.create(order, cart);
-  if (!response) return res.status(504).send()
+  if (!response) return res.status(504).send();
 
-  // Create New Cart for this Session
-  const newCart = await CartService.get(req.sessionID);
-  (req.session as any).cart = newCart._id;
-
-  res.send(response);
+  req.session.destroy(() => {
+    res.send(response);
+  });
 };
 
 export default { validations, controller };

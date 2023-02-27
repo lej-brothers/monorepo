@@ -24,15 +24,22 @@ function getItem(
 
 const items: MenuItem[] = [
   getItem(
-    <FormattedMessage id="product" />,
+    <FormattedMessage id="order" />,
     "1",
+    <Link to="/orders">
+      <AppstoreOutlined />
+    </Link>
+  ),
+  getItem(
+    <FormattedMessage id="product" />,
+    "2",
     <Link to="/products">
       <AppstoreOutlined />
     </Link>
   ),
   getItem(
     <FormattedMessage id="promotion" />,
-    "2",
+    "3",
     <Link to="/promotions">
       <GiftOutlined />
     </Link>

@@ -3,10 +3,15 @@ import { IOrder, ORDER_STATUS } from "common";
 import { IOrderDocument, Order } from "../model/order.model";
 
 import { ALPHABET } from "../constants/alphabet";
+import { PaginateOptions } from "mongoose";
 
 const nanoid = customAlphabet(ALPHABET, 12);
 
 const OrderService = {
+
+  async list(params: PaginateOptions) {
+    return Order.paginate({}, params);
+  },
   async get(id: string) {
     const order = await Order.findOne({ _id: id });
     if (!order) return null;
@@ -20,11 +25,10 @@ const OrderService = {
     const order = await Order.findById(orderId).populate("momo");
     return order as any as IOrderDocument;
   },
-  async update(order: IOrder) {
-    const updated = await Order.findOneAndUpdate(
-      { _id: order._id },
-      order
-    ).populate("momo");
+  async update(_id: string, order: IOrder) {
+    const updated = await Order.findOneAndUpdate({ _id }, order).populate(
+      "momo"
+    );
     return updated;
   },
   async create(payload: Partial<IOrder>) {

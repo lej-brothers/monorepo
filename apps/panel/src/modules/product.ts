@@ -16,10 +16,9 @@ const ProductModule = {
     const params = new URLSearchParams({
       page: String(page),
       limit: String(limit),
-      type: 'option',
     });
 
-    const res = await requester.get("/products", { params });
+    const res = await requester.get("/products/options", { params });
     return res.data;
   },
 

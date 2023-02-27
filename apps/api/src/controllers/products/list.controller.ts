@@ -6,7 +6,7 @@ import ProductService from "../../services/product.service";
 const validations = [param("page"), param("limit")];
 
 const controller = async (req: Request, res: Response) => {
-  const { page, limit, categories, type } = req.query;
+  const { page, limit, categories, title } = req.query;
 
   if (categories) {
     const dataByCategory = await ProductService.listByCategory(
@@ -16,24 +16,15 @@ const controller = async (req: Request, res: Response) => {
     return res.send(dataByCategory);
   }
 
-  const optionSelector =
-    type === "option"
-      ? {
-          fields: {
-            _id: 1,
-            title: 1,
-            description: 1,
-            images: 1,
-            slug: 1,
-          },
-        }
-      : {};
+  let query: any = {};
 
-  const data = await ProductService.list({
+  if (title) query.title = new RegExp("^" + title);
+
+  const data = await ProductService.list(query, {
     page: Number(page),
     limit: Number(limit) || 20,
-    ...optionSelector,
   });
+  
   res.send(data);
 };
 

@@ -12,7 +12,7 @@ const ProductService = {
       .populate("images")
       .populate("categories");
 
-      return product as IProductDocument;
+    return product as IProductDocument;
   },
   async getBySlug(slug: string) {
     const product = await Product.findOne({ slug })
@@ -33,15 +33,12 @@ const ProductService = {
     return Product.find({}).select("slug");
   },
 
-  async list(params: PaginateOptions) {
-    const products = await Product.paginate(
-      {},
-      {
-        ...params,
-        populate: ["warehourse", "categories", "images"],
-        lean: true,
-      }
-    );
+  async list(query: any, params: PaginateOptions) {
+    const products = await Product.paginate(query, {
+      ...params,
+      populate: ["warehourse", "categories", "images"],
+      lean: true,
+    });
 
     products.docs = products.docs.map((product) => {
       product.images = product.images.map((image) => ({

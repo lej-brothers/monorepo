@@ -29,7 +29,7 @@ MINIO.getBucketNotification("lej-marketplace");
 app.use(
   cors({
     credentials: true,
-    origin: "http://localhost:4001",
+    origin: ["http://localhost:3000", "http://localhost:4001"],
     methods: ["POST", "PUT", "GET", "OPTIONS", "DELETE", "HEAD"],
     exposedHeaders: ["set-cookie"],
   })
