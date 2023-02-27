@@ -1,5 +1,5 @@
 import { redirect } from "react-router-dom";
-import AuthorizationModule from "../modules/authorization";
+import AuthorizationModule from "../services/auth.service";
 
 const authLoader = () => {
   const authenticated = AuthorizationModule.isAuthorized();

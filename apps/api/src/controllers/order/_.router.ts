@@ -1,5 +1,6 @@
 import { Router } from "express";
 
+import { assetAuthroized } from "../../middlewares/assetAuthorized";
 import { assertRequestInput } from "../../middlewares/assertRequestInput";
 
 import GetController from "./get.controller";
@@ -16,8 +17,10 @@ router.get(
   ListController.controller
 );
 router.get("/:id", GetController.controller);
+
 router.patch(
   "/:id",
+  assetAuthroized,
   assertRequestInput(PatchController.validations),
   PatchController.controller
 );

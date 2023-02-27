@@ -143,6 +143,7 @@ importers:
       antd: ^5.1.6
       axios: ^1.2.5
       common: workspace:^0.0.0
+      queries: workspace:^0.0.0
       react: ^18.2.0
       react-dnd: ^16.0.1
       react-dnd-html5-backend: ^16.0.1
@@ -169,6 +170,7 @@ importers:
       antd: 5.1.6_biqbaboplfbrettd7655fr4n2y
       axios: 1.2.5
       common: link:../../packages/common
+      queries: link:../../packages/queries
       react: 18.2.0
       react-dnd: 16.0.1_3qpvhq7sz3ngdu3uzeox2r4jni
       react-dnd-html5-backend: 16.0.1
@@ -194,7 +196,6 @@ importers:
       '@mui/material': ^5.11.8
       '@next/font': ^13.1.6
       '@reduxjs/toolkit': ^1.9.2
-      '@tanstack/react-query': ^4.24.4
       '@types/node': ^17.0.12
       '@types/react': ^18.0.22
       '@types/react-dom': ^18.0.7
@@ -209,15 +210,15 @@ importers:
       framer-motion: ^8.5.2
       next: ^13.1.1
       postcss: ^8.4.21
+      queries: workspace:^0.0.0
       query-string: ^8.1.0
-      rc-util: ^5.14.0
+      rc-util: ^5.28.0
       react: 18.2.0
       react-device-detect: ^2.2.3
       react-dom: 18.2.0
       react-hook-form: ^7.42.1
       react-icons: ^4.7.1
       react-qr-code: ^2.0.11
-      react-query: ^3.39.3
       react-query-devtools: ^2.6.3
       react-redux: ^8.0.5
       react-scrollbar: ^0.5.6
@@ -237,11 +238,11 @@ importers:
       '@mui/material': 5.11.8_rqh7qj4464ntrqrt6banhaqg4q
       '@next/font': 13.1.6
       '@reduxjs/toolkit': 1.9.2_k4ae6lp43ej6mezo3ztvx6pykq
-      '@tanstack/react-query': 4.24.4_biqbaboplfbrettd7655fr4n2y
       antd: 5.1.6_biqbaboplfbrettd7655fr4n2y
       axios: 1.2.5
       framer-motion: 8.5.2_biqbaboplfbrettd7655fr4n2y
       next: 13.1.2_pjwopsidmaokadturxaafygjp4
+      queries: link:../../packages/queries
       query-string: 8.1.0
       rc-util: 5.28.0_biqbaboplfbrettd7655fr4n2y
       react: 18.2.0
@@ -250,8 +251,7 @@ importers:
       react-hook-form: 7.42.1_react@18.2.0
       react-icons: 4.7.1_react@18.2.0
       react-qr-code: 2.0.11_react@18.2.0
-      react-query: 3.39.3_biqbaboplfbrettd7655fr4n2y
-      react-query-devtools: 2.6.3_ldexeid5tkqi33rnjpayttgy5i
+      react-query-devtools: 2.6.3_e6lhshrhwsb2t5cu2ofxv35xe4
       react-redux: 8.0.5_r7hvvldj6g2s5chfsdsflfq664
       react-scrollbar: 0.5.6_sh5qlbywuemxd2y3xkrw2y2kr4
       redux: 4.2.1
@@ -313,6 +313,31 @@ importers:
       eslint-config-turbo: 0.0.8_eslint@7.32.0
       eslint-plugin-react: 7.31.8_eslint@7.32.0
     devDependencies:
+      typescript: 4.9.4
+
+  packages/queries:
+    specifiers:
+      '@types/react': ^18.0.17
+      '@types/react-dom': ^18.0.6
+      axios: ^1.2.5
+      common: workspace:^0.0.0
+      eslint: ^7.32.0
+      eslint-config-custom: workspace:*
+      react: ^18.2.0
+      react-query: ^3.39.3
+      tsconfig: workspace:*
+      typescript: ^4.5.2
+    dependencies:
+      axios: 1.2.5
+      react-query: 3.39.3_react@18.2.0
+    devDependencies:
+      '@types/react': 18.0.27
+      '@types/react-dom': 18.0.10
+      common: link:../common
+      eslint: 7.32.0
+      eslint-config-custom: link:../eslint-config-custom
+      react: 18.2.0
+      tsconfig: link:../tsconfig
       typescript: 4.9.4
 
   packages/tsconfig:
@@ -4499,28 +4524,6 @@ packages:
     resolution: {integrity: sha512-4C7nX/dvpzB7za4Ql9K81xK3HPxCpHMgwTZVyf+9JQ6VUbn9jjZVN7/Nkdz/Ugzs2CSjqnL/UPXroiVBVHUWUw==}
     dependencies:
       tslib: 2.4.1
-    dev: false
-
-  /@tanstack/query-core/4.24.4:
-    resolution: {integrity: sha512-9dqjv9eeB6VHN7lD3cLo16ZAjfjCsdXetSAD5+VyKqLUvcKTL0CklGQRJu+bWzdrS69R6Ea4UZo8obHYZnG6aA==}
-    dev: false
-
-  /@tanstack/react-query/4.24.4_biqbaboplfbrettd7655fr4n2y:
-    resolution: {integrity: sha512-RpaS/3T/a3pHuZJbIAzAYRu+1nkp+/enr9hfRXDS/mojwx567UiMksoqW4wUFWlwIvWTXyhot2nbIipTKEg55Q==}
-    peerDependencies:
-      react: ^16.8.0 || ^17.0.0 || ^18.0.0
-      react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
-      react-native: '*'
-    peerDependenciesMeta:
-      react-dom:
-        optional: true
-      react-native:
-        optional: true
-    dependencies:
-      '@tanstack/query-core': 4.24.4
-      react: 18.2.0
-      react-dom: 18.2.0_react@18.2.0
-      use-sync-external-store: 1.2.0_react@18.2.0
     dev: false
 
   /@testing-library/dom/8.20.0:
@@ -13349,7 +13352,7 @@ packages:
       react: 18.2.0
     dev: false
 
-  /react-query-devtools/2.6.3_ldexeid5tkqi33rnjpayttgy5i:
+  /react-query-devtools/2.6.3_e6lhshrhwsb2t5cu2ofxv35xe4:
     resolution: {integrity: sha512-pSvWq5Q8zgIP7QbF0+4BerCHLaLn5HPzce7sIXYqz4XEizcYJHkJtcrAwn6bUkCu5JmAt1Y7fViQtZwOIG2SYA==}
     peerDependencies:
       react: ^16.6.3 || ^17.0.0
@@ -13357,7 +13360,24 @@ packages:
     dependencies:
       match-sorter: 4.2.1
       react: 18.2.0
-      react-query: 3.39.3_biqbaboplfbrettd7655fr4n2y
+      react-query: 2.26.4_biqbaboplfbrettd7655fr4n2y
+    dev: false
+
+  /react-query/2.26.4_biqbaboplfbrettd7655fr4n2y:
+    resolution: {integrity: sha512-sXGG0gh1ah11AcfptYOCRpGDoYMnssq6riQUpQaLSM2EOodVkexp3zNLk1MFDgfRGuXQst40Tnu17oNwni66aA==}
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0
+      react-dom: '*'
+      react-native: '*'
+    peerDependenciesMeta:
+      react-dom:
+        optional: true
+      react-native:
+        optional: true
+    dependencies:
+      '@babel/runtime': 7.20.7
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
     dev: false
 
   /react-query/3.39.3_biqbaboplfbrettd7655fr4n2y:
@@ -13377,6 +13397,24 @@ packages:
       match-sorter: 6.3.1
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
+    dev: false
+
+  /react-query/3.39.3_react@18.2.0:
+    resolution: {integrity: sha512-nLfLz7GiohKTJDuT4us4X3h/8unOh+00MLb2yJoGTPjxKs2bc1iDhkNx2bd5MKklXnOD3NrVZ+J2UXujA5In4g==}
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0
+      react-dom: '*'
+      react-native: '*'
+    peerDependenciesMeta:
+      react-dom:
+        optional: true
+      react-native:
+        optional: true
+    dependencies:
+      '@babel/runtime': 7.20.7
+      broadcast-channel: 3.7.0
+      match-sorter: 6.3.1
+      react: 18.2.0
     dev: false
 
   /react-redux/8.0.5_r7hvvldj6g2s5chfsdsflfq664:

@@ -30,5 +30,5 @@ export type IProductCreate = {
 
 
 export type IProductParams = Partial<
-  Pick<IProductCreate, "isMetch" | "isHighlight"> & { categories: string }
+  Pick<IProductCreate, "title" | "isHighlight"> & { categories: string }
 >;

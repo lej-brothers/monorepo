@@ -27,6 +27,7 @@
     "recoil-nexus": "^0.4.0",
     "typescript": "^4.9.4",
     "web-vitals": "^2.1.4",
+    "queries": "workspace:^0.0.0",
     "yup": "^0.32.11"
   },
   "scripts": {

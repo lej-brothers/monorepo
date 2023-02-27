@@ -7,7 +7,7 @@ import { PROMOTION_MODAL } from "./constants";
 import usePromotions from "../../utils/usePromotions";
 import { CreateModal } from "./components";
 import { IPromotion, IPromotionCreate } from "common";
-import PromotionModule from "../../modules/promotion";
+import PromotionModule from "../../services/promotion";
 import CategoryCreateModal from "../Product/components/CategoryCreateModal";
 
 const { Column } = Table;

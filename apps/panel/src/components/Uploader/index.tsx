@@ -12,7 +12,7 @@ import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
 import { Button, Progress, Tooltip, UploadFile, UploadProps } from "antd";
 import { DndProvider, useDrag, useDrop } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
-import ImageModule from "../../modules/image";
+import ImageModule from "../../services/image";
 import { RcFile } from "antd/es/upload";
 import { Upload } from "./styles";
 

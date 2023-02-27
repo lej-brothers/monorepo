@@ -12,7 +12,7 @@ import { PRODUCT_DRAWER, PRODUCT_MODAL } from "./constants";
 import { Container } from "./styles";
 import { ICategory, IProduct, IProductCreate } from "common";
 import { FormattedMessage } from "react-intl";
-import ProductModule from "../../modules/product";
+import ProductModule from "../../services/product";
 import useProducts from "../../utils/useProducts";
 import CategoryCreateModal from "./components/CategoryCreateModal";
 import ProductCreateDrawer from "./components/CreateDrawer";

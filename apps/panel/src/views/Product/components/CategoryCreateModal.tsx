@@ -4,7 +4,7 @@ import { useForm, FormProvider } from "react-hook-form";
 import { FormattedMessage } from "react-intl";
 import { Input, Textarea } from "../../../components";
 import { ICategory, ICategoryCreate } from "common";
-import CategoryModule from "../../../modules/category";
+import CategoryModule from "../../../services/category";
 
 interface Props {
   open: boolean;

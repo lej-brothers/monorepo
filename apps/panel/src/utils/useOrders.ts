@@ -1,6 +1,6 @@
 import { useQuery } from "react-query";
 import { IOrder, IPaginated } from "common";
-import OrderModule from "../modules/order";
+import OrderModule from "../services/order";
 
 const useOrders = () =>
   useQuery<IPaginated<IOrder>>("orders", () =>

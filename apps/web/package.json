@@ -14,7 +14,6 @@
     "@mui/material": "^5.11.8",
     "@next/font": "^13.1.6",
     "@reduxjs/toolkit": "^1.9.2",
-    "@tanstack/react-query": "^4.24.4",
     "antd": "^5.1.6",
     "axios": "^1.2.5",
     "framer-motion": "^8.5.2",
@@ -27,7 +26,6 @@
     "react-hook-form": "^7.42.1",
     "react-icons": "^4.7.1",
     "react-qr-code": "^2.0.11",
-    "react-query": "^3.39.3",
     "react-query-devtools": "^2.6.3",
     "react-redux": "^8.0.5",
     "react-scrollbar": "^0.5.6",
@@ -37,8 +35,8 @@
     "redux-saga": "^1.2.2",
     "sharp": "^0.31.3",
     "styled-components": "^5.3.6",
-    "usehooks-ts": "^2.9.1",
-    "rc-util": "^5.14.0"
+    "queries": "workspace:^0.0.0",
+    "usehooks-ts": "^2.9.1"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",

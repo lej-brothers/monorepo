@@ -1,5 +1,5 @@
 import { selector } from "recoil";
-import CategoryModule from "../modules/category";
+import CategoryModule from "../services/category";
 
 const categoryQuery = selector({
   key: "categoryQuery",

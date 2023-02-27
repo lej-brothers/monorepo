@@ -1,7 +1,7 @@
 import { ICategoryCreate } from "common";
 import requester from "../utils/requester";
 
-const CategoryModule = {
+const CategoryService = {
   list: async (page: number, limit: number) => {
     const params = new URLSearchParams({
       page: String(page),
@@ -18,4 +18,4 @@ const CategoryModule = {
   },
 };
 
-export default CategoryModule;
+export default CategoryService;

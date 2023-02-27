@@ -1,6 +1,6 @@
 import requester from "../utils/requester";
 
-const AuthorizationModule = {
+const AuthorizationService = {
   isAuthorized() {
     const state = sessionStorage.getItem("auth");
     return state === 'true';
@@ -16,4 +16,4 @@ const AuthorizationModule = {
   },
 };
 
-export default AuthorizationModule;
+export default AuthorizationService;

@@ -1,5 +1,5 @@
 import { useQuery } from "react-query";
-import CategoryModule from "../modules/category";
+import CategoryModule from "../services/category";
 import { ICategory, IPaginated } from "common";
 
 const useCategories = () =>

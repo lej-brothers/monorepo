@@ -5,7 +5,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useForm, FormProvider } from "react-hook-form";
 import { Input } from "../../components";
-import AuthorizationModule from "../../modules/authorization";
+import AuthorizationModule from "../../services/auth.service";
 import { useNavigate } from "react-router-dom";
 
 const authFormSchema = yup.object().shape({
