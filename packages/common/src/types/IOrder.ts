@@ -25,9 +25,9 @@ export interface IOrder {
   status: ORDER_STATUS;
 
   /**
-   * 
+   *
    */
-  method: PAYMENT_METHOD
+  method: PAYMENT_METHOD;
 
   /**
    * Delivery Info
@@ -57,3 +57,5 @@ export interface IOrderDeliveryInfo {
   phone: string;
   address: string;
 }
+
+export type IOrderParams = Partial<Pick<IOrder, "code"> & {}>;

@@ -1,6 +1,6 @@
 import Image from "next/image";
-import React, { useEffect, useMemo } from "react";
-
+import React, { ChangeEvent, useState } from "react";
+import { AiFillCheckCircle } from "react-icons/ai";
 import { Collapse } from "@mui/material";
 import { IProduct } from "common";
 import { useForm } from "react-hook-form";
@@ -26,6 +26,7 @@ const ProductInfo: React.FC<ProductInfoProps> = ({ product }) => {
     defaultValues: { grind: GRIND_SIZE.NONE, quantity: 1 },
   });
 
+  const [added, setAdded] = useState(false);
   const { quantity, shouldGrind, grind, notes } = methods.watch();
 
   const { addProduct } = useCart();
@@ -33,18 +34,26 @@ const ProductInfo: React.FC<ProductInfoProps> = ({ product }) => {
   // EVENT HANDLERS
   const updateShouldGrind = (shouldGrind: boolean) => () => {
     methods.setValue("shouldGrind", shouldGrind);
+    setAdded(false);
   };
 
   const updateGrindSize = (value: any) => () => {
     methods.setValue("grind", value as GRIND_SIZE);
+    setAdded(false);
   };
 
   const increaseQuantity = () => {
     methods.setValue("quantity", quantity + 1);
+    setAdded(false);
   };
 
   const decreaseQuantity = () => {
     methods.setValue("quantity", quantity - 1);
+    setAdded(false);
+  };
+
+  const updateNote = (event: ChangeEvent<HTMLTextAreaElement>) => {
+    methods.setValue("notes", event.target.value);
   };
 
   const add = () => {
@@ -52,11 +61,22 @@ const ProductInfo: React.FC<ProductInfoProps> = ({ product }) => {
       _id: product._id!,
       title: product.title,
       description: product.description,
+      categories: product.categories.map(({_id}) => _id),
       price: product.warehourse.price,
+      afterPrice: product.warehourse.price,
       quantity: quantity,
       slug: product.slug,
       notes,
     });
+
+    setAdded(true);
+  };
+
+  const getButtonState = (added: boolean) => {
+    const base = "transition-all flex justify-center items-center ";
+    if (added)
+      return base + " bg-black text-white font-medium py-2 px-4 rounded-full";
+    return base + " bg-white text-black font-medium py-2 px-4 rounded-full";
   };
 
   return (
@@ -145,13 +165,16 @@ const ProductInfo: React.FC<ProductInfoProps> = ({ product }) => {
                 Phin
               </button>
             </div>
-            <textarea
-              onChange={(event) =>
-                methods.setValue("notes", event.target.value)
-              }
-              className="bg-[#efefef] min-h-[60px] appearance-none py-2 px-3 leading-tight focus:outline-none focus:shadow-outline rounded w-[50%]"
-              placeholder="Bạn có thể ghi chú thêm mẫu máy"
-            />
+            <Collapse
+              className={grind === GRIND_SIZE.EXPRESSO ? "mb-5" : ""}
+              in={grind === GRIND_SIZE.EXPRESSO}
+            >
+              <textarea
+                onChange={updateNote}
+                className="bg-[#efefef] min-h-[60px] appearance-none py-2 px-3 leading-tight focus:outline-none focus:shadow-outline rounded w-[50%]"
+                placeholder="Bạn có thể ghi chú thêm mẫu máy"
+              />
+            </Collapse>
           </Collapse>
 
           <div className="flex justify-between w-[360px] flex-nowrap items-center mb-2">
@@ -177,9 +200,11 @@ const ProductInfo: React.FC<ProductInfoProps> = ({ product }) => {
             <div className="flex-1 flex justify-center items-center">
               <button
                 onClick={add}
-                className="bg-white text-black font-medium py-2 px-4 rounded-full"
+                className={getButtonState(added)}
+                disabled={added}
               >
-                Thêm vào giỏ hàng
+                {added ? "Đã thêm vào giỏ hàng" : "Thêm vào giỏ hàng"}
+                {added && <AiFillCheckCircle className="ml-1 mt-1" />}
               </button>
             </div>
           </div>

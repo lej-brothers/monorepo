@@ -11,7 +11,6 @@ import useCart from "../../hooks/useCart";
 import Link from "next/link";
 import { useDispatch } from "react-redux";
 import { toggleCartDrawer } from "../../reducers/cart/actions";
-// import CartDropdown from "@modules/layout/components/cart-dropdown"
 
 const Navbar = () => {
   const dispatch = useDispatch();
@@ -50,17 +49,13 @@ const Navbar = () => {
   }, [pathname]);
 
   return (
-    <header
-      className={`absolute ${
-        isScrolled ? "inset-y-[10px]" : "inset-y-[10px]"
-      }  z-50 flex justify-center items-center w-full h-[122px]`}
-    >
+    <header className="fixed z-50 flex justify-center items-center w-full h-[122px]">
       <nav
         style={{
           background: "rgb(255,255,255,0.2)",
           boxShadow: "0px 5px 18px 2px rgb(0,0,0,0.1)",
         }}
-        className="flex max-w-2xl backdrop-blur-2xl w-full h-[77px] rounded-full"
+        className="flex max-w-2xl backdrop-blur-2xl w-[100vw] h-[77px] rounded-full"
       >
         <div className="flex flex-1 justify-center items-center">
           <Link href="/">

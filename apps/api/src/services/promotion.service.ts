@@ -1,13 +1,13 @@
 import { IPromotionCreate } from "common";
 import { PaginateOptions } from "mongoose";
-import { Promotion } from "../model/promotion.model";
+import { IPromotionDocument, Promotion } from "../model/promotion.model";
 
 const PromotionService = {
   async get(id: string) {
     return Promotion.findById(id);
   },
   async getByCode(code: string) {
-    return Promotion.findOne({ code });
+    return Promotion.findOne({ code }).populate('products') as any as IPromotionDocument;
   },
   async list(params: PaginateOptions) {
     return Promotion.paginate({}, params);

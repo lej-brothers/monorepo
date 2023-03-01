@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Steps as AntSteps } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 
@@ -14,11 +14,26 @@ interface Props {
   orderId: string;
 }
 const Order: React.FC<Props> = ({ orderId }) => {
-  const { data } = useOrder(orderId, orderId ? 1000 : false);
+  const [refetch, setRefetch] = useState(orderId ? 1000 : false);
+  const { data } = useOrder(orderId, refetch as any);
 
-  const products = data?.cart?.products || [];
   const paying = data?.status === ORDER_STATUS.Draft;
-  const current = paying ? 1 : 3;
+  const delivering = !paying && data?.status !== ORDER_STATUS.Delivery;
+
+  const current = useMemo(() => {
+    if (paying) return 1;
+
+    switch (data?.status) {
+      case ORDER_STATUS.Confirmed:
+        return 2;
+      case ORDER_STATUS.Delivery:
+        return 3;
+    }
+  }, [data]);
+
+  useEffect(() => {
+    if (!paying && !delivering) setRefetch(false);
+  }, [paying, delivering]);
 
   return (
     <>
@@ -60,43 +75,14 @@ const Order: React.FC<Props> = ({ orderId }) => {
           {
             status: !paying ? "finish" : "wait",
             title: "Le J’ gửi hàng cho bạn",
+            icon: delivering && (
+              <div className="rounded-full bg-black w-[32px] flex justify-center items-center h-[32px]">
+                <LoadingOutlined style={{ color: "white" }} />
+              </div>
+            ),
           },
         ]}
       />
-
-      {/* <p className="text-4xl">Đơn hàng</p>
-      <p className="text-sm text-gray-400">#{data?.code}</p>
-
-      {products.map((product) => (
-        <div key={product._id} className="my-6">
-          <OrderProduct editable={false} product={product} />
-        </div>
-      ))}
-
-      <Divider />
-
-      <Steps
-        direction="vertical"
-        current={current}
-        items={[
-          {
-            status: "finish",
-            title: "Tiếp nhận bởi Le J’",
-            description: "Đơn hàng được tiếp nhận bởi Le J’",
-            icon: <CheckCircleFilled />,
-          },
-          {
-            title: "Xác nhận thanh toán",
-            icon: paying ? <LoadingOutlined /> : <CheckCircleFilled />,
-            description: "Xác nhận từ dịch vụ thanh toán",
-          },
-          {
-            status: !paying ? "finish" : "wait",
-            title: "Le J’ gửi hàng cho bạn",
-            icon: !paying && <LoadingOutlined />,
-          },
-        ]}
-      /> */}
     </>
   );
 };

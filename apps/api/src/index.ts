@@ -12,7 +12,7 @@ import { v4 as uuidv4 } from "uuid";
 import MINIO from "./configs/minio";
 import { logger } from "./configs/pino";
 import REDIS_CLIENT from "./configs/redis";
-import { MONGO_URL, SECRET } from "./configs/secrets";
+import { MOMO_BASE_URL, MONGO_URL, SECRET } from "./configs/secrets";
 import ApplicationRouter from "./controllers/index.router";
 import assetCart from "./middlewares/assetCart";
 
@@ -24,13 +24,14 @@ const port = 4000;
 
 mongoose.set("strictQuery", false);
 mongoose.connect(MONGO_URL);
+
 MINIO.getBucketNotification("lej-marketplace");
 
 app.use(
   cors({
     credentials: true,
-    origin: ["http://localhost:3000", "http://localhost:4001"],
-    methods: ["POST", "PUT", "GET", "OPTIONS", "DELETE", "HEAD"],
+    origin: ["http://localhost:3000", "http://localhost:4001", MOMO_BASE_URL],
+    methods: ["POST", "PUT", "PATCH", "GET", "OPTIONS", "DELETE", "HEAD"],
     exposedHeaders: ["set-cookie"],
   })
 );

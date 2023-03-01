@@ -45,7 +45,6 @@ const Payment = ({ onChange, onFinish }: Props) => {
     !isMomoLoading && method === PAYMENT_METHOD.MOMO && !momoData;
 
   const onPrevious = () => onChange(ORDER_TABS.USER_INFO);
-  const onNext = () => onChange(ORDER_TABS.DONE);
 
   const onChangeMethod = (key: string | string[]) => {
     if (key[1]) setMethod(key[1] as PAYMENT_METHOD);

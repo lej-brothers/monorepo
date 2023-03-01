@@ -40,7 +40,6 @@ const MomoService = {
     if (!order) return false;
 
     (order as any).momo = (momo as any)._id;
-    console.log(order, momo);
     await order.save();
     return momo;
   },
@@ -61,16 +60,19 @@ const MomoService = {
       category: product.categories
         ?.map((category: any) => category.slug)
         .join(","),
-      price: product.price,
+      price: product.afterPrice,
       currency: "VND",
       quantity: product.quantity,
-      totalPrice: product.price * product.quantity,
+      totalPrice: product.afterPrice * product.quantity,
       imageUrl: product.images[0].url,
     }));
 
     const amount = items.reduce((pre, cur) => {
       return pre + Number(cur.totalPrice);
     }, 0);
+
+    console.log(items, amount)
+
 
     /**
      * Setup Order

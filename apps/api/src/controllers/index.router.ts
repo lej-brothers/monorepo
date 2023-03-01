@@ -5,7 +5,7 @@ import ProductRouter from "./products/_.router";
 import ImageRouter from "./images/_.router";
 import CartRouter from "./cart/_.router";
 import VoidRouter from "./void.router";
-import OrderRouter from "./order/_.router";
+import OrderRouter from "./orders/_.router";
 import IPNRouter from "./ipn/_.router";
 import PromotionRouter from "./promotions/_.router";
 import AuthRouter from "./auth/_.router";

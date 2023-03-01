@@ -8,9 +8,8 @@ import { PaginateOptions } from "mongoose";
 const nanoid = customAlphabet(ALPHABET, 12);
 
 const OrderService = {
-
-  async list(params: PaginateOptions) {
-    return Order.paginate({}, params);
+  async list(query: any = {}, params: PaginateOptions) {
+    return Order.paginate(query, params);
   },
   async get(id: string) {
     const order = await Order.findOne({ _id: id });

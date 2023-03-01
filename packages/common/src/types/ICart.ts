@@ -36,6 +36,12 @@ export interface ICartProduct
   > {
   _id: string;
   price: number;
+  afterPrice: number;
+  categories: string[];
   quantity: number;
   notes: string;
+}
+
+export type ICartCreate = Omit<ICart, 'promotions'> & {
+  promotions: string[]
 }

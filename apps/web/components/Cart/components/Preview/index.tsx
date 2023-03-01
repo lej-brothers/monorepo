@@ -1,7 +1,14 @@
 import { ICart } from "common";
+import { AiOutlineClose } from "react-icons/ai";
 import OrderProduct from "../Product";
 import format from "../../../../utils/format";
 import { ORDER_TABS } from "../../constants";
+import { Button, Input, Tag } from "antd";
+import { ChangeEvent, useEffect, useState } from "react";
+import useCart from "../../../../hooks/useCart";
+import dynamic from "next/dynamic";
+
+const ScrollBar = dynamic(() => import("react-scrollbar"), { ssr: false });
 
 interface Props {
   cart: ICart;
@@ -9,28 +16,85 @@ interface Props {
 }
 
 const Preview = ({ cart, onChange }: Props) => {
+  const { addPromotion, removePromotion } = useCart();
+  const [discountInput, setDiscountInput] = useState("");
+
   const products = cart?.products || [];
 
   const totalPrice = products.reduce((pre, cur) => {
-    return pre + cur.price * cur.quantity;
+    return pre + cur.afterPrice * cur.quantity;
   }, 0);
 
   const totalPriceFormatted = format("vi-VN", "VND", totalPrice);
 
   const onNext = () => onChange(ORDER_TABS.USER_INFO);
 
+  const onDiscountInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setDiscountInput(event.target.value);
+  };
+
+  const onAddPromotion = () => {
+    addPromotion(discountInput);
+    setDiscountInput("");
+  };
+
+  const onRemovePromotion = (code: string) => {
+    removePromotion(code);
+  };
+
+  useEffect(() => {
+    return () => {
+      setDiscountInput("");
+    };
+  }, []);
+
   return (
-    <>
-      <div className="px-[74px]">
-        <p className="text-4xl">Giỏ hàng</p>
+    <div className="relative max-h-[100vh]">
+      <ScrollBar
+        smoothScrolling
+        className="px-[74px] h-[calc(100vh_-_130px)]"
+      >
+        <p className="text-4xl mb-3">Giỏ hàng</p>
+
+        <div className="flex">
+          <Input
+            value={discountInput}
+            onChange={onDiscountInputChange}
+            placeholder="Nhập mã giảm giá ở đây"
+          />
+          <Button onClick={onAddPromotion} className="ml-8">
+            Sử dụng
+          </Button>
+        </div>
+
+        <div className="flex mt-3">
+          {cart?.promotions.map((promotion) => (
+            <Tag
+              className="flex bg-black text-white items-center"
+              onClose={onRemovePromotion.bind(this, promotion.code)}
+              closeIcon={<AiOutlineClose color="white" />}
+              closable
+            >
+              <span>{promotion.code}</span>
+            </Tag>
+          ))}
+        </div>
+
         {products.map((product) => (
           <div key={product._id} className="my-6">
             <OrderProduct editable={true} product={product} />
           </div>
         ))}
-      </div>
+
+        {!products.length && (
+          <p className="text-xl select-none text-gray-300 mt-5">
+            Thêm sản phẩm vào giỏ hàng và chúng sẽ hiển thị ở đây.
+          </p>
+        )}
+      </ScrollBar>
       {/* FOOTER */}
-      <div className="absolute text-white flex bg-black bottom-0 rounded-t-2xl left-0 right-0 w-full h-[100px]">
+
+      <div className="absolute text-white flex bg-black -bottom-[52px] rounded-t-2xl left-0 right-0 w-full h-[100px]">
         <div className="flex justify-between mx-[64px] my-[28px] text-white w-full">
           <div className="flex flex-col">
             <p className="font-medium text-sm">Tổng tiền:</p>
@@ -46,7 +110,7 @@ const Preview = ({ cart, onChange }: Props) => {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

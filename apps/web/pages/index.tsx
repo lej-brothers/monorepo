@@ -5,6 +5,9 @@ import Collection from "../components/Collection";
 import FeaturedProducts from "../components/FeaturedProducts";
 import { ReactElement } from "react";
 import Layout from "../components/Layout";
+import dynamic from "next/dynamic";
+
+const ScrollBar = dynamic(() => import("react-scrollbar"), { ssr: false });
 
 export default function Web() {
   const products = useProducts();
@@ -12,7 +15,7 @@ export default function Web() {
   const first3 = products.data?.docs?.slice(0, 3);
 
   return (
-    <>
+    <ScrollBar smoothScrolling className="h-[100vh]">
       <section
         style={{
           backgroundRepeat: "no-repeat",
@@ -37,7 +40,7 @@ export default function Web() {
           <Collection />
         </div>
       </section>
-    </>
+    </ScrollBar>
   );
 }
 

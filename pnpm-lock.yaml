@@ -153,7 +153,6 @@ importers:
       react-dom: ^18.2.0
       react-hook-form: ^7.42.1
       react-intl: ^6.2.6
-      react-query: ^3.39.3
       react-router-dom: ^6.8.0
       react-scripts: 5.0.1
       recoil: ^0.7.6
@@ -183,7 +182,6 @@ importers:
       react-dom: 18.2.0_react@18.2.0
       react-hook-form: 7.42.1_react@18.2.0
       react-intl: 6.2.6_o77wnou4wwnegu5woljtklrzru
-      react-query: 3.39.3_biqbaboplfbrettd7655fr4n2y
       react-router-dom: 6.8.0_biqbaboplfbrettd7655fr4n2y
       react-scripts: 5.0.1_nzrq25kkg3fxd4nlhpjs3z57um
       recoil: 0.7.6_biqbaboplfbrettd7655fr4n2y
@@ -13483,25 +13481,6 @@ packages:
         optional: true
     dependencies:
       '@babel/runtime': 7.20.7
-      react: 18.2.0
-      react-dom: 18.2.0_react@18.2.0
-    dev: false
-
-  /react-query/3.39.3_biqbaboplfbrettd7655fr4n2y:
-    resolution: {integrity: sha512-nLfLz7GiohKTJDuT4us4X3h/8unOh+00MLb2yJoGTPjxKs2bc1iDhkNx2bd5MKklXnOD3NrVZ+J2UXujA5In4g==}
-    peerDependencies:
-      react: ^16.8.0 || ^17.0.0 || ^18.0.0
-      react-dom: '*'
-      react-native: '*'
-    peerDependenciesMeta:
-      react-dom:
-        optional: true
-      react-native:
-        optional: true
-    dependencies:
-      '@babel/runtime': 7.20.7
-      broadcast-channel: 3.7.0
-      match-sorter: 6.3.1
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
     dev: false

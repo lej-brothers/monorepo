@@ -1,4 +1,4 @@
-import { ICart, ICartProduct } from "common";
+import { ICart, ICartCreate, ICartProduct } from "common";
 import CartModule from "../modules/cart.module";
 import { useMutation, useQuery } from "react-query";
 import { useMemo } from "react";
@@ -18,24 +18,36 @@ const useCart = () => {
   const totalAmount = useMemo(() => {
     const product = cartData?.products || [];
     return product.reduce((pre, cur) => {
-      return pre + cur.price * cur.quantity;
+      return pre + cur.afterPrice * cur.quantity;
     }, 0);
   }, [cartData]);
 
   const formattedTotalAmount = format("vi-VN", "VND", totalAmount);
 
-  const { mutateAsync } = useMutation<ICart, unknown, ICart>(
+  const { mutateAsync } = useMutation<ICart, unknown, ICartCreate>(
     "update-cart",
     CartModule.update
   );
 
   const addProduct = async (newProduct: ICartProduct) => {
     if (!cartData) return;
+
     const cleanedProducts = cartData.products.filter(
       (product) => product._id !== newProduct._id
     );
-    cartData.products = [...cleanedProducts, newProduct];
-    await mutateAsync(cartData);
+
+    const promotionCodes = cartData.promotions.map(
+      (promotion) => promotion.code
+    );
+
+    const payload: ICartCreate = {
+      _id: cartData._id,
+      sessionId: cartData.sessionId,
+      products: [...cleanedProducts, newProduct],
+      promotions: promotionCodes,
+    };
+
+    await mutateAsync(payload);
     await refetch();
   };
 
@@ -45,9 +57,56 @@ const useCart = () => {
     const cleanedProducts = cartData.products.filter(
       (product) => product._id !== id
     );
-    cartData.products = cleanedProducts;
+    const promotionCodes = cartData.promotions.map(
+      (promotion) => promotion.code
+    );
 
-    await mutateAsync(cartData);
+    const payload: ICartCreate = {
+      _id: cartData._id,
+      sessionId: cartData.sessionId,
+      products: cleanedProducts,
+      promotions: promotionCodes,
+    };
+
+    await mutateAsync(payload);
+    await refetch();
+  };
+
+  const addPromotion = async (code: string) => {
+    if (!cartData) return;
+
+    const promotionCodes = cartData.promotions.map(
+      (promotion) => promotion.code
+    );
+
+    const payload: ICartCreate = {
+      _id: cartData._id,
+      sessionId: cartData.sessionId,
+      products: cartData.products,
+      promotions: [...promotionCodes, code],
+    };
+
+    await mutateAsync(payload);
+    await refetch();
+  };
+
+  const removePromotion = async (code: string) => {
+    if (!cartData) return;
+
+    const promotions = cartData.promotions.filter(
+      (promotion) => promotion.code !== code
+    );
+
+    const promotionCodes = promotions.map((promotion) => promotion.code);
+
+    const payload: ICartCreate = {
+      _id: cartData._id,
+      sessionId: cartData.sessionId,
+      products: cartData.products,
+      promotions: [...promotionCodes],
+    };
+
+    await mutateAsync(payload);
     await refetch();
   };
 
@@ -58,8 +117,18 @@ const useCart = () => {
       if (product._id === id) product.quantity = quantity;
       return product;
     });
+    const promotionCodes = cartData.promotions.map(
+      (promotion) => promotion.code
+    );
 
-    await mutateAsync({ ...cartData, products: updatedProducts });
+    const payload: ICartCreate = {
+      _id: cartData._id,
+      sessionId: cartData.sessionId,
+      products: updatedProducts,
+      promotions: promotionCodes,
+    };
+
+    await mutateAsync(payload);
     await refetch();
   };
 
@@ -72,6 +141,8 @@ const useCart = () => {
     addProduct,
     removeProduct,
     updateQuantity,
+    removePromotion,
+    addPromotion,
   };
 };
 
