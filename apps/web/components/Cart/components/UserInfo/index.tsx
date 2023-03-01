@@ -1,7 +1,7 @@
 import { AiFillCaretLeft, AiFillCaretRight } from "react-icons/ai";
 import Input from "../../../Input";
 import { ORDER_TABS } from "../../constants";
-import { useFormContext } from "react-hook-form";
+import { useFormContext, useFormState } from "react-hook-form";
 import { IMomoForm } from "common";
 import { useEffect } from "react";
 import useCart from "../../../../hooks/useCart";
@@ -12,11 +12,13 @@ interface Props {
 
 const UserInfo = ({ onChange }: Props) => {
   const methods = useFormContext<IMomoForm>();
+  const formState = useFormState();
+
   const { cart } = useCart();
 
   const products = cart?.products || [];
+  const formValid = formState.isValid;
 
-  const formValid = methods.formState.isValid
 
   const onPrevious = () => onChange(ORDER_TABS.PREVIEW);
   const onNext = () => onChange(ORDER_TABS.PAYMENT);

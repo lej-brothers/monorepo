@@ -19,6 +19,7 @@ const CartDrawer = () => {
       bodyStyle={{ padding: 0 }}
       headerStyle={{ display: "none" }}
       onClose={toggle}
+      destroyOnClose
     >
       <Cart />
     </Drawer>
