@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc -p tsconfig.json",
-    "start": "node index.js",
+    "start": "node build/index.js",
     "dev": "ts-node-dev src/index.ts"
   },
   "keywords": [],
@@ -44,10 +44,11 @@
     "passport-local": "^1.0.0",
     "pino-pretty": "^9.1.1",
     "redis": "^4.5.1",
-    "sib-api-v3-typescript": "^2.2.2",
     "slug": "^8.2.2",
     "ts-node-dev": "^2.0.0",
     "uuid": "^9.0.0",
+    "webpack": "^5.75.0",
+    "webpack-cli": "^5.0.1",
     "winston": "^3.8.2",
     "yup": "^0.32.11"
   },

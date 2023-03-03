@@ -1,9 +1,9 @@
-import SibApiV3Sdk from "@sendinblue/client";
+import { TransactionalEmailsApi, TransactionalEmailsApiApiKeys } from "@sendinblue/client";
 import { SEND_IN_BLUE_KEY } from "./secrets";
 
-export const transactions = new SibApiV3Sdk.TransactionalEmailsApi();
+export const transactions = new TransactionalEmailsApi();
 
 transactions.setApiKey(
-  SibApiV3Sdk.TransactionalEmailsApiApiKeys.apiKey,
+  TransactionalEmailsApiApiKeys.apiKey,
   SEND_IN_BLUE_KEY
 );

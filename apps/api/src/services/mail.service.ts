@@ -1,7 +1,7 @@
 import fs from "fs";
 import path from "path";
 import ejs from "ejs";
-import * as SibApiV3Sdk from "sib-api-v3-typescript";
+import { SendSmtpEmail } from "@sendinblue/client";
 import { transactions } from "../configs/sib";
 import { IOrderDocument } from "../model/order.model";
 
@@ -16,7 +16,7 @@ const MailService = {
       ...order.toJSON(),
     });
 
-    let sendSmtpEmail = new SibApiV3Sdk.SendSmtpEmail();
+    let sendSmtpEmail = new SendSmtpEmail();
 
     sendSmtpEmail.subject = `Thông báo đơn hàng số: ${order.code}`;
     sendSmtpEmail.htmlContent = html;

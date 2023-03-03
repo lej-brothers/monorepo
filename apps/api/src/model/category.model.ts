@@ -3,7 +3,7 @@ import paginate from "mongoose-paginate-v2";
 
 import { ICategory } from "common";
 
-interface ICategoryDocument extends Omit<ICategory, "_id">, Document {}
+export interface ICategoryDocument extends Omit<ICategory, "_id">, Document {}
 
 const CategorySchema = new Schema(
   {
