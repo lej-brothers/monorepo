@@ -11,11 +11,17 @@ const controller = async (req: Request, res: Response) => {
   const { deliveryInfo } = req.body;
   const cart = await CartService.get(req.sessionID);
 
+  const totalAmount = cart.products.reduce(
+    (pre, cur) => pre + cur.afterPrice,
+    0
+  );
+
   const order = await OrderService.create({
     cart: cart.toJSON(),
     status: ORDER_STATUS.Draft,
     method: PAYMENT_METHOD.MOMO,
     deliveryInfo,
+    totalAmount,
   });
 
   const response = await MomoService.create(order, cart);

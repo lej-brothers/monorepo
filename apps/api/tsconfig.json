@@ -4,7 +4,7 @@
     "baseUrl": "./src"
   },
   "include": [
-    ".",
+    "./src",
   ],
   "typeRoots": [
     "./src/index.d.ts"
