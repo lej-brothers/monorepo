@@ -1,16 +1,18 @@
 "use client";
 
-import Image from "next/image";
 import { Badge } from "antd";
+import Image from "next/image";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { FaSearch, FaShoppingCart } from "react-icons/fa";
 
-import LeJCompactLogo from "../../public/lej-compact-logo.png";
-import useCart from "../../hooks/useCart";
 import Link from "next/link";
 import { useDispatch } from "react-redux";
+import styled from "styled-components";
+import useCart from "../../hooks/useCart";
+import LeJCompactLogo from "../../public/lej-compact-logo.png";
 import { toggleCartDrawer } from "../../reducers/cart/actions";
+import { toggleSearchDrawer } from "../../reducers/search/actions";
 
 const Navbar = () => {
   const dispatch = useDispatch();
@@ -19,8 +21,12 @@ const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const { cart } = useCart();
 
-  const toggle = () => {
+  const toggleCart = () => {
     dispatch(toggleCartDrawer());
+  };
+
+  const toggleSearch = () => {
+    dispatch(toggleSearchDrawer());
   };
 
   const products = cart?.products || [];
@@ -45,6 +51,7 @@ const Navbar = () => {
   }, [isHome]);
 
   useEffect(() => {
+    console.log(pathname);
     pathname === "/" ? setIsHome(true) : setIsHome(false);
   }, [pathname]);
 
@@ -64,26 +71,35 @@ const Navbar = () => {
         </div>
         <div className="flex justify-start space-x-5 items-center flex-[4]">
           <Link href="/products">
-            <button className="btn px-8 bg-white rounded-full h-[54px] flex justify-center items-center">
+            <Button
+              active={pathname.includes("/products")}
+              className="btn px-8 bg-white rounded-full h-[54px] flex justify-center items-center"
+            >
               Sản phẩm
-            </button>
+            </Button>
           </Link>
           <Link href="/about">
-            <button className="btn px-8 bg-white rounded-full h-[54px] flex justify-center items-center">
+            <Button
+              active={pathname.includes("/about")}
+              className="btn px-8 bg-white rounded-full h-[54px] flex justify-center items-center"
+            >
               Về chúng tôi
-            </button>
+            </Button>
           </Link>
-          <button className="btn bg-white rounded-full h-[54px] w-[54px] flex justify-center items-center">
+          <Button
+            onClick={toggleSearch}
+            className="btn bg-white rounded-full h-[54px] w-[54px] flex justify-center items-center"
+          >
             <FaSearch size={20} />
-          </button>
-          <button
-            onClick={toggle}
+          </Button>
+          <Button
+            onClick={toggleCart}
             className="btn bg-white rounded-full h-[54px] w-[54px] flex justify-center items-center"
           >
             <Badge size="small" count={products.length || 0}>
               <FaShoppingCart size={20} />
             </Badge>
-          </button>
+          </Button>
         </div>
       </nav>
     </header>
@@ -91,3 +107,9 @@ const Navbar = () => {
 };
 
 export default Navbar;
+
+const Button = styled.button<{ active?: boolean }>`
+  transition: 250ms all;
+  background: ${(props) => (props.active ? "black" : "white")};
+  color: ${(props) => (props.active ? "#ffffff" : "black")};
+`;

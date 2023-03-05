@@ -1,5 +1,6 @@
 import { FiPlus, FiMinus, FiTrash2 } from "react-icons/fi";
 import { FaTrash } from "react-icons/fa";
+import Counter from "../Counter";
 
 interface Props {
   value: number;
@@ -58,7 +59,9 @@ const Ratio = ({
           <FiMinus fontSize={18} />
         )}
       </div>
-      <span className="font-thin">{format ? format(value) : value}</span>
+      <span className="font-thin">
+        {format ? format(value) : <Counter from={0} to={value} />}
+      </span>
       <div
         onClick={onPlus}
         className="flex transition-colors cursor-pointer border-[1px] hover:border-black bg-[#efefef] active:bg-[#d1d0d0] border-white justify-center items-center p-[7px] rounded-full"

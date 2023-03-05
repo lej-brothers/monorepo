@@ -18,9 +18,11 @@
     "axios": "^1.2.5",
     "framer-motion": "^8.5.2",
     "next": "^13.1.1",
+    "queries": "workspace:^0.0.0",
     "query-string": "^8.1.0",
     "rc-util": "^5.28.0",
     "react": "18.2.0",
+    "react-animejs": "^0.5.6",
     "react-device-detect": "^2.2.3",
     "react-dom": "18.2.0",
     "react-hook-form": "^7.42.1",
@@ -35,7 +37,6 @@
     "redux-saga": "^1.2.2",
     "sharp": "^0.31.3",
     "styled-components": "^5.3.6",
-    "queries": "workspace:^0.0.0",
     "usehooks-ts": "^2.9.1"
   },
   "devDependencies": {

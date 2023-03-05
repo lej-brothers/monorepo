@@ -14,6 +14,13 @@ const ProductService = {
 
     return product as IProductDocument;
   },
+
+  async isDuplicate(slug: string) {
+    const count = await Product.findOne({ slug }).count()
+    const duplicated = count !== 0
+    return duplicated;
+  },
+
   async getBySlug(slug: string) {
     const product = await Product.findOne({ slug })
       .populate("warehourse")

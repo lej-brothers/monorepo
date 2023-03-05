@@ -129,15 +129,13 @@ const ProductRotator = ({ products }: Props) => {
           </button>
         </div>
         <Link href={`/products/${highlightedProduct.slug}`} passHref>
-          <div
-            className="flex w-[300px] grow-0 shrink-0 break-words flex-col justify-center items-center"
-          >
+          <div className="flex w-[300px] grow-0 shrink-0 break-words flex-col justify-center items-center">
             <motion.p
               className="text-[#CC8181] font-normal text-sm mb-1"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
             >
-              {highlightedProduct.description}
+              {highlightedProduct.details}
             </motion.p>
             <motion.p
               className="text-base font-medium mb-1"
@@ -151,7 +149,7 @@ const ProductRotator = ({ products }: Props) => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
             >
-              {`${formatedPrice} VND / 100g`}
+              {formatedPrice} VND
             </motion.p>
           </div>
         </Link>

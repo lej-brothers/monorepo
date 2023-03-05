@@ -15,7 +15,7 @@ const validations = [
 const controller = async (req: Request, res: Response) => {
   const payloads = req.body;
   payloads.slug = slug(payloads.title);
-  const duplicated = await ProductService.getBySlug(payloads.slug);
+  const duplicated = await ProductService.isDuplicate(payloads.slug);
   if (duplicated) return res.status(400).json({ error: "Product Duplicated" });
   const product = await ProductService.create(payloads);
   res.send(product.toJSON());

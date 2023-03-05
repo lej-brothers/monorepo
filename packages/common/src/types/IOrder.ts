@@ -33,7 +33,7 @@ export interface IOrder {
    * Delivery Info
    */
 
-  deliveryInfo?: IOrderDeliveryInfo;
+  deliveryInfo: IOrderDeliveryInfo;
 
   /**
    * Either user paid for this order or not

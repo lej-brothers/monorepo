@@ -147,13 +147,13 @@ const ProductInfo: React.FC<ProductInfoProps> = ({ product }) => {
             <div className="flex mb-2">
               <button
                 className={`w-[142px] transition-[border] bg-[#efefef] hover:border-black border-[1px] font-medium mr-3 h-[56px] rounded-lg flex justify-center btn items-center ${
-                  grind === GRIND_SIZE.EXPRESSO
+                  grind === GRIND_SIZE.ESPRESSO
                     ? "border-black"
                     : "border-white"
                 }`}
-                onClick={updateGrindSize(GRIND_SIZE.EXPRESSO)}
+                onClick={updateGrindSize(GRIND_SIZE.ESPRESSO)}
               >
-                Expresso
+                Espresso
               </button>
 
               <button
@@ -166,8 +166,8 @@ const ProductInfo: React.FC<ProductInfoProps> = ({ product }) => {
               </button>
             </div>
             <Collapse
-              className={grind === GRIND_SIZE.EXPRESSO ? "mb-5" : ""}
-              in={grind === GRIND_SIZE.EXPRESSO}
+              className={grind === GRIND_SIZE.ESPRESSO ? "mb-5" : ""}
+              in={grind === GRIND_SIZE.ESPRESSO}
             >
               <textarea
                 onChange={updateNote}

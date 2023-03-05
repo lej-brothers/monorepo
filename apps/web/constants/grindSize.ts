@@ -1,6 +1,6 @@
 enum GRIND_SIZE {
   NONE = 0,
-  EXPRESSO = 1,
+  ESPRESSO = 1,
   FILTER = 2,
 }
 
