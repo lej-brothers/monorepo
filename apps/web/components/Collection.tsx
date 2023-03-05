@@ -6,7 +6,7 @@ import CafeIcon from "../public/cafe-icon.png";
 
 const Collection = () => {
   return (
-    <div className="flex flex-col items-center justify-center w-full h-[422px]">
+    <div className="flex flex-col items-center justify-center w-full">
       <span className="text-xl mb-8 font-normal">Bộ sưu tập</span>
       <div className="grid w-full px-[64px] grid-cols-3 gap-4">
         <button className="btn border-[1px] h-[88px] flex flex-col justify-center items-center border-black rounded">

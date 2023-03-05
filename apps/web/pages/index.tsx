@@ -6,6 +6,7 @@ import FeaturedProducts from "../components/FeaturedProducts";
 import { ReactElement } from "react";
 import Layout from "../components/Layout";
 import dynamic from "next/dynamic";
+import Services from "../components/Services";
 
 const ScrollBar = dynamic(() => import("react-scrollbar"), { ssr: false });
 
@@ -40,6 +41,13 @@ export default function Web() {
           <Collection />
         </div>
       </section>
+
+      <section className="flex justify-center bg-black">
+        <div className="flex flex-col justify-center items-center bg-white w-full max-w-3xl h-[100%] py-12">
+          <Services />
+        </div>
+      </section>
+
     </ScrollBar>
   );
 }
