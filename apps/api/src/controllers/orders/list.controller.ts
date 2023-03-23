@@ -10,7 +10,7 @@ const controller = async (req: Request, res: Response) => {
 
   const data = await OrderService.list(
     {
-      status: { $in: [ORDER_STATUS.Confirmed, ORDER_STATUS.Delivery] },
+      status: { $in: [ORDER_STATUS.Confirmed, ORDER_STATUS.Delivery, ORDER_STATUS.ReadyToDelivery] },
     },
     {
       page: Number(page),

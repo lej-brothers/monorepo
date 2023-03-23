@@ -26,13 +26,19 @@
   "paginate.text": "Đang hiển thị {showing} trên {total}",
   "price_drop.tooltip": "Nhỏ hơn 1 là giảm theo phần trăm và lớn hơn 1 là giá giảm trực tiếp",
   "code": "Mã",
+  "order_infomation": "Thông tin đơn hàng [#{id}]",
   "price_drop": "Giá giảm",
   "limit": "Số lần sử dụng",
   "valid": "Thời gian hiệu lực",
   "promotion": "Khuyến mãi",
+  "notes": "Ghi chú",
   "count": "Số lượng",
+  "grind": "Cỡ xay",
   "description": "Mô tả",
   "update": "Cập nhật",
   "create": "Khởi tạo",
-  "name": "Tên"
+  "name": "Tên",
+
+  "button.ready_to_delivery": "Sẵn sàng để giao",
+  "button.deliveried": "Giao hàng thành công"
 }

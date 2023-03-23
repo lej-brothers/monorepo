@@ -1,5 +1,4 @@
 import { Modal } from "antd";
-import { useQueryClient } from "react-query";
 import { useForm, FormProvider } from "react-hook-form";
 import { FormattedMessage } from "react-intl";
 import { Input, Textarea } from "../../../components";
@@ -12,7 +11,6 @@ interface Props {
 }
 
 const CategoryCreateModal = ({ open, onClose }: Props) => {
-  const queryClient = useQueryClient();
   const methods = useForm<ICategoryCreate>();
   const values = methods.watch();
 

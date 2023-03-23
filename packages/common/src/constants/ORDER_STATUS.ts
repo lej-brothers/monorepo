@@ -20,4 +20,8 @@ export enum ORDER_STATUS {
    * Order is sent to delivery
    */
   Delivery = 3,
+  /**
+   * Ready to Delivery
+   */
+  ReadyToDelivery = 4,
 }

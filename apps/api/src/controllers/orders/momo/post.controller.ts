@@ -12,7 +12,7 @@ const controller = async (req: Request, res: Response) => {
   const cart = await CartService.get(req.sessionID);
 
   const totalAmount = cart.products.reduce(
-    (pre, cur) => pre + cur.afterPrice,
+    (pre, cur) => pre + cur.afterPrice * cur.quantity,
     0
   );
 

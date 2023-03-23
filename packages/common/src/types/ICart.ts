@@ -36,6 +36,7 @@ export interface ICartProduct
   > {
   _id: string;
   price: number;
+  grind: string;
   afterPrice: number;
   categories: string[];
   quantity: number;

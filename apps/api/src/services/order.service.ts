@@ -9,7 +9,7 @@ const nanoid = customAlphabet(ALPHABET, 12);
 
 const OrderService = {
   async list(query: any = {}, params: PaginateOptions) {
-    return Order.paginate(query, params);
+    return Order.paginate(query, { ...params, sort: { createdAt: -1 } });
   },
   async get(id: string) {
     const order = await Order.findOne({ _id: id });

@@ -30,7 +30,7 @@ MINIO.getBucketNotification("lej-marketplace");
 app.use(
   cors({
     credentials: true,
-    origin: ["http://localhost:3000", "http://localhost:4001", MOMO_BASE_URL],
+    origin: ["http://localhost:3000", "http://localhost:4001", "http://conmeocam.ddns.net:4001", MOMO_BASE_URL],
     methods: ["POST", "PUT", "PATCH", "GET", "OPTIONS", "DELETE", "HEAD"],
     exposedHeaders: ["set-cookie"],
   })

@@ -7,6 +7,7 @@ import useProduct from "../../hooks/useProduct";
 import ProductModule from "../../modules/product.module";
 import ProductTemplate from "../../components/ProductTemplate";
 import Layout from "../../components/Layout";
+import Head from "next/head";
 
 interface Params extends ParsedUrlQuery {
   handle: string;
@@ -23,6 +24,9 @@ const ProductPage = () => {
 
   return (
     <>
+    <Head>
+      <title>LeJ`Cafe | {data.title}</title>
+    </Head>
       <ProductTemplate product={data} />
     </>
   );

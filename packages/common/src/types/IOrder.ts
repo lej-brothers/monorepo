@@ -4,7 +4,7 @@ import { ICart } from "./ICart";
 import { PAYMENT_METHOD } from "../..";
 
 export interface IOrder {
-  _id?: string;
+  _id: string;
   /**
    * Short ID for this order
    */

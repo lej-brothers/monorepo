@@ -9,6 +9,7 @@ import BeanIcon from "../../public/coffee-beans-icon.png";
 import Ratio from "../Ratio";
 import format from "../../utils/format";
 import useCart from "../../hooks/useCart";
+import { getGrindAttitude } from "./utils";
 
 type ProductInfoProps = {
   product: IProduct;
@@ -62,6 +63,7 @@ const ProductInfo: React.FC<ProductInfoProps> = ({ product }) => {
       title: product.title,
       description: product.description,
       categories: product.categories.map(({_id}) => _id),
+      grind: getGrindAttitude(shouldGrind, grind),
       price: product.warehourse.price,
       afterPrice: product.warehourse.price,
       quantity: quantity,

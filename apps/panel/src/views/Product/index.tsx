@@ -8,6 +8,7 @@ import { FormattedMessage } from "react-intl";
 import CategoryCreateModal from "./components/CategoryCreateModal";
 import ProductCreateDrawer from "./components/CreateDrawer";
 import { ProductQuery } from "queries";
+import format from "../../utils/format";
 
 const { Column } = Table;
 
@@ -77,7 +78,7 @@ const Product: React.FC = () => {
           <Column
             title={<FormattedMessage id="product.create.metch_price" />}
             dataIndex={["warehourse", "price"]}
-            render={(price: number) => price.toLocaleString("en-US")}
+            render={(price: number) => format('vi-VN', 'VND', price)}
           />
         </Table>
         <div className="mt-2 flex justify-end">

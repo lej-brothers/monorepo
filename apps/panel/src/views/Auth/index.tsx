@@ -1,12 +1,12 @@
-import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
 import { Modal } from "antd";
 import React from "react";
-import { yupResolver } from "@hookform/resolvers/yup";
+import { FormProvider, useForm } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
-import { useForm, FormProvider } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+import * as yup from "yup";
 import { Input } from "../../components";
 import AuthorizationModule from "../../services/auth.service";
-import { Navigate, redirect, useNavigate } from "react-router-dom";
 
 const authFormSchema = yup.object().shape({
   token: yup.string().required(),
@@ -28,7 +28,7 @@ const Auth: React.FC = () => {
     const success = await AuthorizationModule.auth(values.token);
     if (!success) return;
     sessionStorage.setItem("auth", `${success}`);
-    redirect('/')
+    navigation("/");
   };
 
   return (
