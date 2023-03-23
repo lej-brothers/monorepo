@@ -7,6 +7,7 @@ import { ReactElement } from "react";
 import Layout from "../components/Layout";
 import dynamic from "next/dynamic";
 import Services from "../components/Services";
+import Head from "next/head";
 
 const ScrollBar = dynamic(() => import("react-scrollbar"), { ssr: false });
 
@@ -16,6 +17,10 @@ export default function Web() {
   const first3 = products.data?.docs?.slice(0, 3);
 
   return (
+   <>
+   <Head>
+    <title>Le J` Cafe - Trang chủ</title>
+   </Head>
     <ScrollBar smoothScrolling className="h-[100vh]">
       <section
         style={{
@@ -49,6 +54,7 @@ export default function Web() {
       </section>
 
     </ScrollBar>
+   </>
   );
 }
 

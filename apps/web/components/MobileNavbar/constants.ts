@@ -1,0 +1,4 @@
+export enum MOBILE_NAVBAR_DRAWER {
+  NONE,
+  NAVIGATION
+}

@@ -51,7 +51,6 @@ const Navbar = () => {
   }, [isHome]);
 
   useEffect(() => {
-    console.log(pathname);
     pathname === "/" ? setIsHome(true) : setIsHome(false);
   }, [pathname]);
 
