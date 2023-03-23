@@ -10,7 +10,7 @@ const Services = () => {
   return (
     <div className="flex flex-col items-center justify-center w-full">
       <span className="text-xl mb-8 font-normal">Dịch vụ</span>
-      <div className="grid w-full px-[64px] grid-cols-3 gap-4">
+      <div className="grid w-full lg:px-[64px] px-[32px] grid-cols-3 gap-4">
         <Link
           className="mt-4 btn flex flex-col h-[88px] justify-center items-center border-[1px] border-black rounded"
           href="/about/setup"

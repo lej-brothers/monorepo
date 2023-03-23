@@ -6,6 +6,7 @@ import { IProduct } from "common";
 
 import format from "../utils/format";
 import Link from "next/link";
+import { isMobile } from "react-device-detect";
 
 export const NEXT_POSITION: { [key: number]: number } = {
   1: 2,
@@ -37,7 +38,20 @@ const ProductRotator = ({ products }: Props) => {
     [products[2]._id!]: 3,
   };
 
-  const POSTION_MAP: { [key: number]: any } = {
+  const POSITION_MAP_MOBILE: { [key: number]: any } = {
+    1: { left: -50, top: -20, width: 110, height: 150, rotate: -25 },
+    2: {
+      zIndex: 1,
+      rotate: 0,
+      left: "calc(50% - 75px)",
+      top: -80,
+      width: 150,
+      height: 190,
+    },
+    3: { right: -50, top: -20, width: 110, height: 150, rotate: 25 },
+  }
+
+  const POSTION_MAP_DESKTOP: { [key: number]: any } = {
     1: { left: 20, top: -20, width: 110, height: 150, rotate: -25 },
     2: {
       zIndex: 1,
@@ -49,6 +63,8 @@ const ProductRotator = ({ products }: Props) => {
     },
     3: { right: 20, top: -20, width: 110, height: 150, rotate: 25 },
   };
+
+  const POSTION_MAP = isMobile ? POSITION_MAP_MOBILE : POSTION_MAP_DESKTOP
 
   const [position, setPosition] = useState(DEFAULT_POSITION);
 
@@ -115,11 +131,13 @@ const ProductRotator = ({ products }: Props) => {
         <img src={products[2].images[0].url!} alt={products[2]._id!} />
       </motion.div>
 
-      <h3 className="lg:mt-[150px] mt-[150px] text-4xl font-medium">
+      {!isMobile && <h3 className="lg:mt-[150px] mt-[150px] text-4xl font-medium">
         Sản phẩm nổi bật
-      </h3>
+      </h3>}
 
-      <div className="select-none w-full flex mt-8">
+      {isMobile && <span className="mt-[100px]"></span>}
+
+      <div className={`select-none w-full flex mt-8 ${isMobile && "mx-5"}`}>
         <div className="flex justify-end items-center flex-1">
           <button
             onClick={onPre}
@@ -129,16 +147,16 @@ const ProductRotator = ({ products }: Props) => {
           </button>
         </div>
         <Link href={`/products/${highlightedProduct.slug}`} passHref>
-          <div className="flex w-[300px] grow-0 shrink-0 break-words flex-col justify-center items-center">
+          <div className={`flex ${isMobile ? 'w-[150px]' : ' w-[300px]'} mx-10 flex-col justify-center items-center`}>
             <motion.p
-              className="text-[#CC8181] font-normal text-sm mb-1"
+              className="text-[#CC8181] text-center font-normal text-xs mb-1"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
             >
               {highlightedProduct.details}
             </motion.p>
             <motion.p
-              className="text-base font-medium mb-1"
+              className="text-xl text-center font-medium mb-1"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
             >
