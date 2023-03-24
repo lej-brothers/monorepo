@@ -6,6 +6,7 @@ import DripperIcon from "../public/dripper-icon.png";
 import useProducts from "../hooks/useProducts";
 import Product from "./Product";
 import { useRouter } from "next/router";
+import { BrowserView, isMobile } from "react-device-detect";
 
 const FeaturedProducts = () => {
   const router = useRouter();
@@ -33,8 +34,14 @@ const FeaturedProducts = () => {
   return (
     <>
       {/* START BLOCK */}
-      <Image src={PhinIcon.src} width={121} height={83} alt="Phin Icon" />
-      <span className="my-10 mb-5 text-3xl text-center">
+      <BrowserView>
+        <Image src={PhinIcon.src} width={121} height={83} alt="Phin Icon" />
+      </BrowserView>
+      <span
+        className={`my-10 mb-5 text-3xl ${
+          isMobile ? "mr-[auto] ml-10 text-left" : "text-center"
+        }`}
+      >
         Tuyệt vời nhất cho
         <br />
         <span className="text-[#CC81AE]">Espresso và Phin</span>
@@ -51,14 +58,21 @@ const FeaturedProducts = () => {
         See More
       </button>
       {/** END BLOCK */}
-      <Image
-        className="mt-20"
-        src={DripperIcon.src}
-        width={121}
-        height={83}
-        alt="dripper Icon"
-      />
-      <span className="my-10 mb-5 text-3xl text-center">
+      <BrowserView>
+        <Image
+          className="mt-20"
+          src={DripperIcon.src}
+          width={121}
+          height={83}
+          alt="dripper Icon"
+        />
+      </BrowserView>
+
+      <span
+        className={`my-10 mb-5 text-3xl ${
+          isMobile ? "mr-[auto] ml-10 text-left" : "text-center"
+        }`}
+      >
         Tuyệt vời nhất cho
         <br />
         <span className="text-[#81BFCC]">Handbrew and Coldbrew</span>

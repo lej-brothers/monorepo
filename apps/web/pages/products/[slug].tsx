@@ -8,6 +8,8 @@ import ProductModule from "../../modules/product.module";
 import ProductTemplate from "../../components/ProductTemplate";
 import Layout from "../../components/Layout";
 import Head from "next/head";
+import { MobileView, BrowserView } from "react-device-detect";
+import MobileProductTemplate from "../../components/MobileProductTemplate";
 
 interface Params extends ParsedUrlQuery {
   handle: string;
@@ -15,7 +17,7 @@ interface Params extends ParsedUrlQuery {
 
 const ProductPage = () => {
   const router = useRouter();
-  
+
   const { slug } = router.query;
 
   const { data } = useProduct(slug as string);
@@ -24,10 +26,15 @@ const ProductPage = () => {
 
   return (
     <>
-    <Head>
-      <title>LeJ`Cafe | {data.title}</title>
-    </Head>
-      <ProductTemplate product={data} />
+      <Head>
+        <title>LeJ`Cafe | {data.title}</title>
+      </Head>
+      <BrowserView>
+        <ProductTemplate product={data} />
+      </BrowserView>
+      <MobileView>
+        <MobileProductTemplate product={data} />
+      </MobileView>
     </>
   );
 };

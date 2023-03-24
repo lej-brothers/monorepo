@@ -9,6 +9,7 @@ import Layout from "../../components/Layout";
 import Product from "../../components/Product";
 import useProducts from "../../hooks/useProducts";
 import BeansIcon from "../../public/beans-icon.png";
+import { BrowserView, MobileView } from "react-device-detect";
 
 const ScrollBar = dynamic(() => import("react-scrollbar"), { ssr: false });
 
@@ -16,7 +17,7 @@ const Store = () => {
   const router = useRouter();
   const { page, categories } = router.query;
 
-  const { data, isSuccess } = useProducts(Number(page), 20, {
+  const { data } = useProducts(Number(page), 20, {
     categories: categories as string,
   });
 
@@ -27,7 +28,7 @@ const Store = () => {
   /** ON-BUTTON-CLICK */
   const onClick = (category?: string) => {
     router.query["categories"] = category;
-    if (!category) delete router.query['categories']
+    if (!category) delete router.query["categories"];
 
     router.push(router);
   };
@@ -56,29 +57,62 @@ const Store = () => {
           <h3 className="font-normal my-4 text-3xl">Cà Phê</h3>
         </div>
 
-        <div className="flex justify-center">
-          <Button
-            onClick={onClick.bind(this, "espresso-phin")}
-            active={categories === "espresso-phin"}
-            className={`px-5 mr-2 py-2`}
+        <BrowserView>
+          <div className="w-full flex justify-center">
+            <Button
+              onClick={onClick.bind(this, "espresso-phin")}
+              active={categories === "espresso-phin"}
+              className={`px-5 mr-2 py-2`}
+            >
+              Espresso và Phin
+            </Button>
+            <Button
+              onClick={onClick.bind(this, undefined)}
+              active={categories === undefined}
+              className={`px-5 mr-2 py-2`}
+            >
+              Tất cả
+            </Button>
+            <Button
+              onClick={onClick.bind(this, "handbrew-coldbrew")}
+              active={categories === "handbrew-coldbrew"}
+              className={`px-5 mr-2 py-2`}
+            >
+              Handbrew và Coldbrew
+            </Button>
+          </div>
+        </BrowserView>
+
+        <MobileView>
+          <InvisibleScrollbar
+            smoothScrolling
+            className="w-full mx-2"
+            contentClassName="w-[max-content] flex px-2"
+            vertical={true}
           >
-            Espresso và Phin
-          </Button>
-          <Button
-            onClick={onClick.bind(this, undefined)}
-            active={categories === undefined}
-            className={`px-5 mr-2 py-2`}
-          >
-            Tất cả
-          </Button>
-          <Button
-            onClick={onClick.bind(this, "handbrew-coldbrew")}
-            active={categories === "handbrew-coldbrew"}
-            className={`px-5 mr-2 py-2`}
-          >
-            Handbrew và Coldbrew
-          </Button>
-        </div>
+            <Button
+              onClick={onClick.bind(this, "espresso-phin")}
+              active={categories === "espresso-phin"}
+              className={`px-5 mr-2 py-2`}
+            >
+              Espresso và Phin
+            </Button>
+            <Button
+              onClick={onClick.bind(this, undefined)}
+              active={categories === undefined}
+              className={`px-5 mr-2 py-2`}
+            >
+              Tất cả
+            </Button>
+            <Button
+              onClick={onClick.bind(this, "handbrew-coldbrew")}
+              active={categories === "handbrew-coldbrew"}
+              className={`px-5 mr-2 py-2`}
+            >
+              Handbrew và Coldbrew
+            </Button>
+          </InvisibleScrollbar>
+        </MobileView>
 
         <div className="flex mb-[60px] w-full justify-center">
           <div className="mt-10 mx-8 grid lg:grid-cols-3 md:rid-cols-3 sm:rid-cols-1 gap-[40px]">
@@ -116,5 +150,11 @@ const Button = styled.button<{ active: boolean }>`
 
   :hover {
     background: ${(props) => (props.active ? "black" : "#e5e5e5")};
+  }
+`;
+
+const InvisibleScrollbar = styled(ScrollBar)`
+  .scrollbar {
+    display: none;
   }
 `;

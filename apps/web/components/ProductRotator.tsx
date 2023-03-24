@@ -27,6 +27,32 @@ const TRANSISTION = {
   ease: [0.17, 0.67, 0.83, 0.67],
 };
 
+const POSITION_MAP_MOBILE: { [key: number]: any } = {
+  1: { left: -50, top: -20, width: 110, height: 150, rotate: -25 },
+  2: {
+    zIndex: 1,
+    rotate: 0,
+    left: "calc(50% - 75px)",
+    top: -80,
+    width: 150,
+    height: 190,
+  },
+  3: { right: -50, top: -20, width: 110, height: 150, rotate: 25 },
+}
+
+const POSTION_MAP_DESKTOP: { [key: number]: any } = {
+  1: { left: 20, top: -20, width: 110, height: 150, rotate: -25 },
+  2: {
+    zIndex: 1,
+    rotate: 0,
+    left: "calc(50% - 80px)",
+    top: -120,
+    width: 160,
+    height: 200,
+  },
+  3: { right: 20, top: -20, width: 110, height: 150, rotate: 25 },
+};
+
 interface Props {
   products: [IProduct, IProduct, IProduct];
 }
@@ -36,32 +62,6 @@ const ProductRotator = ({ products }: Props) => {
     [products[0]._id!]: 1,
     [products[1]._id!]: 2,
     [products[2]._id!]: 3,
-  };
-
-  const POSITION_MAP_MOBILE: { [key: number]: any } = {
-    1: { left: -50, top: -20, width: 110, height: 150, rotate: -25 },
-    2: {
-      zIndex: 1,
-      rotate: 0,
-      left: "calc(50% - 75px)",
-      top: -80,
-      width: 150,
-      height: 190,
-    },
-    3: { right: -50, top: -20, width: 110, height: 150, rotate: 25 },
-  }
-
-  const POSTION_MAP_DESKTOP: { [key: number]: any } = {
-    1: { left: 20, top: -20, width: 110, height: 150, rotate: -25 },
-    2: {
-      zIndex: 1,
-      rotate: 0,
-      left: "calc(50% - 80px)",
-      top: -120,
-      width: 160,
-      height: 200,
-    },
-    3: { right: 20, top: -20, width: 110, height: 150, rotate: 25 },
   };
 
   const POSTION_MAP = isMobile ? POSITION_MAP_MOBILE : POSTION_MAP_DESKTOP
