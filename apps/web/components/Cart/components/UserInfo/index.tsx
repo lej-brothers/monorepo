@@ -35,7 +35,7 @@ const UserInfo = ({ onChange }: Props) => {
 
   return (
     <>
-      <div className="px-[74px]">
+      <div className="px-[34px] lg:px-[74px]">
         <p className="text-4xl pb-[24px]">Thông tin của bạn</p>
 
         <label className="text-base">Tên nhận hàng</label>
@@ -55,7 +55,7 @@ const UserInfo = ({ onChange }: Props) => {
 
         {/* FOOTER */}
         <div className="absolute text-white flex bg-black bottom-0 rounded-t-2xl left-0 right-0 w-full h-[100px]">
-          <div className="flex justify-end mx-[64px] my-[28px] text-white w-full">
+          <div className="flex justify-end mx-[34px] lg:mx-[64px] my-[28px] text-white w-full">
             <button
               onClick={onPrevious}
               className="flex items-center mr-3 justify-center rounded-full p-5 bg-white text-black"

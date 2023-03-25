@@ -1,11 +1,13 @@
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
-import { FaSearch, FaShoppingCart } from "react-icons/fa";
+import { AiOutlineSearch, AiOutlineShoppingCart } from "react-icons/ai";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { useDispatch } from "react-redux";
 import useCart from "../../hooks/useCart";
 import { MOBILE_NAVBAR_DRAWER } from "./constants";
 import NavigationDrawer from "./components/NavigationDrawer";
+import { toggleCartDrawer } from "../../reducers/cart/actions";
+import { toggleSearchDrawer } from "../../reducers/search/actions";
 
 const MobileNavbar = () => {
   const dispatch = useDispatch();
@@ -20,9 +22,18 @@ const MobileNavbar = () => {
    * EVENT HANDLERS
    */
 
-  const openNavigationDrawer = () => setDrawer(MOBILE_NAVBAR_DRAWER.NAVIGATION)
+  const openNavigationDrawer = () => setDrawer(MOBILE_NAVBAR_DRAWER.NAVIGATION);
 
   const onClose = () => setDrawer(MOBILE_NAVBAR_DRAWER.NONE);
+
+  const toggleCart = () => {
+    dispatch(toggleCartDrawer());
+  };
+
+  const toggleSearch = () => {
+    dispatch(toggleSearchDrawer());
+  };
+
 
   /**
    * SIDE-EFFECTS
@@ -57,15 +68,19 @@ const MobileNavbar = () => {
   return (
     <header className="fixed z-50 flex justify-center items-center w-full h-[77px]">
       <nav
-        className={`flex max-w-2xl w-[100vw] ${
-          isScrolled ? "bg-black" : "bg-transparent"
-        } h-[77px]`}
+        className={`flex max-w-2xl w-[100vw]  ${
+          isHome ? "bg-transparent" : "bg-white"
+        } text-black hover:text-gray-500 h-[77px]`}
       >
-        <div className="w-full text-white flex justify-between items-center px-5">
-          <GiHamburgerMenu className="cursor-pointer transition-all hover:text-stone-200" onClick={openNavigationDrawer} size={32} />
+        <div className="w-full flex justify-between items-center px-5">
+          <GiHamburgerMenu
+            className="cursor-pointer transition-all"
+            onClick={openNavigationDrawer}
+            size={32}
+          />
           <div className="flex">
-            <FaSearch size={32} />
-            <FaShoppingCart className="ml-6" size={32} />
+            <AiOutlineSearch className="cursor-pointer hover:text-stone-500" onClick={toggleSearch} size={32} />
+            <AiOutlineShoppingCart className="cursor-pointer ml-6 hover:text-stone-500" onClick={toggleCart} size={32} />
           </div>
         </div>
       </nav>

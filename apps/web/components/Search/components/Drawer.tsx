@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Search from "..";
 import { toggleSearchDrawer } from "../../../reducers/search/actions";
 import { IStore } from "../../../types/IStore";
+import { isMobile } from "react-device-detect";
 
 const SearchDrawer = () => {
   const dispatch = useDispatch();
@@ -12,7 +13,7 @@ const SearchDrawer = () => {
 
   return (
     <Drawer
-      width={535}
+      width={isMobile ? '100vw' : '535px'}
       open={!!open}
       bodyStyle={{ padding: 0 }}
       headerStyle={{ display: "none" }}

@@ -3,6 +3,7 @@ import Cart from "../..";
 import { useDispatch, useSelector } from "react-redux";
 import { IStore } from "../../../../types/IStore";
 import { toggleCartDrawer } from "../../../../reducers/cart/actions";
+import { isMobile } from "react-device-detect";
 
 const CartDrawer = () => {
   const dispatch = useDispatch();
@@ -14,7 +15,7 @@ const CartDrawer = () => {
 
   return (
     <Drawer
-      width={535}
+      width={isMobile ? "100vw" : 535}
       open={!!open}
       bodyStyle={{ padding: 0 }}
       headerStyle={{ display: "none" }}

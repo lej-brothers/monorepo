@@ -9,7 +9,7 @@ import Layout from "../../components/Layout";
 import Product from "../../components/Product";
 import useProducts from "../../hooks/useProducts";
 import BeansIcon from "../../public/beans-icon.png";
-import { BrowserView, MobileView } from "react-device-detect";
+import { BrowserView, MobileView, isMobile } from "react-device-detect";
 
 const ScrollBar = dynamic(() => import("react-scrollbar"), { ssr: false });
 
@@ -38,23 +38,18 @@ const Store = () => {
     <ScrollBar smoothScrolling className="h-[100vh]">
       {/* <Head title="Store" description="Explore all of our products." /> */}
       <div className="flex mt-[50px] flex-col">
-        <div className="flex mx-[60px] justify-start items-center w-full h-[44px]">
-          <button
-            onClick={() => router.push("/")}
-            className="z-[100] flex btn justiyf-center align-center"
-          >
-            <FaArrowLeft size="20px" className="mt-[2px] mr-2" />{" "}
-            <span className="text-normal">Quay lại</span>
-          </button>
-        </div>
         <div className="flex mt-[50px] flex-col justify-center items-center">
-          <Image
-            src={BeansIcon.src}
-            alt="beans-icon"
-            width={177}
-            height={122}
-          />
-          <h3 className="font-normal my-4 text-3xl">Cà Phê</h3>
+          <BrowserView>
+            <Image
+              src={BeansIcon.src}
+              alt="beans-icon"
+              width={177}
+              height={122}
+            />
+          </BrowserView>
+          <h3 className={`font-normal my-4 text-3xl ${isMobile && "mb-5"}`}>
+            Cà Phê
+          </h3>
         </div>
 
         <BrowserView>
@@ -86,28 +81,28 @@ const Store = () => {
         <MobileView>
           <InvisibleScrollbar
             smoothScrolling
-            className="w-full mx-2"
-            contentClassName="w-[max-content] flex px-2"
+            className="w-full"
+            contentClassName="w-[max-content] flex"
             vertical={true}
           >
             <Button
               onClick={onClick.bind(this, "espresso-phin")}
               active={categories === "espresso-phin"}
-              className={`px-5 mr-2 py-2`}
+              className={`px-5 mx-2 py-2`}
             >
               Espresso và Phin
             </Button>
             <Button
               onClick={onClick.bind(this, undefined)}
               active={categories === undefined}
-              className={`px-5 mr-2 py-2`}
+              className={`px-5 mx-2 py-2`}
             >
               Tất cả
             </Button>
             <Button
               onClick={onClick.bind(this, "handbrew-coldbrew")}
               active={categories === "handbrew-coldbrew"}
-              className={`px-5 mr-2 py-2`}
+              className={`px-5 mx-2 py-2`}
             >
               Handbrew và Coldbrew
             </Button>

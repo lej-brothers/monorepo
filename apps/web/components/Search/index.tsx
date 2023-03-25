@@ -8,6 +8,7 @@ import { toggleSearchDrawer } from "../../reducers/search/actions";
 import useProducts from "../../hooks/useProducts";
 import Product from "../Product";
 import { useDebounce } from "usehooks-ts";
+import { isMobile } from "react-device-detect";
 
 const ScrollBar = dynamic(() => import("react-scrollbar"), { ssr: false });
 
@@ -31,15 +32,25 @@ const Search = () => {
   return (
     <ScrollBar smoothScrolling className="max-h-full">
       <div className="flex flex-col">
-        <div className="flex justify-end mt-[46px] mr-[46px]">
+        <div
+          className={`flex justify-end mt-[46px] ${
+            isMobile ? "mr-[10px]" : "mr-[46px]"
+          }`}
+        >
           <Button onClick={toggle} type="text">
             <AiOutlineClose size={18} />
           </Button>
         </div>
 
-        <p className="px-[96px] font-semibold text-3xl mt-5">Tìm kiếm</p>
+        <p
+          className={`${
+            isMobile ? "px-[36px]" : "px-[96px]"
+          } font-semibold text-3xl mt-5`}
+        >
+          Tìm kiếm
+        </p>
 
-        <div className="px-[96px] flex mt-5">
+        <div className={`${isMobile ? "px-[36px]" : "px-[96px]"} flex mt-5`}>
           <Input
             className="h-[49px] mb-11"
             prefix={<RiSearchLine />}
@@ -49,13 +60,21 @@ const Search = () => {
         </div>
 
         {products.map((product) => (
-          <div onClick={toggle} key={product._id} className="my-10 mx-[96px]">
+          <div
+            onClick={toggle}
+            key={product._id}
+            className={`my-10 ${isMobile ? "mx-[36px]" : "mx-[96px]"}`}
+          >
             <Product product={product} />
           </div>
         ))}
 
         {!products.length && (
-          <p className="text-xl select-none mx-[96px] text-gray-300 mt-5">
+          <p
+            className={`text-xl select-none ${
+              isMobile ? "mx-[36px]" : "mx-[96px]"
+            } text-gray-300 text-center mt-5`}
+          >
             Không có thông tin để hiển thị.
           </p>
         )}

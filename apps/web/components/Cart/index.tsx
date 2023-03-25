@@ -16,6 +16,7 @@ import Preview from "./components/Preview";
 import UserInfo from "./components/UserInfo";
 import { ORDER_TABS, PHONE_REG } from "./constants";
 import dynamic from "next/dynamic";
+import { isMobile } from "react-device-detect";
 
 const ScrollBar = dynamic(() => import("react-scrollbar"), { ssr: false });
 
@@ -73,7 +74,7 @@ const Cart = () => {
   return (
     <FormProvider {...methods}>
       <Container className="flex flex-col h-full">
-        <div className="flex justify-end mt-[46px] mr-[46px]">
+        <div className={`flex justify-end mt-[46px] ${isMobile ? "mr-[16px]" : "mr-[46px]"}`}>
           <Button onClick={toggle} type="text">
             <AiOutlineClose size={18} />
           </Button>

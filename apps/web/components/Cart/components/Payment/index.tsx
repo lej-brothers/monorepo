@@ -66,7 +66,7 @@ const Payment = ({ onChange, onFinish }: Props) => {
 
   return (
     <>
-      <div className="px-[74px]">
+      <div className="px-[34px] lg:px-[74px]">
         <p className="text-4xl pb-[24px]">Thanh toán</p>
 
         <label className="text-base">Chọn hình thức thanh toán</label>
