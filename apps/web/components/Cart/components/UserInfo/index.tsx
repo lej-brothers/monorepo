@@ -50,7 +50,7 @@ const UserInfo = ({ onChange }: Props) => {
         <label className="text-base">Địa chỉ nhận hàng</label>
         <Input
           name="deliveryInfo.deliveryAddress"
-          className="mt-[8px] mb-[16px]"
+          className="mt-[8px] mb-[160px]"
         />
 
         {/* FOOTER */}

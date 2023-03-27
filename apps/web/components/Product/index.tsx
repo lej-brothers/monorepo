@@ -35,11 +35,12 @@ const Product = ({
         } rounded flex justify-center ${className}`}
       >
         <div className="basis-[122px] h-full relative">
-          <img
+          <Image
             className={`absolute ${children ? "" : "-top-6 left-0"}`}
             src={product.images[0].url!}
             alt={product.title}
-            width="80%"
+            width={100}
+            height={155}
           />
         </div>
 

@@ -30,7 +30,7 @@ const Search = () => {
   const toggle = () => dispatch(toggleSearchDrawer());
 
   return (
-    <ScrollBar smoothScrolling className="max-h-full">
+    <ScrollBar smoothScrolling className="max-h-full" contentClassName="pb-[250px]">
       <div className="flex flex-col">
         <div
           className={`flex justify-end mt-[46px] ${

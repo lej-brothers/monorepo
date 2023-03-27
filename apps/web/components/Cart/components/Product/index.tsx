@@ -1,4 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
+import Image from "next/image";
 import useProduct from "../../../../hooks/useProduct";
 import format from "../../../../utils/format";
 import Ratio from "../../../Ratio";
@@ -37,10 +38,12 @@ const OrderProduct = ({ product, editable = true }: Props) => {
   return (
     <div className="flex w-[343px] h-[156px] rounded-lg bg-stone-100">
       <div className="basis-[82px] pl-2 flex justify-center items-center">
-        <img
+        <Image
           className="w-[78px] h-[142px]"
           src={firstImage.url}
           alt={firstImage._id!}
+          width={78}
+          height={78}
         />
       </div>
       <div className="flex-1 flex pt-[24px] pl-[24px] flex-col">

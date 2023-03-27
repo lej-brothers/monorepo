@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { AiOutlineSearch, AiOutlineShoppingCart } from "react-icons/ai";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { useDispatch } from "react-redux";
@@ -8,15 +8,21 @@ import { MOBILE_NAVBAR_DRAWER } from "./constants";
 import NavigationDrawer from "./components/NavigationDrawer";
 import { toggleCartDrawer } from "../../reducers/cart/actions";
 import { toggleSearchDrawer } from "../../reducers/search/actions";
+import { Badge } from "antd";
 
-const MobileNavbar = () => {
+export interface Props {
+  color?: string;
+}
+
+const MobileNavbar = ({ color = "black" }: Props) => {
   const dispatch = useDispatch();
   const { pathname } = useRouter();
 
-  const [isHome, setIsHome] = useState(false);
-  const [drawer, setDrawer] = useState(MOBILE_NAVBAR_DRAWER.NAVIGATION); // TO-DO: Remove when done dev
-  const [isScrolled, setIsScrolled] = useState(false);
   const { cart } = useCart();
+  const [drawer, setDrawer] = useState(MOBILE_NAVBAR_DRAWER.NONE);
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  const totalCount = cart?.products.length || 0;
 
   /**
    * EVENT HANDLERS
@@ -34,43 +40,35 @@ const MobileNavbar = () => {
     dispatch(toggleSearchDrawer());
   };
 
-
   /**
    * SIDE-EFFECTS
    */
 
   useEffect(() => {
-    if (isHome) {
-      const detectScrollY = () => {
-        if (window.scrollY > 5) {
-          setIsScrolled(true);
-        } else {
-          setIsScrolled(false);
-        }
-      };
+    const detectScrollY = () => {
+      console.log(window.scrollY);
+      if (window.scrollY > 5) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
 
-      window.addEventListener("scroll", detectScrollY);
+    window.addEventListener("scroll", detectScrollY);
 
-      return () => {
-        window.removeEventListener("scroll", detectScrollY);
-      };
-    }
-  }, [isHome]);
-
-  useEffect(() => {
-    pathname === "/" ? setIsHome(true) : setIsHome(false);
-  }, [pathname]);
+    return () => {
+      window.removeEventListener("scroll", detectScrollY);
+    };
+  }, []);
 
   /**
    * MAIN RETURN
    */
 
   return (
-    <header className="fixed z-50 flex justify-center items-center w-full h-[77px]">
+    <header className="fixed select-none z-50 flex justify-center items-center w-full h-[55px]">
       <nav
-        className={`flex max-w-2xl w-[100vw]  ${
-          isHome ? "bg-transparent" : "bg-white"
-        } text-black hover:text-gray-500 h-[77px]`}
+        className={`flex max-w-2xl w-[100vw]  bg-white text-${color} h-[55px]`}
       >
         <div className="w-full flex justify-between items-center px-5">
           <GiHamburgerMenu
@@ -79,8 +77,18 @@ const MobileNavbar = () => {
             size={32}
           />
           <div className="flex">
-            <AiOutlineSearch className="cursor-pointer hover:text-stone-500" onClick={toggleSearch} size={32} />
-            <AiOutlineShoppingCart className="cursor-pointer ml-6 hover:text-stone-500" onClick={toggleCart} size={32} />
+            <AiOutlineSearch
+              className="cursor-pointer "
+              onClick={toggleSearch}
+              size={32}
+            />
+            <Badge size="small" count={totalCount || 0}>
+              <AiOutlineShoppingCart
+                className="cursor-pointer ml-6 "
+                onClick={toggleCart}
+                size={32}
+              />
+            </Badge>
           </div>
         </div>
       </nav>

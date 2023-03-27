@@ -4,6 +4,7 @@ import { AiOutlineClose } from "react-icons/ai";
 import { useRouter } from "next/router";
 
 import Order from "../index";
+import { isMobile } from "react-device-detect";
 
 interface Props {}
 
@@ -19,13 +20,13 @@ const OrderDrawer: React.FC<Props> = ({}) => {
 
   return (
     <Drawer
-      width={535}
+      width={isMobile ? '100vw' : 535}
       open={open}
       bodyStyle={{ padding: 0 }}
       headerStyle={{ display: "none" }}
       onClose={toggle}
     >
-      <div className="flex flex-col h-full">
+      <div className="flex flex-col h-full mb-11">
         <Order orderId={orderID as string} />
       </div>
     </Drawer>

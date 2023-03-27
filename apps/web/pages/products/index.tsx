@@ -35,7 +35,7 @@ const Store = () => {
 
   /* MAIN RETURN */
   return (
-    <ScrollBar smoothScrolling className="h-[100vh]">
+    <ScrollBar smoothScrolling className="h-[100vh]" contentClassName="pb-[250px]">
       {/* <Head title="Store" description="Explore all of our products." /> */}
       <div className="flex mt-[50px] flex-col">
         <div className="flex mt-[50px] flex-col justify-center items-center">

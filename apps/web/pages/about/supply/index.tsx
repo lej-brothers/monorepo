@@ -16,6 +16,7 @@ const Setup = () => {
     <ScrollBar
       smoothScrolling
       className="flex flex-col items-center max-h-full w-full"
+      contentClassName="pb-[250px]"
     >
       <div className="flex w-[834px] flex-col">
         <div className="px-[100px] mt-[100px] py-[60px] flex flex-col justify-end items-center rounded-b-[45px] h-[587px">

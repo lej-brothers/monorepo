@@ -15,10 +15,8 @@ import Payment from "./components/Payment";
 import Preview from "./components/Preview";
 import UserInfo from "./components/UserInfo";
 import { ORDER_TABS, PHONE_REG } from "./constants";
-import dynamic from "next/dynamic";
 import { isMobile } from "react-device-detect";
 
-const ScrollBar = dynamic(() => import("react-scrollbar"), { ssr: false });
 
 const Cart = () => {
   const methods = useForm<IMomoForm>({

@@ -51,7 +51,7 @@ const Preview = ({ cart, onChange }: Props) => {
 
   return (
     <div className="relative max-h-[100vh]">
-      <ScrollBar smoothScrolling className="px-[34px] lg:px-[74px] h-[calc(100vh_-_130px)]">
+      <ScrollBar smoothScrolling contentClassName="pb-[250px]" className="px-[34px] lg:px-[74px] h-[calc(100vh_-_130px)]">
         <div className="flex pb-[100px] flex-col">
           <p className="text-4xl mb-3">Giỏ hàng</p>
 
@@ -95,7 +95,7 @@ const Preview = ({ cart, onChange }: Props) => {
       {/* FOOTER */}
 
       <div className="absolute text-white flex bg-black -bottom-[52px] rounded-t-2xl left-0 right-0 w-full h-[100px]">
-        <div className="flex justify-between mx-[34px] lg:mx-[64px] my-[28px] text-white w-full">
+        <div className="flex justify-between mx-[24px] lg:mx-[64px] my-[28px] text-white w-full">
           <div className="flex flex-col">
             <p className="font-medium text-sm">Tổng tiền:</p>
             <p className="font-light text-xl"><Counter from={0} to={totalPrice} duration={0.5} format={totalPriceFormatter} /> VND</p>

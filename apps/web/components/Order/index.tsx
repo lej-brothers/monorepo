@@ -1,19 +1,27 @@
 "use client";
 
-import React, { useEffect, useMemo, useState } from "react";
-import { Steps as AntSteps } from "antd";
+import Image from "next/image";
 import { LoadingOutlined } from "@ant-design/icons";
+import { Steps as AntSteps } from "antd";
+import React, { useEffect, useMemo, useState } from "react";
 
 import OrderBackgroundImage from "../../public/coffee-order-background.jpeg";
+import LejCompactLogoWhite from "../../public/lej-compact-logo-white.png";
+
+import { ORDER_STATUS } from "common";
+import { isMobile } from "react-device-detect";
+import styled from "styled-components";
 
 import useOrder from "../../hooks/useOrder";
-import { ORDER_STATUS } from "common";
-import styled from "styled-components";
+import Link from "next/link";
+import { useRouter } from "next/router";
 
 interface Props {
   orderId: string;
 }
 const Order: React.FC<Props> = ({ orderId }) => {
+  const router = useRouter();
+
   const [refetch, setRefetch] = useState(orderId ? 1000 : false);
   const { data } = useOrder(orderId, refetch as any);
 
@@ -41,13 +49,20 @@ const Order: React.FC<Props> = ({ orderId }) => {
         style={{
           background: `linear-gradient(rgba(0, 0, 0, 0.60), rgba(0, 0, 0, 0.60)), url(${OrderBackgroundImage.src})`,
         }}
-        className={`h-[496px] text-white flex flex-col justify-end rounded-b-[45px] px-[42px] py-[38px]`}
+        className={`h-[50vh] text-white flex flex-col justify-end rounded-b-[45px] px-[42px] py-[38px]`}
       >
+        <Image
+          className="mb-5"
+          src={LejCompactLogoWhite.src}
+          alt="lej-compact-logo-white"
+          width={48}
+          height={48}
+        />
         <p className="text-3xl">Cảm ơn bạn</p>
         <p className="text-3xl">đã ủng hộ Le J’</p>
       </div>
       <Steps
-        className="py-[45px] pl-[110px] pr-[65px]"
+        className={`pt-[45px] ${isMobile ? "px-6" : "pl-[110px] pr-[65px]"}`}
         direction="vertical"
         current={current}
         items={[
@@ -83,6 +98,15 @@ const Order: React.FC<Props> = ({ orderId }) => {
           },
         ]}
       />
+
+      {isMobile && (
+        <button
+          onClick={() => router.push("/")}
+          className="bg-black mt-8 rounded-full text-white py-4 text-xl mb-[200px] mx-8"
+        >
+          Quay lại trang chủ
+        </button>
+      )}
     </>
   );
 };

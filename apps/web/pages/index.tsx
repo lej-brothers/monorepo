@@ -26,7 +26,7 @@ export default function Web() {
       <Head>
         <title>Le J` Cafe - Trang chủ</title>
       </Head>
-      <ScrollBar smoothScrolling className="h-[100vh]">
+      <ScrollBar smoothScrolling className="h-[100vh]" contentClassName='pb-[250px]'>
         <section
           className={`relative flex justify-center items-end ${
             isMobile ? "h-[70vh]" : "h-[100vh]"
@@ -65,7 +65,7 @@ export default function Web() {
           </div>
         </section>
 
-        <section className="flex justify-center bg-black">
+        <section className="flex justify-center mb-[250px] bg-black">
           <div className="flex flex-col justify-center items-center bg-white w-full max-w-3xl h-[100%] py-12">
             <Services />
           </div>

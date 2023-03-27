@@ -9,14 +9,21 @@ import OrderDrawer from "../Order/Drawer";
 import SearchDrawer from "../Search/components/Drawer";
 import MobileNavbar from "../MobileNavbar";
 
-const Layout: React.FC<{ children: ReactNode }> = ({ children }) => {
+import { Props as MobileProps } from "../MobileNavbar/index";
+
+interface Props {
+  mobileNavProps?: MobileProps;
+  children: ReactNode;
+}
+
+const Layout: React.FC<Props> = ({ mobileNavProps, children }) => {
   return (
     <div>
       <BrowserView>
         <Navbar />
       </BrowserView>
       <MobileView>
-        <MobileNavbar />
+        <MobileNavbar {...mobileNavProps} />
       </MobileView>
       <main className="relative">{children}</main>
       <CartDrawer />
