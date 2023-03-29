@@ -64,49 +64,6 @@ const About = () => {
           </Carousel>
         </div>
 
-        <p className="mb-2 mx-5 mt-10 font-light text-sm text-[#757575]">
-          An easy-going coffee with a delicious, syrupy mouthfeel. Los Altos has
-          been at the core of who we are for years, showcasing our long term
-          Direct Trade relationship with the Mierisch family.
-        </p>
-
-        <div className="mb-3 px-5 w-full mt-10">
-          <div className="rounded-lg flex p-3 w-full bg-[#F8F8F8] h-[88px]">
-            <div className="flex flex-col">
-              <p className="text-sm pb-1">Thông tin liên hệ</p>
-              <p className="text-sm font-light text-[#757575]">
-                51A Yersin, phường 10, Đà Lạt
-              </p>
-              <p className="text-sm font-light text-[#757575]">
-                SĐT: 093345678
-              </p>
-            </div>
-            <div className="flex-1 flex justify-end text-sm items-center">
-              <Link
-                target="#blank"
-                href="https://www.google.com/maps/place/51a+Yersin,+Ph%C6%B0%E1%BB%9Dng+10,+Th%C3%A0nh+ph%E1%BB%91+%C4%90%C3%A0+L%E1%BA%A1t,+L%C3%A2m+%C4%90%E1%BB%93ng/data=!4m2!3m1!1s0x31711318af7746ed:0x3b8db6ca0fa1d3d1?sa=X&ved=2ahUKEwimttDdvbD9AhUZG4gKHXDRBksQ8gF6BAgKEAI"
-                passHref
-              >
-                <button className="p-2 px-4 font-light bg-black rounded-full text-white">
-                  Bản đồ
-                </button>
-              </Link>
-            </div>
-          </div>
-
-          <div className="rounded-lg flex py-3 px-3 mt-5 justify-between items-center bg-[#F8F8F8]">
-            <p>Le J’ trên mạng xã hội</p>
-            <div className="flex">
-              <Link href="https://facebook.com/lejcafe">
-                <FaFacebook className="text-3xl mr-4" />
-              </Link>
-              <Link href="https://facebook.com/lejcafe">
-                <RiInstagramFill className="text-4xl -m-1 mr-4" />
-              </Link>
-            </div>
-          </div>
-        </div>
-
         <div className=" mt-10 mx-5 flex-col">
           <div className="flex-1 flex flex-col mb-10">
             <p className="mb-2 font-light text-sm text-[#757575]">

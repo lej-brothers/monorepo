@@ -1,5 +1,5 @@
 import { Divider, Drawer } from "antd";
-import { AiOutlineRight } from "react-icons/ai";
+import { AiOutlineRight, AiFillHome } from "react-icons/ai";
 import { FaHandPeace } from "react-icons/fa";
 import Image from "next/image";
 import { VscChromeClose } from "react-icons/vsc";
@@ -33,8 +33,22 @@ const NavigationDrawer: React.FC<Props> = ({ open, onClose }) => {
         </div>
         <p className="text-4xl mb-11">LeJ’ xin chào</p>
 
+        <Link onClick={onClose} passHref href="/">
+          <div className="flex w-full mb-6 items-center">
+            <AiFillHome className="w-[24px] h-[24px] mr-[16px]" />
+            <div>
+              <p className="text-base">Trang chủ</p>
+              <p className="text-sm text-[#545454] font-light">
+                Các sản phẩm mới nhất từ LeJ`
+              </p>
+
+            </div>
+            <AiOutlineRight className="w-[16px] ml-[auto] h-[16px] mr-4" />
+          </div>
+        </Link>
+
         <Link onClick={onClose} passHref href="/products">
-          <div className="flex w-full items-cente">
+          <div className="flex w-full items-center">
             <Image
               className="w-[32px] h-[32px] mr-[16px]"
               src={BeansIcon.src}
