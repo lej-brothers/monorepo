@@ -1,4 +1,4 @@
-import Image from 'next/image'
+import Image from "next/image";
 import ProductRotator from "../components/ProductRotator";
 import LandingPageTopBg from "../public/landing-page-top-bg.png";
 import useProducts from "../hooks/useProducts";
@@ -12,7 +12,7 @@ import Head from "next/head";
 import styled from "styled-components";
 import { BrowserView, MobileView, isMobile } from "react-device-detect";
 import HighlightedProductSlider from "../components/HighlightedProductSlider";
-import LejCompactLogoWhite from '../public/lej-compact-logo-white.png'
+import LejCompactLogoWhite from "../public/lej-compact-logo-white.png";
 
 const ScrollBar = dynamic(() => import("react-scrollbar"), { ssr: false });
 
@@ -26,7 +26,7 @@ export default function Web() {
       <Head>
         <title>Le J` Cafe - Trang chủ</title>
       </Head>
-      <ScrollBar smoothScrolling className="h-[100vh]" contentClassName='pb-[250px]'>
+      <ScrollBar smoothScrolling className="h-[100vh]">
         <section
           className={`relative flex justify-center items-end ${
             isMobile ? "h-[70vh]" : "h-[100vh]"
@@ -39,7 +39,13 @@ export default function Web() {
           </BrowserView>
 
           <MobileView>
-            <Image className='absolute top-0 bottom-0 left-0 right-0 z-[11] mt-[auto] mb-[auto] mr-[auto] ml-[auto]' src={LejCompactLogoWhite.src} width={45} height={49} alt='lej-compact-logo-white' />
+            <Image
+              className="absolute top-0 bottom-0 left-0 right-0 z-[11] mt-[auto] mb-[auto] mr-[auto] ml-[auto]"
+              src={LejCompactLogoWhite.src}
+              width={45}
+              height={49}
+              alt="lej-compact-logo-white"
+            />
           </MobileView>
 
           <TopBackground className="relative" isMobile={isMobile}>
