@@ -4,7 +4,7 @@
   "product.create.title": "Tạo sản phẩm mới",
   "product.create.name": "Tên sản phẩm",
   "product.create.description": "Mô tả sản phẩm",
-  "product.create.price": "Giá tiền / 100G",
+  "product.create.price": "Giá tiền",
   "product.create.count": "Số lượng",
   "product.create.metch_price": "Giá tiền",
   "product.create.slug": "Đường dẫn",
@@ -40,5 +40,7 @@
   "name": "Tên",
 
   "button.ready_to_delivery": "Sẵn sàng để giao",
-  "button.deliveried": "Giao hàng thành công"
+  "button.deliveried": "Giao hàng thành công",
+
+  "tutorial.highlight": "Sản phẩm nổi bật"
 }

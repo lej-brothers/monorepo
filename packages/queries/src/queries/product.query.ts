@@ -17,15 +17,20 @@ const ProductQuery = {
     );
   },
 
-  useProduct: (handle: string) => {
-    return useQuery(["product", handle], async () => {
-      try {
-        const res = await ProductServcie.get(handle);
-        return res.data;
-      } catch (error) {
-        return Promise.reject(error);
-      }
-    });
+  useProduct: (handle?: string, options: any = {}) => {
+    return useQuery(
+      ["product", handle],
+      async () => {
+        try {
+          if (!handle) return null;
+          const res = await ProductServcie.get(handle);
+          return res.data;
+        } catch (error) {
+          return Promise.reject(error);
+        }
+      },
+      { ...options }
+    );
   },
 
   useProductOptions: (page: number = 1, limit: number = 100) => {
@@ -40,9 +45,20 @@ const ProductQuery = {
   },
 
   useCreateProduct: () => {
-    return useMutation("createProduct", async (payload: IProductCreate) => {
+    return useMutation("create-product", async (payload: IProductCreate) => {
       try {
         const res = await ProductServcie.create(payload);
+        return res.data;
+      } catch (error) {
+        return Promise.reject(error);
+      }
+    });
+  },
+
+  useUpdateProduct: () => {
+    return useMutation("update-product", async (payload: IProductCreate) => {
+      try {
+        const res = await ProductServcie.update(payload);
         return res.data;
       } catch (error) {
         return Promise.reject(error);

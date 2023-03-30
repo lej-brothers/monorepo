@@ -1,11 +1,6 @@
 import type { UploadRequestOption } from "rc-upload/lib/interface";
 
-import React, {
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import update from "immutability-helper";
 import { PlusOutlined } from "@ant-design/icons";
 import { Progress, Tooltip, UploadFile, UploadProps } from "antd";
@@ -14,9 +9,10 @@ import { HTML5Backend } from "react-dnd-html5-backend";
 import { RcFile } from "antd/es/upload";
 import { Upload } from "./styles";
 import { ImageService } from "queries";
+import { IImage } from "common";
 
 const type = "DragableUploadList";
- 
+
 interface DragableUploadListItemProps {
   originNode: React.ReactElement<
     any,
@@ -60,9 +56,11 @@ const DragableUploadListItem = ({
     }),
   });
   drop(drag(ref));
+
   const errorNode = (
     <Tooltip title="Upload Error">{originNode.props.children}</Tooltip>
   );
+
   return (
     <div
       ref={ref}
@@ -71,16 +69,21 @@ const DragableUploadListItem = ({
       }`}
       style={{ cursor: "move" }}
     >
-      {file.status === "error" ? errorNode : originNode}
+      {file.status === "error" ? (
+        errorNode
+      ) : (
+        <div className="h-[100px]">{originNode}</div>
+      )}
     </div>
   );
 };
 
 interface Props {
+  images?: IImage[];
   onChange: (ids: string[]) => void;
 }
 
-const Uploader = ({ onChange }: Props) => {
+const Uploader = ({ images = [], onChange }: Props) => {
   const [files, setFiles] = useState<UploadFile[]>([]);
   const [progress, setProgress] = useState<{ [index: number]: number }>({});
 
@@ -129,6 +132,19 @@ const Uploader = ({ onChange }: Props) => {
   useEffect(() => {
     onChange(files.map((file) => file.response));
   }, [files, onChange]);
+
+  useEffect(() => {
+    setFiles(
+      images.map((img) => ({
+        uid: img._id!,
+        status: "done",
+        type: "image/png",
+        percent: 100,
+        url: img.url,
+        name: img.key,
+      }))
+    );
+  }, [images]);
 
   return (
     <DndProvider backend={HTML5Backend}>

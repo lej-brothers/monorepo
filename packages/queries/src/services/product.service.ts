@@ -41,6 +41,11 @@ const ProductServcie = {
     const res = await requester.post("/products", product);
     return res as AxiosResponse<IProduct>;
   },
+
+  update: async (product: IProductCreate) => {
+    const res = await requester.patch(`/products/${product._id}`, product);
+    return res as AxiosResponse<IProduct>;
+  },
 };
 
 export default ProductServcie;

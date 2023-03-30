@@ -1,9 +1,10 @@
-import { Button, Pagination, PaginationProps, Table, Tag } from "antd";
+import { Button, Pagination, PaginationProps, Table, Tag, Tooltip } from "antd";
 import React, { useState } from "react";
 import { useQueryClient } from "react-query";
 import { PRODUCT_DRAWER, PRODUCT_MODAL } from "./constants";
 import { Container } from "./styles";
 import { ICategory, IProductCreate } from "common";
+import { BsStar, BsStarFill } from "react-icons/bs";
 import { FormattedMessage } from "react-intl";
 import CategoryCreateModal from "./components/CategoryCreateModal";
 import ProductCreateDrawer from "./components/CreateDrawer";
@@ -16,23 +17,44 @@ const Product: React.FC = () => {
   const queryClient = useQueryClient();
   const [modal, setModal] = useState(PRODUCT_MODAL.NONE);
   const [drawer, setDrawer] = useState(PRODUCT_DRAWER.NONE);
+  const [editing, setEditing] = useState<string | undefined>(undefined);
 
   const [{ page, limit }, setPaginate] = useState({ page: 1, limit: 20 });
 
-  const { data } = ProductQuery.useList(page, limit, {});
+  const { data, refetch } = ProductQuery.useList(page, limit, {});
 
   const createMutation = ProductQuery.useCreateProduct();
+  const editMutation = ProductQuery.useUpdateProduct();
 
   const products = data?.docs || [];
 
   const openCreateDrawer = () => setDrawer(PRODUCT_DRAWER.CREATE);
 
-  const onCloseDrawer = () => setDrawer(PRODUCT_DRAWER.NONE);
-  const onCloseModal = () => setModal(PRODUCT_MODAL.NONE);
+  const onCloseDrawer = () => {
+    setDrawer(PRODUCT_DRAWER.NONE);
+    setEditing(undefined);
+  };
+  const onCloseModal = () => {
+    setModal(PRODUCT_MODAL.NONE);
+  };
 
   const onCreateProduct = async (payload: IProductCreate) => {
     await createMutation.mutateAsync(payload);
     await queryClient.refetchQueries(["categories"], { active: true });
+  };
+
+  const onUpdateProduct = async (payload: IProductCreate) => {
+    await editMutation.mutateAsync(payload);
+    await queryClient.refetchQueries(["categories", "products"], {
+      active: true,
+    });
+    await refetch();
+  };
+
+  const onSubmit = async (payload: IProductCreate) => {
+    if (editing) await onUpdateProduct(payload);
+    else await onCreateProduct(payload);
+
     onCloseDrawer();
   };
 
@@ -50,7 +72,18 @@ const Product: React.FC = () => {
             +
           </Button>
         </div>
-        <Table pagination={false} dataSource={products}>
+        <Table
+          onRow={(data) => ({
+            className: "cursor-pointer",
+            onClick: (event) => {
+              event.stopPropagation();
+              setEditing(data.slug);
+              setDrawer(PRODUCT_DRAWER.CREATE);
+            },
+          })}
+          pagination={false}
+          dataSource={products}
+        >
           <Column
             title={<FormattedMessage id="product.create.name" />}
             dataIndex="title"
@@ -78,7 +111,21 @@ const Product: React.FC = () => {
           <Column
             title={<FormattedMessage id="product.create.metch_price" />}
             dataIndex={["warehourse", "price"]}
-            render={(price: number) => format('vi-VN', 'VND', price)}
+            render={(price: number) => format("vi-VN", "VND", price)}
+          />
+          <Column
+            dataIndex={["isHighlight"]}
+            onCell={(data: any) => ({
+              onClick: (e) => {
+                e.stopPropagation();
+                onUpdateProduct({ ...data, isHighlight: !data.isHighlight });
+              },
+            })}
+            render={(value) => (
+              <Tooltip title={<FormattedMessage id="tutorial.highlight" />}>
+                {value ? <BsStarFill size={20} /> : <BsStar size={20} />}
+              </Tooltip>
+            )}
           />
         </Table>
         <div className="mt-2 flex justify-end">
@@ -104,8 +151,9 @@ const Product: React.FC = () => {
       </Container>
 
       <ProductCreateDrawer
+        editing={editing}
         toggleModal={toggleModal}
-        onSubmit={onCreateProduct}
+        onSubmit={onSubmit}
         open={drawer === PRODUCT_DRAWER.CREATE}
         onClose={onCloseDrawer}
       />

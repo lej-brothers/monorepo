@@ -6,6 +6,7 @@ import HandlerController from "./get.handler.controller";
 import ListController from "./list.controller";
 import GetController from "./get.controller";
 import PostController from "./post.controller";
+import PatchController from "./patch.controller";
 
 import OptionRouter from ".//options/_.router";
 
@@ -29,6 +30,12 @@ router.get(
   "/:slug",
   assertRequestInput(GetController.validations),
   GetController.controller
+);
+
+router.patch(
+  "/:id",
+  assertRequestInput(PatchController.validations),
+  PatchController.controller
 );
 
 router.use("/options", OptionRouter);

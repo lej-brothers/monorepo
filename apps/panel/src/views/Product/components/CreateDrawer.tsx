@@ -3,18 +3,19 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { CaretRightOutlined } from "@ant-design/icons";
 import { Button, Collapse, Drawer } from "antd";
 import { IProductCreate } from "common";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { FormattedMessage } from "react-intl";
 import { SLUG_VALIDATE_EX } from "../../../constants/regexs";
 import { Input, Select, Switch, Textarea, Uploader } from "../../../components";
 import { PRODUCT_MODAL } from "../constants";
-import { CategoryQuery } from "queries";
+import { CategoryQuery, ProductQuery } from "queries";
 
 const { Panel } = Collapse;
 
 interface Props {
   open: boolean;
+  editing?: string;
   onClose: () => void;
   onSubmit: (data: IProductCreate) => void;
   toggleModal: (modal: PRODUCT_MODAL) => void;
@@ -22,6 +23,7 @@ interface Props {
 
 const CreateDrawer: React.FC<Props> = ({
   open,
+  editing,
   onSubmit,
   toggleModal,
   onClose,
@@ -32,6 +34,30 @@ const CreateDrawer: React.FC<Props> = ({
 
   const values = methods.watch();
   const { data } = CategoryQuery.useList();
+  const _ = ProductQuery.useProduct(editing, {
+    onSuccess: (editingData: any) => {
+      methods.reset({
+        _id: editingData._id,
+        slug: editingData.slug,
+        title: editingData.title,
+        details: editingData.details,
+        description: editingData.description,
+        categories: editingData.categories.map(
+          (categories: any) => categories._id
+        ),
+        isHighlight: editingData.isHighlight,
+        isMetch: editingData.isMetch,
+        count: editingData.warehourse.count,
+        price: editingData.warehourse.price,
+      });
+
+      setImages(editingData.images);
+    },
+    enabled: !!editing,
+    cacheTime: 0,
+  });
+
+  const [images, setImages] = useState<any>([]);
 
   const categories = data?.docs || [];
 
@@ -42,11 +68,16 @@ const CreateDrawer: React.FC<Props> = ({
 
   const onCreateButtonClick = () => onSubmit(values);
 
+  useEffect(() => {
+    methods.reset({});
+    setImages([]);
+  }, [methods, open]);
+
   return (
     <Drawer
       extra={
         <Button onClick={onCreateButtonClick}>
-          <FormattedMessage id="create" />
+          <FormattedMessage id={editing ? "update" : "create"} />
         </Button>
       }
       title={<FormattedMessage id="product.create.title" />}
@@ -160,6 +191,7 @@ const CreateDrawer: React.FC<Props> = ({
             </div>
             <div>
               <Uploader
+                images={images}
                 onChange={(ids) => {
                   methods.setValue("images", ids);
                 }}
