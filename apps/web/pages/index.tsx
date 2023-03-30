@@ -17,9 +17,9 @@ import LejCompactLogoWhite from "../public/lej-compact-logo-white.png";
 const ScrollBar = dynamic(() => import("react-scrollbar"), { ssr: false });
 
 export default function Web() {
-  const products = useProducts();
+  const featuredData = useProducts(1, 3, { isHighlight: true })
 
-  const first3 = products.data?.docs?.slice(0, 3);
+  const features = featuredData.data?.docs || []
 
   return (
     <>
@@ -34,7 +34,7 @@ export default function Web() {
         >
           <BrowserView>
             <div className="absolute left-0 right-0 ml-[auto] mr-[auto] z-10 bottom-0 flex mt-[0px] flex-col justify-center items-center bg-white w-full max-w-3xl h-[60%] rounded-tl-full rounded-tr-full">
-              {first3 && <ProductRotator products={first3 as any} />}
+              {features && <ProductRotator products={features as any} />}
             </div>
           </BrowserView>
 
@@ -51,8 +51,8 @@ export default function Web() {
           <TopBackground className="relative" isMobile={isMobile}>
             <MobileView>
               <div className="absolute flex z-10 -bottom-11 w-full max-w-3xl h-[60%]">
-                {first3 && (
-                  <HighlightedProductSlider products={first3 as any} />
+                {features && (
+                  <HighlightedProductSlider products={features as any} />
                 )}
               </div>
             </MobileView>

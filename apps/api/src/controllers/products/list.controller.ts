@@ -7,11 +7,12 @@ import CategoryService from "../../services/category.service";
 const validations = [param("page"), param("limit")];
 
 const controller = async (req: Request, res: Response) => {
-  const { page, limit, categories, title } = req.query;
+  const { page, limit, categories, isHighlight, title } = req.query;
 
   let query: any = {};
 
   if (title) query.title = { "$regex": title, "$options": "i" };
+  if (isHighlight) query.isHighlight = true;
 
   if (categories) {
     let ids: string[] = [];
