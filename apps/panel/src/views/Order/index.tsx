@@ -7,6 +7,7 @@ import { ORDER_MODAL, STATUS_OPTIONS } from "./constants";
 import { Container } from "./styles";
 import ProductPreview from "../../components/ProductPreview";
 import format from "../../utils/format";
+import moment from "moment";
 
 const { Column } = Table;
 
@@ -30,7 +31,7 @@ const Order: React.FC = () => {
     <Container>
       <Table
         onRow={(data) => ({
-          className: 'cursor-pointer',
+          className: "cursor-pointer",
           onClick: (e: any) => {
             e.stopPropagation();
             setModal(ORDER_MODAL.PRODUCT_PREVIEW);
@@ -40,6 +41,12 @@ const Order: React.FC = () => {
         pagination={false}
         dataSource={orders}
       >
+        <Column
+          title={<FormattedMessage id="order.date" />}
+          dataIndex="createdAt"
+          render={(value) => moment(value).format("DD-MM-YYYY")}
+        />
+
         <Column title={<FormattedMessage id="order.code" />} dataIndex="code" />
         <Column
           title={<FormattedMessage id="order.status" />}
@@ -93,29 +100,29 @@ const Order: React.FC = () => {
           title={<FormattedMessage id="order.totalAmount" />}
           dataIndex="totalAmount"
           render={(value) => {
-            return <p>{format('vi-VN', 'VND', value)}</p>;
+            return <p>{format("vi-VN", "VND", value)}</p>;
           }}
         />
       </Table>
       <Pagination
-            current={page}
-            pageSize={limit}
-            onChange={onChange}
-            className="w-full mt-2 flex justify-end"
-            pageSizeOptions={[10, 20, 30]}
-            defaultPageSize={20}
-            defaultCurrent={1}
-            total={data?.totalDocs || 0}
-            showTotal={(showing) => (
-              <div className="h-full w-full flex items-center mt-1">
-                <FormattedMessage
-                  id="paginate.text"
-                  values={{ showing, total: data?.totalDocs || 0 }}
-                />
-              </div>
-            )}
-            responsive
-          />
+        current={page}
+        pageSize={limit}
+        onChange={onChange}
+        className="w-full mt-2 flex justify-end"
+        pageSizeOptions={[10, 20, 30]}
+        defaultPageSize={20}
+        defaultCurrent={1}
+        total={data?.totalDocs || 0}
+        showTotal={(showing) => (
+          <div className="h-full w-full flex items-center mt-1">
+            <FormattedMessage
+              id="paginate.text"
+              values={{ showing, total: data?.totalDocs || 0 }}
+            />
+          </div>
+        )}
+        responsive
+      />
       <ProductPreview
         orderId={selected}
         open={modal === ORDER_MODAL.PRODUCT_PREVIEW}
