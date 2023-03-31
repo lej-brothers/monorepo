@@ -1,6 +1,6 @@
 import React, { Suspense, useEffect } from "react";
 import { Layout } from "antd";
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 
 import { SideBar } from "../components";
 
@@ -8,9 +8,12 @@ const { Content, Footer } = Layout;
 
 const Root: React.FC = () => {
   const nativate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
-    nativate("/products");
+    if (!location.pathname) {
+      nativate("/products");
+    }
   }, []);
 
   return (

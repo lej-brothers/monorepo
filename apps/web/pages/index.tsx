@@ -34,7 +34,7 @@ export default function Web() {
         >
           <BrowserView>
             <div className="absolute left-0 right-0 ml-[auto] mr-[auto] z-10 bottom-0 flex mt-[0px] flex-col justify-center items-center bg-white w-full max-w-3xl h-[60%] rounded-tl-full rounded-tr-full">
-              {features && <ProductRotator products={features as any} />}
+              {features.length >= 3 && <ProductRotator products={features as any} />}
             </div>
           </BrowserView>
 

@@ -7,6 +7,7 @@ export * from "./src/types/IWarehouse";
 export * from "./src/types/IPromotion";
 export * from "./src/types/IProduct";
 export * from "./src/types/IPaginated";
+export * from './src/types/IPost';
 export * from "./src/types/ICarrier";
 export * from "./src/types/IImage";
 

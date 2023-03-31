@@ -22,43 +22,43 @@ function getItem(
   } as MenuItem;
 }
 
-const items: MenuItem[] = [
+const ITEMS: MenuItem[] = [
+  getItem(
+    <FormattedMessage id="insights" />,
+    "/insights",
+    <Link to="/insights">
+      <AppstoreOutlined />
+    </Link>
+  ),
   getItem(
     <FormattedMessage id="product" />,
-    "1",
+    "/product",
     <Link to="/products">
       <AppstoreOutlined />
     </Link>
   ),
   getItem(
     <FormattedMessage id="order" />,
-    "2",
+    "/order",
     <Link to="/orders">
       <AppstoreOutlined />
     </Link>
   ),
   getItem(
     <FormattedMessage id="promotion" />,
-    "3",
+    "/promotion",
     <Link to="/promotions">
       <GiftOutlined />
     </Link>
   ),
-  // getItem("Option 2", "2", <DesktopOutlined />),
-  // getItem("User", "sub1", <UserOutlined />, [
-  //   getItem("Tom", "3"),
-  //   getItem("Bill", "4"),
-  //   getItem("Alex", "5"),
-  // ]),
-  // getItem("Team", "sub2", <TeamOutlined />, [
-  //   getItem("Team 1", "6"),
-  //   getItem("Team 2", "8"),
-  // ]),
-  // getItem("Files", "9", <FileOutlined />),
 ];
 
 const SideBar = () => {
   const [collapsed, setCollapsed] = useState(false);
+
+  const selected = ITEMS.find((item) =>
+    window.location.pathname.includes(item!.key as string)
+  )!.key!;
 
   return (
     <Sider
@@ -75,9 +75,9 @@ const SideBar = () => {
       />
       <Menu
         theme="dark"
-        defaultSelectedKeys={["1"]}
+        selectedKeys={[selected as string]}
         mode="inline"
-        items={items}
+        items={ITEMS}
       />
     </Sider>
   );

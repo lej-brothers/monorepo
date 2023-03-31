@@ -59,6 +59,7 @@ interface Props {
 }
 
 const ProductRotator = ({ products }: Props) => {
+
   const DEFAULT_POSITION: { [key: string]: number } = {
     [products[0]._id!]: 1,
     [products[1]._id!]: 2,

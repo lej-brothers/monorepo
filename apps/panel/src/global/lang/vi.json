@@ -30,6 +30,7 @@
   "order_infomation": "Thông tin đơn hàng [#{id}]",
   "price_drop": "Giá giảm",
   "limit": "Số lần sử dụng",
+  "insights": "Báo cáo",
   "valid": "Thời gian hiệu lực",
   "promotion": "Khuyến mãi",
   "notes": "Ghi chú",
