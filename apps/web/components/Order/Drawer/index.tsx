@@ -4,7 +4,7 @@ import { AiOutlineClose } from "react-icons/ai";
 import { useRouter } from "next/router";
 
 import Order from "../index";
-import { isMobile } from "react-device-detect";
+import { isMobile, isTablet } from "react-device-detect";
 
 interface Props {}
 
@@ -20,7 +20,7 @@ const OrderDrawer: React.FC<Props> = ({}) => {
 
   return (
     <Drawer
-      width={isMobile ? '100vw' : 535}
+      width={(isMobile && !isTablet) ? '100vw' : 535}
       open={open}
       bodyStyle={{ padding: 0 }}
       headerStyle={{ display: "none" }}

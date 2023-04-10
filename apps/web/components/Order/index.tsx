@@ -9,7 +9,7 @@ import OrderBackgroundImage from "../../public/coffee-order-background.jpeg";
 import LejCompactLogoWhite from "../../public/lej-compact-logo-white.png";
 
 import { ORDER_STATUS } from "common";
-import { isMobile } from "react-device-detect";
+import { isMobile, isTablet } from "react-device-detect";
 import styled from "styled-components";
 
 import useOrder from "../../hooks/useOrder";
@@ -62,7 +62,7 @@ const Order: React.FC<Props> = ({ orderId }) => {
         <p className="text-3xl">đã ủng hộ Le J’</p>
       </div>
       <Steps
-        className={`pt-[45px] ${isMobile ? "px-6" : "pl-[110px] pr-[65px]"}`}
+        className={`pt-[45px] ${(isMobile && !isTablet) ? "px-6" : "pl-[110px] pr-[65px]"}`}
         direction="vertical"
         current={current}
         items={[
@@ -99,7 +99,7 @@ const Order: React.FC<Props> = ({ orderId }) => {
         ]}
       />
 
-      {isMobile && (
+      {(isMobile && !isTablet) && (
         <button
           onClick={() => router.push("/")}
           className="bg-black mt-8 rounded-full text-white py-4 text-xl mb-[200px] mx-8"

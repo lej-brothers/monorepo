@@ -58,7 +58,7 @@ const SideBar = () => {
 
   const selected = ITEMS.find((item) =>
     window.location.pathname.includes(item!.key as string)
-  )!.key!;
+  )?.key || 'products';
 
   return (
     <Sider

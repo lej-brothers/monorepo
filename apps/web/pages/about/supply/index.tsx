@@ -1,7 +1,12 @@
 import dynamic from "next/dynamic";
 import { ReactElement } from "react";
 import Layout from "../../../components/Layout";
-import { BrowserView, MobileView } from "react-device-detect";
+import {
+  BrowserView,
+  MobileView,
+  TabletView,
+  isTablet,
+} from "react-device-detect";
 
 const ScrollBar = dynamic(() => import("react-scrollbar"), { ssr: false });
 
@@ -14,9 +19,16 @@ const Page = () => {
       <BrowserView>
         <SupplyWebView />
       </BrowserView>
-      <MobileView>
-        <SupplyMobileView />
-      </MobileView>
+
+      <TabletView>
+        <SupplyWebView />
+      </TabletView>
+
+      {!isTablet && (
+        <MobileView>
+          <SupplyMobileView />
+        </MobileView>
+      )}
     </>
   );
 };

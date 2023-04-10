@@ -1,6 +1,11 @@
 "use client";
 
-import { BrowserView, MobileView } from "react-device-detect";
+import {
+  BrowserView,
+  MobileView,
+  TabletView,
+  isTablet,
+} from "react-device-detect";
 import AboutComponent from "../../components/About/index";
 import AboutMobile from "../../components/About/index.mobile";
 import { ReactElement } from "react";
@@ -12,9 +17,14 @@ const About = () => {
       <BrowserView>
         <AboutComponent />
       </BrowserView>
-      <MobileView>
-        <AboutMobile />
-      </MobileView>
+      <TabletView>
+        <AboutComponent />
+      </TabletView>
+      {!isTablet && (
+        <MobileView>
+          <AboutMobile />
+        </MobileView>
+      )}
     </>
   );
 };

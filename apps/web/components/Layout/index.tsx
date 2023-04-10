@@ -1,7 +1,12 @@
 "use client";
 
 import React, { ReactNode } from "react";
-import { BrowserView, MobileView } from "react-device-detect";
+import {
+  BrowserView,
+  MobileView,
+  TabletView,
+  isTablet,
+} from "react-device-detect";
 
 import { CartDrawer } from "../Cart/components";
 import Navbar from "../Navbar";
@@ -22,9 +27,14 @@ const Layout: React.FC<Props> = ({ mobileNavProps, children }) => {
       <BrowserView>
         <Navbar />
       </BrowserView>
-      <MobileView>
-        <MobileNavbar {...mobileNavProps} />
-      </MobileView>
+      <TabletView>
+        <Navbar />
+      </TabletView>
+      {!isTablet && (
+        <MobileView>
+          <MobileNavbar {...mobileNavProps} />
+        </MobileView>
+      )}
       <main className="relative">{children}</main>
       <CartDrawer />
       <SearchDrawer />

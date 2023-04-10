@@ -8,7 +8,13 @@ import ProductModule from "../../modules/product.module";
 import ProductTemplate from "../../components/ProductTemplate";
 import Layout from "../../components/Layout";
 import Head from "next/head";
-import { MobileView, BrowserView, isMobile } from "react-device-detect";
+import {
+  MobileView,
+  BrowserView,
+  isMobile,
+  TabletView,
+  isTablet,
+} from "react-device-detect";
 import MobileProductTemplate from "../../components/MobileProductTemplate";
 
 interface Params extends ParsedUrlQuery {
@@ -32,15 +38,21 @@ const ProductPage = () => {
       <BrowserView>
         <ProductTemplate product={data} />
       </BrowserView>
-      <MobileView>
-        <MobileProductTemplate product={data} />
-      </MobileView>
+
+      <TabletView>
+        <ProductTemplate product={data} />
+      </TabletView>
+
+      {!isTablet && (
+        <MobileView>
+          <MobileProductTemplate product={data} />
+        </MobileView>
+      )}
     </>
   );
 };
 
 ProductPage.getLayout = (page: ReactElement) => {
-
   return <Layout>{page}</Layout>;
 };
 

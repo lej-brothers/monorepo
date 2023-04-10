@@ -9,7 +9,13 @@ import Layout from "../../components/Layout";
 import Product from "../../components/Product";
 import useProducts from "../../hooks/useProducts";
 import BeansIcon from "../../public/beans-icon.png";
-import { BrowserView, MobileView, isMobile } from "react-device-detect";
+import {
+  BrowserView,
+  MobileView,
+  TabletView,
+  isMobile,
+  isTablet,
+} from "react-device-detect";
 
 const ScrollBar = dynamic(() => import("react-scrollbar"), { ssr: false });
 
@@ -35,7 +41,11 @@ const Store = () => {
 
   /* MAIN RETURN */
   return (
-    <ScrollBar smoothScrolling className="h-[100vh]" contentClassName="pb-[250px]">
+    <ScrollBar
+      smoothScrolling
+      className="h-[100vh]"
+      contentClassName="pb-[250px]"
+    >
       {/* <Head title="Store" description="Explore all of our products." /> */}
       <div className="flex mt-[50px] flex-col">
         <div className="flex mt-[50px] flex-col justify-center items-center">
@@ -47,7 +57,11 @@ const Store = () => {
               height={122}
             />
           </BrowserView>
-          <h3 className={`font-normal my-4 text-3xl ${isMobile && "mb-5"}`}>
+          <h3
+            className={`font-normal my-4 text-3xl ${
+              isMobile && !isTablet && "mb-5"
+            }`}
+          >
             Cà Phê
           </h3>
         </div>
@@ -78,36 +92,64 @@ const Store = () => {
           </div>
         </BrowserView>
 
-        <MobileView>
-          <InvisibleScrollbar
-            smoothScrolling
-            className="w-full"
-            contentClassName="w-[max-content] flex"
-            vertical={true}
-          >
+        <TabletView>
+          <div className="w-full flex justify-center">
             <Button
               onClick={onClick.bind(this, "espresso-phin")}
               active={categories === "espresso-phin"}
-              className={`px-5 mx-2 py-2`}
+              className={`px-5 mr-2 py-2`}
             >
               Espresso và Phin
             </Button>
             <Button
               onClick={onClick.bind(this, undefined)}
               active={categories === undefined}
-              className={`px-5 mx-2 py-2`}
+              className={`px-5 mr-2 py-2`}
             >
               Tất cả
             </Button>
             <Button
               onClick={onClick.bind(this, "handbrew-coldbrew")}
               active={categories === "handbrew-coldbrew"}
-              className={`px-5 mx-2 py-2`}
+              className={`px-5 mr-2 py-2`}
             >
               Handbrew và Coldbrew
             </Button>
-          </InvisibleScrollbar>
-        </MobileView>
+          </div>
+        </TabletView>
+
+        {!isTablet && (
+          <MobileView>
+            <InvisibleScrollbar
+              smoothScrolling
+              className="w-full"
+              contentClassName="w-[max-content] flex"
+              vertical={true}
+            >
+              <Button
+                onClick={onClick.bind(this, "espresso-phin")}
+                active={categories === "espresso-phin"}
+                className={`px-5 mx-2 py-2`}
+              >
+                Espresso và Phin
+              </Button>
+              <Button
+                onClick={onClick.bind(this, undefined)}
+                active={categories === undefined}
+                className={`px-5 mx-2 py-2`}
+              >
+                Tất cả
+              </Button>
+              <Button
+                onClick={onClick.bind(this, "handbrew-coldbrew")}
+                active={categories === "handbrew-coldbrew"}
+                className={`px-5 mx-2 py-2`}
+              >
+                Handbrew và Coldbrew
+              </Button>
+            </InvisibleScrollbar>
+          </MobileView>
+        )}
 
         <div className="flex mb-[60px] w-full justify-center">
           <div className="mt-10 mx-8 grid lg:grid-cols-3 md:rid-cols-3 sm:rid-cols-1 gap-[40px]">

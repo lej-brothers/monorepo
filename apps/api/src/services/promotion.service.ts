@@ -7,7 +7,9 @@ const PromotionService = {
     return Promotion.findById(id);
   },
   async getByCode(code: string) {
-    return Promotion.findOne({ code }).populate('products') as any as IPromotionDocument;
+    return Promotion.findOne({ code }).populate(
+      "products"
+    ) as any as IPromotionDocument;
   },
   async list(params: PaginateOptions) {
     return Promotion.paginate({}, params);

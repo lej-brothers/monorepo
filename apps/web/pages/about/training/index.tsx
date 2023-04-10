@@ -1,6 +1,11 @@
 import { ReactElement } from "react";
 import Layout from "../../../components/Layout";
-import { BrowserView, MobileView } from "react-device-detect";
+import {
+  BrowserView,
+  MobileView,
+  TabletView,
+  isTablet,
+} from "react-device-detect";
 
 import TraniningWebView from "../../../components/About/training";
 import TraniningMobileView from "../../../components/About/training.mobile";
@@ -11,9 +16,14 @@ const Setup = () => {
       <BrowserView>
         <TraniningWebView />
       </BrowserView>
-      <MobileView>
-        <TraniningMobileView />
-      </MobileView>
+      <TabletView>
+        <TraniningWebView />
+      </TabletView>
+      {!isTablet && (
+        <MobileView>
+          <TraniningMobileView />
+        </MobileView>
+      )}
     </>
   );
 };

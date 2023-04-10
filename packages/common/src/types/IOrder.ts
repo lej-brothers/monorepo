@@ -49,6 +49,10 @@ export interface IOrder {
   totalAmount: number;
 
   momo: IMomo;
+
+  createdAt: string;
+  updatedAt: string;
+
 }
 
 export interface IOrderDeliveryInfo {

@@ -2,10 +2,9 @@ import Image from "next/image";
 import { isMobile } from "react-device-detect";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { FaSearch, FaShoppingCart } from "react-icons/fa";
+import { FaSearch } from "react-icons/fa";
 
 import LeJCompactLogo from "../../../../../public/lej-compact-logo.png";
-// import CartDropdown from "@modules/layout/components/cart-dropdown"
 
 const Navbar = () => {
   const { pathname } = useRouter();

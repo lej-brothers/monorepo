@@ -1,4 +1,3 @@
-import Image from "next/image";
 import ProductRotator from "../components/ProductRotator";
 import LandingPageTopBg from "../public/landing-page-top-bg.png";
 import useProducts from "../hooks/useProducts";
@@ -10,16 +9,19 @@ import dynamic from "next/dynamic";
 import Services from "../components/Services";
 import Head from "next/head";
 import styled from "styled-components";
-import { BrowserView, MobileView, isMobile } from "react-device-detect";
-import HighlightedProductSlider from "../components/HighlightedProductSlider";
-import LejCompactLogoWhite from "../public/lej-compact-logo-white.png";
+import {
+  BrowserView,
+  MobileView,
+  isMobile,
+  isTablet,
+} from "react-device-detect";
 
 const ScrollBar = dynamic(() => import("react-scrollbar"), { ssr: false });
 
 export default function Web() {
-  const featuredData = useProducts(1, 3, { isHighlight: true })
+  const featuredData = useProducts(1, 3, { isHighlight: true });
 
-  const features = featuredData.data?.docs || []
+  const features = featuredData.data?.docs || [];
 
   return (
     <>
@@ -29,34 +31,41 @@ export default function Web() {
       <ScrollBar smoothScrolling className="h-[100vh]">
         <section
           className={`relative flex justify-center items-end ${
-            isMobile ? "h-[70vh]" : "h-[100vh]"
+            isMobile && !isTablet ? "h-[70vh]" : "h-[100vh]"
           } w-full`}
         >
           <BrowserView>
             <div className="absolute left-0 right-0 ml-[auto] mr-[auto] z-10 bottom-0 flex mt-[0px] flex-col justify-center items-center bg-white w-full max-w-3xl h-[60%] rounded-tl-full rounded-tr-full">
-              {features.length >= 3 && <ProductRotator products={features as any} />}
+              {features.length >= 3 && (
+                <ProductRotator products={features as any} />
+              )}
             </div>
           </BrowserView>
 
           <MobileView>
-            <Image
-              className="absolute top-0 bottom-0 left-0 right-0 z-[11] mt-[auto] mb-[auto] mr-[auto] ml-[auto]"
-              src={LejCompactLogoWhite.src}
-              width={45}
-              height={49}
-              alt="lej-compact-logo-white"
-            />
+            <div className="absolute left-0 right-0 ml-[auto] mr-[auto] z-10 bottom-0 flex mt-[0px] flex-col justify-center items-center bg-white w-full max-w-3xl h-[60%] rounded-tl-full rounded-tr-full">
+              {features.length >= 3 && (
+                <ProductRotator products={features as any} />
+              )}
+            </div>
           </MobileView>
 
-          <TopBackground className="relative" isMobile={isMobile}>
+          {/* {!isTablet && (
             <MobileView>
-              <div className="absolute flex z-10 -bottom-11 w-full max-w-3xl h-[60%]">
-                {features && (
-                  <HighlightedProductSlider products={features as any} />
-                )}
-              </div>
+              <Image
+                className="absolute top-0 bottom-0 left-0 right-0 z-[11] mt-[auto] mb-[auto] mr-[auto] ml-[auto]"
+                src={LejCompactLogoWhite.src}
+                width={45}
+                height={49}
+                alt="lej-compact-logo-white"
+              />
             </MobileView>
-          </TopBackground>
+          )} */}
+
+          <TopBackground
+            className="relative"
+            isMobile={isMobile && !isTablet}
+          ></TopBackground>
         </section>
 
         <section className="flex justify-center bg-black">
@@ -75,7 +84,9 @@ export default function Web() {
           <div className="flex flex-col justify-center items-center bg-white w-full max-w-3xl h-[100%] py-12">
             <Services />
           </div>
+
         </section>
+
       </ScrollBar>
     </>
   );

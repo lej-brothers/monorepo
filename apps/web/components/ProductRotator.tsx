@@ -7,7 +7,7 @@ import { IProduct } from "common";
 
 import format from "../utils/format";
 import Link from "next/link";
-import { isMobile } from "react-device-detect";
+import { isMobile, isTablet } from "react-device-detect";
 
 export const NEXT_POSITION: { [key: number]: number } = {
   1: 2,
@@ -39,9 +39,9 @@ const POSITION_MAP_MOBILE: { [key: number]: any } = {
     height: 190,
   },
   3: { right: -50, top: -20, width: 110, height: 150, rotate: 25 },
-}
+};
 
-const POSTION_MAP_DESKTOP: { [key: number]: any } = {
+const POSITION_MAP_DESKTOP: { [key: number]: any } = {
   1: { left: 20, top: -20, width: 110, height: 150, rotate: -25 },
   2: {
     zIndex: 1,
@@ -59,16 +59,16 @@ interface Props {
 }
 
 const ProductRotator = ({ products }: Props) => {
-
   const DEFAULT_POSITION: { [key: string]: number } = {
     [products[0]._id!]: 1,
     [products[1]._id!]: 2,
     [products[2]._id!]: 3,
   };
 
-  const POSTION_MAP = isMobile ? POSITION_MAP_MOBILE : POSTION_MAP_DESKTOP
-
   const [position, setPosition] = useState(DEFAULT_POSITION);
+
+  const POSITION_MAP =
+    isMobile && !isTablet ? POSITION_MAP_MOBILE : POSITION_MAP_DESKTOP;
 
   const highlightedProduct =
     position[products[0]._id!] === 1
@@ -107,39 +107,60 @@ const ProductRotator = ({ products }: Props) => {
         layout
         className="absolute select-none"
         key={products[0]._id!}
-        style={{ ...POSTION_MAP[position[products[0]._id!]] }}
+        style={{ ...POSITION_MAP[position[products[0]._id!]] }}
         transition={TRANSISTION}
       >
-        <img src={products[0].images[0].url} alt={products[0]._id!} />
+        <Image
+          width={POSITION_MAP[position[products[0]._id!]].width}
+          height={POSITION_MAP[position[products[0]._id!]].height}
+          src={products[0].images[0].url}
+          alt={products[0]._id!}
+        />
       </motion.div>
 
       <motion.div
         layout
         className="absolute select-none"
         key={products[1]._id!}
-        style={{ ...POSTION_MAP[position[products[1]._id!]] }}
+        style={{ ...POSITION_MAP[position[products[1]._id!]] }}
         transition={TRANSISTION}
       >
-        <img src={products[1].images[0].url!} alt={products[1]._id!} />
+        <Image
+          width={POSITION_MAP[position[products[1]._id!]].width}
+          height={POSITION_MAP[position[products[1]._id!]].height}
+          src={products[1].images[0].url!}
+          alt={products[1]._id!}
+        />
       </motion.div>
 
       <motion.div
         layout
         className="absolute select-none"
         key={products[2]._id!}
-        style={{ ...POSTION_MAP[position[products[2]._id!]] }}
+        style={{ ...POSITION_MAP[position[products[2]._id!]] }}
         transition={TRANSISTION}
       >
-        <img src={products[2].images[0].url!} alt={products[2]._id!} />
+        <Image
+          width={POSITION_MAP[position[products[2]._id!]].width}
+          height={POSITION_MAP[position[products[2]._id!]].height}
+          src={products[2].images[0].url!}
+          alt={products[2]._id!}
+        />
       </motion.div>
 
-      {!isMobile && <h3 className="lg:mt-[150px] mt-[150px] text-4xl font-medium">
-        Sản phẩm nổi bật
-      </h3>}
+      {(!isMobile || isTablet) && (
+        <h3 className="lg:mt-[150px] mt-[150px] text-4xl font-medium">
+          Sản phẩm nổi bật
+        </h3>
+      )}
 
-      {isMobile && <span className="mt-[100px]"></span>}
+      {isMobile && !isTablet && <span className="mt-[100px]"></span>}
 
-      <div className={`select-none w-full flex mt-8 ${isMobile && "mx-5"}`}>
+      <div
+        className={`select-none w-full flex mt-8 ${
+          isMobile && !isTablet && "mx-5 mt-[140px]"
+        }`}
+      >
         <div className="flex justify-end items-center flex-1">
           <button
             onClick={onPre}
@@ -149,7 +170,11 @@ const ProductRotator = ({ products }: Props) => {
           </button>
         </div>
         <Link href={`/products/${highlightedProduct.slug}`} passHref>
-          <div className={`flex ${isMobile ? 'w-[150px]' : ' w-[300px]'} mx-10 flex-col justify-center items-center`}>
+          <div
+            className={`flex ${
+              isMobile && !isTablet ? "w-[150px]" : " w-[300px]"
+            } mx-10 flex-col justify-center items-center`}
+          >
             <motion.p
               className="text-[#CC8181] text-center font-normal text-xs mb-1"
               initial={{ opacity: 0 }}

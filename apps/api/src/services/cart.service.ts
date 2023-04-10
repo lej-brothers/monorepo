@@ -53,7 +53,7 @@ const CartService = {
         return (
           products.find((item) => String(item._id) === product._id) !==
             undefined ||
-          !!categories.filter((item) => product.categories.includes(item._id))
+          !!categories.filter((item) => product.categories.includes(String(item)))
             .length
         );
       });

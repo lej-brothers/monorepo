@@ -1,6 +1,11 @@
 import { ReactElement } from "react";
 import Layout from "../../../components/Layout";
-import { BrowserView, MobileView } from "react-device-detect";
+import {
+  BrowserView,
+  MobileView,
+  TabletView,
+  isTablet,
+} from "react-device-detect";
 
 import Setup from "../../../components/About/setup";
 import SetupMobile from "../../../components/About/setup.mobile";
@@ -11,9 +16,14 @@ const Page = () => {
       <BrowserView>
         <Setup />
       </BrowserView>
-      <MobileView>
-        <SetupMobile />
-      </MobileView>
+      <TabletView>
+        <Setup />
+      </TabletView>
+      {!isTablet && (
+        <MobileView>
+          <SetupMobile />
+        </MobileView>
+      )}
     </>
   );
 };

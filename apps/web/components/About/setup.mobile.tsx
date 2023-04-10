@@ -50,22 +50,23 @@ const Setup = () => {
         </Carousel>
       </div>
 
-
       <div className="flex w-full my-8 px-5 flex-col">
-          <p className="text-xl mb-5">Các dịch vụ khác</p>
-          <div className="flex w-full">
-            <div className="flex flex-1">
-           
+        <p className="text-xl mb-5">Các dịch vụ khác</p>
+        <div className="flex w-full">
+          <div className="flex flex-1">
+            <Link passHref href="/about/training">
               <button className=" btn mr-5 border-[1px] px-6 h-[84px] flex flex-col justify-center items-center border-black rounded">
                 <Image
-                  src={CafeIcon.src}
+                  src={CoffeeMaker.src}
                   width={32}
                   height={32}
                   alt="coffee-bean-icon"
                 />
                 <span>Training</span>
               </button>
+            </Link>
 
+            <Link passHref href="/about/supply">
               <button className=" btn border-[1px] px-6 h-[84px] flex flex-col justify-center items-center border-black rounded">
                 <Image
                   src={CoffeeBean.src}
@@ -75,33 +76,31 @@ const Setup = () => {
                 />
                 <span>Supply</span>
               </button>
-            </div>
-          </div>
-
-          <div className="rounded-lg mt-5 flex p-3 mb-3 bg-[#F8F8F8] h-[88px]">
-            <div className="flex-3 flex flex-col">
-              <p className="text-sm pb-1">Hồ sơ năng lực</p>
-              <p className="text-sm font-light text-[#757575]">
-                Liên hệ để lấy password
-              </p>
-              <p className="text-sm font-light text-[#757575]">
-                SĐT: 093345678
-              </p>
-            </div>
-            <div className="flex-1 flex justify-end text-sm items-center">
-              <Link
-                target="#blank"
-                href="https://www.google.com/maps/place/51a+Yersin,+Ph%C6%B0%E1%BB%9Dng+10,+Th%C3%A0nh+ph%E1%BB%91+%C4%90%C3%A0+L%E1%BA%A1t,+L%C3%A2m+%C4%90%E1%BB%93ng/data=!4m2!3m1!1s0x31711318af7746ed:0x3b8db6ca0fa1d3d1?sa=X&ved=2ahUKEwimttDdvbD9AhUZG4gKHXDRBksQ8gF6BAgKEAI"
-                passHref
-              >
-                <button className="p-2 px-4 font-light bg-black rounded-full text-white">
-                  Xem PDF
-                </button>
-              </Link>
-            </div>
+            </Link>
           </div>
         </div>
 
+        <div className="rounded-lg mt-5 flex p-3 mb-3 bg-[#F8F8F8] h-[88px]">
+          <div className="flex-3 flex flex-col">
+            <p className="text-sm pb-1">Hồ sơ năng lực</p>
+            <p className="text-sm font-light text-[#757575]">
+              Liên hệ để lấy password
+            </p>
+            <p className="text-sm font-light text-[#757575]">SĐT: 093345678</p>
+          </div>
+          <div className="flex-1 flex justify-end text-sm items-center">
+            <Link
+              target="#blank"
+              href="https://www.google.com/maps/place/51a+Yersin,+Ph%C6%B0%E1%BB%9Dng+10,+Th%C3%A0nh+ph%E1%BB%91+%C4%90%C3%A0+L%E1%BA%A1t,+L%C3%A2m+%C4%90%E1%BB%93ng/data=!4m2!3m1!1s0x31711318af7746ed:0x3b8db6ca0fa1d3d1?sa=X&ved=2ahUKEwimttDdvbD9AhUZG4gKHXDRBksQ8gF6BAgKEAI"
+              passHref
+            >
+              <button className="p-2 px-4 font-light bg-black rounded-full text-white">
+                Xem PDF
+              </button>
+            </Link>
+          </div>
+        </div>
+      </div>
     </ScrollBar>
   );
 };

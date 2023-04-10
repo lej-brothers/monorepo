@@ -111,35 +111,41 @@ const About = () => {
           <p className="text-xl mb-5">Dịch vụ</p>
           <div className="flex">
             <div className="flex flex-1">
-              <button className=" btn mr-5 border-[1px] px-10 h-[84px] flex flex-col justify-center items-center border-black rounded">
-                <Image
-                  src={CoffeeMaker.src}
-                  width={32}
-                  height={32}
-                  alt="coffee-bean-icon"
-                />
-                <span>Setup</span>
-              </button>
+              <Link passHref href="/about/training">
+                <button className=" btn mr-5 border-[1px] px-10 h-[84px] flex flex-col justify-center items-center border-black rounded">
+                  <Image
+                    src={CoffeeMaker.src}
+                    width={32}
+                    height={32}
+                    alt="coffee-bean-icon"
+                  />
+                  <span>Training</span>
+                </button>
+              </Link>
 
-              <button className=" btn mr-5 border-[1px] px-10 h-[84px] flex flex-col justify-center items-center border-black rounded">
-                <Image
-                  src={CafeIcon.src}
-                  width={32}
-                  height={32}
-                  alt="coffee-bean-icon"
-                />
-                <span>Setup</span>
-              </button>
+              <Link passHref href="/about/setup">
+                <button className=" btn mr-5 border-[1px] px-10 h-[84px] flex flex-col justify-center items-center border-black rounded">
+                  <Image
+                    src={CafeIcon.src}
+                    width={32}
+                    height={32}
+                    alt="coffee-bean-icon"
+                  />
+                  <span>Setup</span>
+                </button>
+              </Link>
 
-              <button className=" btn border-[1px] px-10 h-[84px] flex flex-col justify-center items-center border-black rounded">
-                <Image
-                  src={CoffeeBean.src}
-                  width={32}
-                  height={32}
-                  alt="coffee-bean-icon"
-                />
-                <span>Supply</span>
-              </button>
+              <Link passHref href="/about/supply">
+                <button className=" btn border-[1px] px-10 h-[84px] flex flex-col justify-center items-center border-black rounded">
+                  <Image
+                    src={CoffeeBean.src}
+                    width={32}
+                    height={32}
+                    alt="coffee-bean-icon"
+                  />
+                  <span>Supply</span>
+                </button>
+              </Link>
             </div>
             <div className="flex-1 ml-3">
               <div className="rounded-lg flex p-3 mb-3 bg-[#F8F8F8] h-[88px]">
