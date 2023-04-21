@@ -31,6 +31,7 @@ const CategoryCreateModal = ({ open, onClose }: Props) => {
 
   return (
     <Modal
+      zIndex={2000}
       title={<FormattedMessage id="category.modal.create.title" />}
       open={open}
       onOk={onOk}

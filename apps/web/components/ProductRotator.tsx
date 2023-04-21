@@ -82,7 +82,7 @@ const ProductRotator = ({ products }: Props) => {
   const formatedPrice = format(
     "vi-VN",
     "VND",
-    highlightedProduct.warehourse.price as number
+    highlightedProduct.warehourse.prices[0].price as number
   );
 
   const onNext = () => {

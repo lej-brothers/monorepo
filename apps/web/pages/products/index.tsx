@@ -92,32 +92,6 @@ const Store = () => {
           </div>
         </BrowserView>
 
-        <TabletView>
-          <div className="w-full flex justify-center">
-            <Button
-              onClick={onClick.bind(this, "espresso-phin")}
-              active={categories === "espresso-phin"}
-              className={`px-5 mr-2 py-2`}
-            >
-              Espresso và Phin
-            </Button>
-            <Button
-              onClick={onClick.bind(this, undefined)}
-              active={categories === undefined}
-              className={`px-5 mr-2 py-2`}
-            >
-              Tất cả
-            </Button>
-            <Button
-              onClick={onClick.bind(this, "handbrew-coldbrew")}
-              active={categories === "handbrew-coldbrew"}
-              className={`px-5 mr-2 py-2`}
-            >
-              Handbrew và Coldbrew
-            </Button>
-          </div>
-        </TabletView>
-
         {!isTablet && (
           <MobileView>
             <InvisibleScrollbar

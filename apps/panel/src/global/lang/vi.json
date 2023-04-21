@@ -44,5 +44,8 @@
   "button.ready_to_delivery": "Sẵn sàng để giao",
   "button.deliveried": "Giao hàng thành công",
 
-  "tutorial.highlight": "Sản phẩm nổi bật"
+  "tutorial.highlight": "Sản phẩm nổi bật",
+  "price_variant.modal.create.title": "Tạo mẫu giá sản phẩm",
+  "product_variant_modal.variant": "Dạng",
+  "product_variant_modal.price": "Giá tiền"
 }

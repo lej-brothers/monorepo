@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { useQueryClient } from "react-query";
 import { PRODUCT_DRAWER, PRODUCT_MODAL } from "./constants";
 import { Container } from "./styles";
-import { ICategory, IProductCreate } from "common";
+import { ICategory, IPriceVariant, IProductCreate } from "common";
 import { BsStar, BsStarFill } from "react-icons/bs";
 import { FormattedMessage } from "react-intl";
 import CategoryCreateModal from "./components/CategoryCreateModal";
@@ -104,14 +104,9 @@ const Product: React.FC = () => {
             }}
           />
           <Column
-            title={<FormattedMessage id="count" />}
-            dataIndex={["warehourse", "count"]}
-            render={(count: number) => count.toLocaleString("en-US")}
-          />
-          <Column
             title={<FormattedMessage id="product.create.metch_price" />}
-            dataIndex={["warehourse", "price"]}
-            render={(price: number) => format("vi-VN", "VND", price)}
+            dataIndex={["warehourse", "prices"]}
+            render={(prices: IPriceVariant[]) => prices.map(({title, price}) => <Tag><span className="font-bold">{title}: </span>{format("vi-VN", "VND", price)}</Tag>)}
           />
           <Column
             dataIndex={["isHighlight"]}
@@ -152,8 +147,9 @@ const Product: React.FC = () => {
 
       <ProductCreateDrawer
         editing={editing}
-        toggleModal={toggleModal}
         onSubmit={onSubmit}
+        activeModal={modal}
+        toggleModal={toggleModal}
         open={drawer === PRODUCT_DRAWER.CREATE}
         onClose={onCloseDrawer}
       />

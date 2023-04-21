@@ -21,6 +21,7 @@ type ProductInfoProps = {
 
 type ProductForm = {
   notes: string;
+  priceVariant: number;
   shouldGrind: boolean;
   grind: GRIND_SIZE;
   quantity: number;
@@ -28,7 +29,7 @@ type ProductForm = {
 
 const MobileProductTemplate: React.FC<ProductInfoProps> = ({ product }) => {
   const methods = useForm<ProductForm>({
-    defaultValues: { grind: GRIND_SIZE.NONE, quantity: 1 },
+    defaultValues: { grind: GRIND_SIZE.NONE, quantity: 1, priceVariant: 0 },
   });
 
   const [added, setAdded] = useState(false);
@@ -40,6 +41,11 @@ const MobileProductTemplate: React.FC<ProductInfoProps> = ({ product }) => {
     methods.setValue("shouldGrind", shouldGrind);
     setAdded(false);
   };
+
+  const updateVariant = (index: number) => {
+    methods.setValue('priceVariant', index);
+    setAdded(false);
+  }
 
   const updateGrindSize = (value: any) => () => {
     methods.setValue("grind", value as GRIND_SIZE);

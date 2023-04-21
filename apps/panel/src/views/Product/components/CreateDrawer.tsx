@@ -1,17 +1,20 @@
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { CaretRightOutlined } from "@ant-design/icons";
-import { Button, Collapse, Drawer } from "antd";
-import { IProductCreate } from "common";
-import React, { useEffect, useState } from "react";
+import { CaretRightOutlined, PlusOutlined, MinusOutlined } from "@ant-design/icons";
+import { Button, Collapse, Drawer, Table } from "antd";
+import { IPriceVariant, IProductCreate } from "common";
+import React, { useCallback, useEffect, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { FormattedMessage } from "react-intl";
 import { SLUG_VALIDATE_EX } from "../../../constants/regexs";
 import { Input, Select, Switch, Textarea, Uploader } from "../../../components";
 import { PRODUCT_MODAL } from "../constants";
 import { CategoryQuery, ProductQuery } from "queries";
+import PriceVariantDrawer from "./PriceVariantDrawerCreateModal";
+import slugify from "../../../utils/slugify";
 
 const { Panel } = Collapse;
+const { Column } = Table;
 
 interface Props {
   open: boolean;
@@ -19,6 +22,7 @@ interface Props {
   onClose: () => void;
   onSubmit: (data: IProductCreate) => void;
   toggleModal: (modal: PRODUCT_MODAL) => void;
+  activeModal: PRODUCT_MODAL;
 }
 
 const CreateDrawer: React.FC<Props> = ({
@@ -26,13 +30,18 @@ const CreateDrawer: React.FC<Props> = ({
   editing,
   onSubmit,
   toggleModal,
+  activeModal,
   onClose,
 }) => {
   const methods = useForm<IProductCreate>({
     resolver: yupResolver(productCreateSchema),
+    defaultValues: { prices: [] },
   });
-
+  
   const values = methods.watch();
+  const title = methods.watch('title')
+  const prices = methods.watch('prices')
+
   const { data } = CategoryQuery.useList();
   const _ = ProductQuery.useProduct(editing, {
     onSuccess: (editingData: any) => {
@@ -48,7 +57,7 @@ const CreateDrawer: React.FC<Props> = ({
         isHighlight: editingData.isHighlight,
         isMetch: editingData.isMetch,
         count: editingData.warehourse.count,
-        price: editingData.warehourse.price,
+        prices: editingData.warehourse.prices,
       });
 
       setImages(editingData.images);
@@ -66,12 +75,34 @@ const CreateDrawer: React.FC<Props> = ({
     value: category._id,
   }));
 
-  const onCreateButtonClick = () => onSubmit(values);
+  const onCreateButtonClick = () => {
+    const values = methods.getValues();
+    onSubmit(values);
+  };
+
+  const onCreatePriceVariant = useCallback((variant: IPriceVariant) => {
+    const values = methods.getValues();
+    methods.setValue("prices", [...(values.prices || []), variant]);
+    toggleModal(PRODUCT_MODAL.NONE);
+  }, [ methods ])
+  
+  const onRemovePriceVariant = (toRemove: number) => {
+    const values = methods.getValues();
+    methods.setValue("prices", values.prices.filter((_, index) => index !== toRemove));
+  }
 
   useEffect(() => {
     methods.reset({});
     setImages([]);
   }, [methods, open]);
+
+  useEffect(() => {
+    if (title) {
+      const slug = slugify(title)
+      methods.setValue('slug', slug);
+    }
+  }, [title]);
+  
 
   return (
     <Drawer
@@ -146,7 +177,7 @@ const CreateDrawer: React.FC<Props> = ({
                 placeholder="Từ vùng núi LangBiang ở Lâm Đồng.."
               />
             </div>
-            <div className="grid mb-4 grid-cols-2 gap-4">
+            <div className="grid mb-4 grid-cols-1 gap-4">
               <div>
                 <label className="text-sm font-semibold">
                   <FormattedMessage id="product.create.slug" />
@@ -159,22 +190,35 @@ const CreateDrawer: React.FC<Props> = ({
                 />
               </div>
               <div>
-                <label className="text-sm font-semibold">
-                  <FormattedMessage
-                    id={
-                      values.isMetch
-                        ? "product.create.metch_price"
-                        : "product.create.price"
-                    }
-                  />
-                </label>
-                <Input
-                  type="number"
-                  name="price"
-                  className="mt-2"
-                  addonAfter={"VND"}
-                  placeholder="120000"
-                />
+                <div className="flex items-center mb-2 justify-between">
+                  <label className="text-sm font-semibold">
+                    <FormattedMessage id="product.create.price" />
+                  </label>
+                  <Button
+                    className="flex items-center justify-center"
+                    onClick={toggleModal.bind(
+                      this,
+                      PRODUCT_MODAL.PRICE_VARIANT_CREATE
+                    )}
+                    size="small"
+                  >
+                    <PlusOutlined size={8} />
+                  </Button>
+                </div>
+
+                <Table dataSource={prices}>
+                  <Column title={<FormattedMessage id="product_variant_modal.variant" />} dataIndex={['title']} render={(value) => value} />
+                  <Column title={<FormattedMessage id="product_variant_modal.price" />} dataIndex={['price']} render={(value) => value} />
+                  <Column width={30} dataIndex={['price']} render={(value, record, index) => <div className="flex justify-end">
+                    <Button
+                      className="flex items-center justify-center"
+                      size="small"
+                    >
+                      <MinusOutlined onClick={onRemovePriceVariant.bind(this, index)} size={8} />
+                    </Button>
+                  </div>} />
+                </Table>
+              
               </div>
               <div>
                 <label className="text-sm font-semibold">
@@ -213,10 +257,11 @@ const CreateDrawer: React.FC<Props> = ({
                     <FormattedMessage id="product.create.category" />
                   </label>
                   <Button
+                    className="flex items-center justify-center"
                     onClick={() => toggleModal(PRODUCT_MODAL.CATEGORY_CREATE)}
                     size="small"
                   >
-                    +
+                    <PlusOutlined />
                   </Button>
                 </div>
                 <Select
@@ -232,6 +277,12 @@ const CreateDrawer: React.FC<Props> = ({
           </Panel>
         </Collapse>
       </FormProvider>
+
+      <PriceVariantDrawer
+        open={activeModal === PRODUCT_MODAL.PRICE_VARIANT_CREATE}
+        onClose={toggleModal.bind(this, PRODUCT_MODAL.NONE)}
+        onSubmit={onCreatePriceVariant}
+      />
     </Drawer>
   );
 };

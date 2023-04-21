@@ -1,5 +1,10 @@
 import { IProduct } from "./IProduct";
 
+export type IPriceVariant = {
+  title: string;
+  price: number;
+};
+
 export interface IWarehourse {
   _id?: string;
   /**
@@ -7,10 +12,10 @@ export interface IWarehourse {
    *
    * It is especially true, when prices go down/up in some warehouses more quickly compared to others, etc.
    *
-   * @type {number}
+   * @type {IPriceVariant}
    * @memberof IWarehourse
    */
-  price: number;
+  prices: IPriceVariant[];
 
   initialPrice: number;
 
@@ -48,6 +53,6 @@ export interface IWarehourse {
 }
 
 export interface IWarehourseCreate {
-  price: number;
+  prices: IPriceVariant[];
   count: number;
 }

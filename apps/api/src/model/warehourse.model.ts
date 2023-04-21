@@ -7,7 +7,7 @@ export interface IWarehourseDocument
 
 export const WarehourseSchema = new Schema(
   {
-    price: Number,
+    prices: Array.of(Object),
     initialPrice: Number,
     count: Number,
     soldCount: Number,

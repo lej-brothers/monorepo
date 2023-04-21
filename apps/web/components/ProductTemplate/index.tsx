@@ -31,6 +31,8 @@ const ProductInfo: React.FC<ProductInfoProps> = ({ product }) => {
   const { quantity, shouldGrind, grind, notes } = methods.watch();
 
   const { addProduct } = useCart();
+  
+  const prices = product?.warehourse.prices || []
 
   // EVENT HANDLERS
   const updateShouldGrind = (shouldGrind: boolean) => () => {
@@ -178,6 +180,11 @@ const ProductInfo: React.FC<ProductInfoProps> = ({ product }) => {
               />
             </Collapse>
           </Collapse>
+
+          <div className="flex justify-between w-[360px] flex-nowrap items-center mb-2">
+            <p className="text-xl mr-9">Phân loại:</p>
+            {prices}
+          </div>
 
           <div className="flex justify-between w-[360px] flex-nowrap items-center mb-2">
             <p className="text-xl mr-9">Số lượng:</p>

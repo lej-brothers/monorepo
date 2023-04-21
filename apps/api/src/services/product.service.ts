@@ -108,7 +108,7 @@ const ProductService = {
     });
 
     const warehourse = await Warehourse.create({
-      price: payload.price,
+      prices: payload.prices,
       count: payload.count,
       product: product._id,
     });
