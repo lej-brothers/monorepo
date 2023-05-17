@@ -107,7 +107,7 @@ const Product: React.FC = () => {
             title={<FormattedMessage id="product.create.metch_price" />}
             dataIndex={["warehourse", "prices"]}
             render={(prices: IPriceVariant[]) => prices.map(({title, price}) => <Tag><span className="font-bold">{title}: </span>{format("vi-VN", "VND", price)}</Tag>)}
-          />
+          />Å
           <Column
             dataIndex={["isHighlight"]}
             onCell={(data: any) => ({

@@ -2,7 +2,7 @@ import Image from "next/image";
 import React, { ChangeEvent, useState } from "react";
 import { AiFillCheckCircle } from "react-icons/ai";
 import { Collapse } from "@mui/material";
-import { IProduct } from "common";
+import { IPriceVariant, IProduct } from "common";
 import { useForm } from "react-hook-form";
 import GRIND_SIZE from "../../constants/grindSize";
 import BeanIcon from "../../public/coffee-beans-icon.png";
@@ -18,21 +18,22 @@ type ProductInfoProps = {
 type ProductForm = {
   notes: string;
   shouldGrind: boolean;
+  selectedPrice: IPriceVariant;
   grind: GRIND_SIZE;
   quantity: number;
 };
 
 const ProductInfo: React.FC<ProductInfoProps> = ({ product }) => {
   const methods = useForm<ProductForm>({
-    defaultValues: { grind: GRIND_SIZE.NONE, quantity: 1 },
+    defaultValues: { grind: GRIND_SIZE.NONE, quantity: 1 }
   });
 
   const [added, setAdded] = useState(false);
-  const { quantity, shouldGrind, grind, notes } = methods.watch();
+  const { quantity, selectedPrice, shouldGrind, grind, notes } = methods.watch();
 
   const { addProduct } = useCart();
-  
-  const prices = product?.warehourse.prices || []
+
+  const prices = product?.warehourse.prices || [];
 
   // EVENT HANDLERS
   const updateShouldGrind = (shouldGrind: boolean) => () => {
@@ -58,19 +59,23 @@ const ProductInfo: React.FC<ProductInfoProps> = ({ product }) => {
   const updateNote = (event: ChangeEvent<HTMLTextAreaElement>) => {
     methods.setValue("notes", event.target.value);
   };
+  
+  const updateSelectedPrice = (price: IPriceVariant) => {
+    methods.setValue('selectedPrice', price)
+  };
 
   const add = () => {
     addProduct({
       _id: product._id!,
       title: product.title,
       description: product.description,
-      categories: product.categories.map(({_id}) => _id),
+      categories: product.categories.map(({ _id }) => _id),
       grind: getGrindAttitude(shouldGrind, grind),
-      price: product.warehourse.price,
-      afterPrice: product.warehourse.price,
+      price: selectedPrice.price,
+      afterPrice: selectedPrice.price,
       quantity: quantity,
       slug: product.slug,
-      notes,
+      notes
     });
 
     setAdded(true);
@@ -91,7 +96,7 @@ const ProductInfo: React.FC<ProductInfoProps> = ({ product }) => {
             style={{
               backgroundSize: "contain",
               background:
-                "url('https://www.foodandwine.com/thmb/o7F9en0HhC601ws3gCvBz4klgSE=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/how-to-store-coffee-beans-FT-BLOG0121-99af87cb1f104993b234e1522746e82c.jpg')",
+                "url('https://www.foodandwine.com/thmb/o7F9en0HhC601ws3gCvBz4klgSE=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/how-to-store-coffee-beans-FT-BLOG0121-99af87cb1f104993b234e1522746e82c.jpg')"
             }}
             className="pt-[10px] flex justify-center items-center bg-white w-[370px] h-[370px] rounded-full"
           >
@@ -181,9 +186,16 @@ const ProductInfo: React.FC<ProductInfoProps> = ({ product }) => {
             </Collapse>
           </Collapse>
 
-          <div className="flex justify-between w-[360px] flex-nowrap items-center mb-2">
+          <div className="flex justify-start w-[360px] flex-nowrap items-center mb-2">
             <p className="text-xl mr-9">Phân loại:</p>
-            {prices}
+            {prices.map(price => <button
+              className={`w-[142px] font-medium h-[56px] transition-all bg-[#efefef] border-[1px] hover:border-black rounded-lg flex justify-center btn items-center ${
+                selectedPrice?.title === price.title ? "border-black" : "border-white"
+              }`}
+              onClick={updateSelectedPrice.bind(this, price)}
+            >
+              {price.title}
+            </button>)}
           </div>
 
           <div className="flex justify-between w-[360px] flex-nowrap items-center mb-2">
@@ -199,11 +211,13 @@ const ProductInfo: React.FC<ProductInfoProps> = ({ product }) => {
             />
           </div>
 
-          <div className="absolute text-white p-4 flex bg-black bottom-0 rounded-t-2xl left-0 right-0 w-[80%] mx-auto h-[80px]">
+          <div
+            className="absolute text-white p-4 flex bg-black bottom-0 rounded-t-2xl left-0 right-0 w-[80%] mx-auto h-[80px]">
             <div className="flex-1 flex justify-center flex-col pl-10">
               <p className="font-medium mb-1">Thành tiền:</p>
               <p className="text-2xl">
-                {format("vi-VN", "VND", product.warehourse.price * quantity)}
+                {selectedPrice && format("vi-VN", "VND", selectedPrice.price * quantity)}
+                {!selectedPrice && '-'}
               </p>
             </div>
             <div className="flex-1 flex justify-center items-center">

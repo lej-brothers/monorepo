@@ -1,15 +1,15 @@
+import React from "react";
 import Image from "next/image";
 import { IProduct } from "common";
-import React from "react";
 import format from "../../../utils/format";
-
+  
 interface Props {
   product: IProduct;
 }
 
 const ProductCard: React.FC<Props> = ({ product }) => {
 
-  const formattedPrice = format('vi-VN', 'VND', product.warehourse.price)
+  const formattedPrice = format('vi-VN', 'VND', product.warehourse.prices[0].price)
 
   return (
     <div className="w-[184px] h-[148px] flex flex-col justify-between overflow-y-visible ml-4 mr-4 bg-[#F8F8F8] px-4 py-6 rounded-lg relative">

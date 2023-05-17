@@ -21,10 +21,10 @@ const Product = ({
   disableCategory = false,
   children,
 }: Props) => {
-  const formatedPrice = format(
+  const formattedPrice = format(
     "vi-VN",
     "VND",
-    product.warehourse.price as number
+    product.warehourse.prices[0].price as number
   );
 
   return (
@@ -54,7 +54,7 @@ const Product = ({
             </p>
           )}
           <h3 className="font-medium mb-2 text-black text-base">{product.title}</h3>
-          <p className="text-sm text-gray-500">{formatedPrice} VND</p>
+          <p className="text-sm text-gray-500">{formattedPrice} VND</p>
           {children}
         </div>
       </Container>
