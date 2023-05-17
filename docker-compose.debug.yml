@@ -1,0 +1,13 @@
+version: "3.4"
+
+services:
+  frontend:
+    build:
+      dockerfile: ./apps/web/Dockerfile
+      context: .
+    volumes:
+      - /node_modules 
+      - ./apps/web:/app
+    environment:
+      - NODE_ENV=development
+      - NEXT_PUBLIC_BASE_URL=http://localhost:4000

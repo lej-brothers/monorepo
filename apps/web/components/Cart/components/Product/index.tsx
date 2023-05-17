@@ -27,12 +27,12 @@ const OrderProduct = ({ product, editable = true }: Props) => {
     product.afterPrice * product.quantity
   );
 
-  const onChange = (newQuantity: number) => {
-    updateQuantity(product, newQuantity);
+  const onChange = async (newQuantity: number) => {
+    await updateQuantity(product, newQuantity);
   };
 
-  const onRemove = () => {
-    removeProduct(product._id);
+  const onRemove = async () => {
+    await removeProduct(product._id);
   };
 
   return (

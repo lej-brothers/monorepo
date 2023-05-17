@@ -1,9 +1,9 @@
-import { IProduct } from "common";
+import { IPriceVariant, IProduct } from "common";
 import Image from "next/image";
 import GRIND_SIZE from "../../constants/grindSize";
 import { AiFillCheckCircle } from "react-icons/ai";
 import { useForm } from "react-hook-form";
-import { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, useState } from "react";
 import useCart from "../../hooks/useCart";
 import dynamic from "next/dynamic";
 import BeanIcon from "../../public/coffee-beans-icon.png";
@@ -12,6 +12,7 @@ import { getGrindAttitude } from "../ProductTemplate/utils";
 import { Collapse } from "@mui/material";
 import format from "../../utils/format";
 import Ratio from "../Ratio";
+import TextExpand from "../TextExpand";
 
 const ScrollBar = dynamic(() => import("react-scrollbar"), { ssr: false });
 
@@ -22,6 +23,7 @@ type ProductInfoProps = {
 type ProductForm = {
   notes: string;
   priceVariant: number;
+  selectedPrice: IPriceVariant;
   shouldGrind: boolean;
   grind: GRIND_SIZE;
   quantity: number;
@@ -33,8 +35,10 @@ const MobileProductTemplate: React.FC<ProductInfoProps> = ({ product }) => {
   });
 
   const [added, setAdded] = useState(false);
-  const { quantity, shouldGrind, grind, notes } = methods.watch();
+  const { quantity, selectedPrice, shouldGrind, grind, notes } = methods.watch();
   const { addProduct } = useCart();
+
+  const prices = product?.warehourse.prices || [];
 
   // EVENT HANDLERS
   const updateShouldGrind = (shouldGrind: boolean) => () => {
@@ -64,8 +68,14 @@ const MobileProductTemplate: React.FC<ProductInfoProps> = ({ product }) => {
 
   const updateNote = (event: ChangeEvent<HTMLTextAreaElement>) => {
     methods.setValue("notes", event.target.value);
+    setAdded(false);
   };
 
+  const updateSelectedPrice = (price: IPriceVariant) => {
+    methods.setValue("selectedPrice", price);
+    setAdded(false);
+  };
+  
   const add = () => {
     addProduct({
       _id: product._id!,
@@ -73,8 +83,8 @@ const MobileProductTemplate: React.FC<ProductInfoProps> = ({ product }) => {
       description: product.description,
       categories: product.categories.map(({ _id }) => _id),
       grind: getGrindAttitude(shouldGrind, grind),
-      price: product.warehourse.price,
-      afterPrice: product.warehourse.price,
+      price: selectedPrice,
+      afterPrice: product.warehourse.prices[0].price,
       quantity: quantity,
       slug: product.slug,
       notes,
@@ -116,8 +126,13 @@ const MobileProductTemplate: React.FC<ProductInfoProps> = ({ product }) => {
 
         <p className="text-4xl mt-2">{product.title}</p>
 
-        <p className="mt-2 font-thin text-[#757575]">{product.description}</p>
-
+        <TextExpand content={
+          product.description
+        } maxLen={100} contentRender={(text: string, handler) => (
+          <p className="mt-2 font-thin text-[#757575]">
+            {text} {handler}
+          </p>)} />
+        
         <p className="text-xl mb-2 mt-4">Mức xay:</p>
         <div className="flex mb-5">
           <button
@@ -187,6 +202,20 @@ const MobileProductTemplate: React.FC<ProductInfoProps> = ({ product }) => {
           </Collapse>
         </Collapse>
 
+        <div className="flex flex-col w-[360px] flex-nowrap mb-2">
+          <p className="text-xl mr-9 mb-2">Phân loại:</p>
+          <div className="flex">
+            {prices.map(price => <button
+              className={`w-[142px] mr-3 font-medium h-[56px] transition-all bg-[#efefef] border-[1px] hover:border-black rounded-lg flex justify-center btn items-center ${
+                selectedPrice?.title === price.title ? "border-black" : "border-white"
+              }`}
+              onClick={updateSelectedPrice.bind(this, price)}
+            >
+              {price.title}
+            </button>)}
+          </div>
+        </div>
+        
         <div className="flex  pb-[220px] pr-[56px] justify-between w-[360px] flex-nowrap items-center mb-2">
           <p className="text-xl mr-9">Số lượng:</p>
           <Ratio
@@ -205,7 +234,7 @@ const MobileProductTemplate: React.FC<ProductInfoProps> = ({ product }) => {
         <div className="flex-1 flex justify-center flex-col pl-10">
           <p className="font-medium mb-1">Thành tiền:</p>
           <p className="text-2xl">
-            {format("vi-VN", "VND", product.warehourse.price * quantity)}
+            {format("vi-VN", "VND", selectedPrice.price * quantity)}
           </p>
         </div>
         <div className="flex-1 flex justify-center items-center">
