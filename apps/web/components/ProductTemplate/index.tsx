@@ -10,6 +10,7 @@ import Ratio from "../Ratio";
 import format from "../../utils/format";
 import useCart from "../../hooks/useCart";
 import { getGrindAttitude } from "./utils";
+import TextExpand from "../TextExpand";
 
 type ProductInfoProps = {
   product: IProduct;
@@ -59,19 +60,20 @@ const ProductInfo: React.FC<ProductInfoProps> = ({ product }) => {
   const updateNote = (event: ChangeEvent<HTMLTextAreaElement>) => {
     methods.setValue("notes", event.target.value);
   };
-  
+
   const updateSelectedPrice = (price: IPriceVariant) => {
-    methods.setValue('selectedPrice', price)
+    methods.setValue("selectedPrice", price);
+    setAdded(false);
   };
 
-  const add = () => {
-    addProduct({
+  const add = async () => {
+    await addProduct({
       _id: product._id!,
       title: product.title,
       description: product.description,
       categories: product.categories.map(({ _id }) => _id),
       grind: getGrindAttitude(shouldGrind, grind),
-      price: selectedPrice.price,
+      price: selectedPrice,
       afterPrice: selectedPrice.price,
       quantity: quantity,
       slug: product.slug,
@@ -114,7 +116,13 @@ const ProductInfo: React.FC<ProductInfoProps> = ({ product }) => {
             {product.categories[0].name}
           </p>
           <p className="mb-3 text-4xl">{product.title}</p>
-          <p className="text-gray-500 mb-1">{product.description}</p>
+          <TextExpand content={
+            product.description
+          } maxLen={100} contentRender={(text: string, handler) => (
+            <p className="text-gray-500 mb-1">
+              {text} {handler}
+            </p>)} />
+
           {/** SHOULD GRIND */}
           <p className="text-xl mb-2">Mức xay:</p>
           <div className="flex mb-5">
@@ -186,16 +194,18 @@ const ProductInfo: React.FC<ProductInfoProps> = ({ product }) => {
             </Collapse>
           </Collapse>
 
-          <div className="flex justify-start w-[360px] flex-nowrap items-center mb-2">
-            <p className="text-xl mr-9">Phân loại:</p>
-            {prices.map(price => <button
-              className={`w-[142px] font-medium h-[56px] transition-all bg-[#efefef] border-[1px] hover:border-black rounded-lg flex justify-center btn items-center ${
-                selectedPrice?.title === price.title ? "border-black" : "border-white"
-              }`}
-              onClick={updateSelectedPrice.bind(this, price)}
-            >
-              {price.title}
-            </button>)}
+          <div className="flex flex-col w-[360px] flex-nowrap mb-2">
+            <p className="text-xl mr-9 mb-2">Phân loại:</p>
+            <div className="flex">
+              {prices.map(price => <button
+                className={`w-[142px] mr-3 font-medium h-[56px] transition-all bg-[#efefef] border-[1px] hover:border-black rounded-lg flex justify-center btn items-center ${
+                  selectedPrice?.title === price.title ? "border-black" : "border-white"
+                }`}
+                onClick={updateSelectedPrice.bind(this, price)}
+              >
+                {price.title}
+              </button>)}
+            </div>
           </div>
 
           <div className="flex justify-between w-[360px] flex-nowrap items-center mb-2">
@@ -217,7 +227,7 @@ const ProductInfo: React.FC<ProductInfoProps> = ({ product }) => {
               <p className="font-medium mb-1">Thành tiền:</p>
               <p className="text-2xl">
                 {selectedPrice && format("vi-VN", "VND", selectedPrice.price * quantity)}
-                {!selectedPrice && '-'}
+                {!selectedPrice && "-"}
               </p>
             </div>
             <div className="flex-1 flex justify-center items-center">

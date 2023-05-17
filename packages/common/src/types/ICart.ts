@@ -36,7 +36,7 @@ export interface ICartProduct
     "images" | "categories" | "warehourse" | "isHighlight" | "isMetch"
   > {
   _id: string;
-  price: number;
+  price: IPriceVariant;
   grind: string;
   afterPrice: number;
   categories: string[];

@@ -33,7 +33,7 @@ const useCart = () => {
     if (!cartData) return;
 
     const cleanedProducts = cartData.products.filter(
-      (product) => product._id !== newProduct._id
+      (product) => product._id !== newProduct._id || product.price.title !== newProduct.price.title
     );
 
     const promotionCodes = cartData.promotions.map(
@@ -110,11 +110,11 @@ const useCart = () => {
     await refetch();
   };
 
-  const updateQuantity = async (id: string, quantity: number) => {
+  const updateQuantity = async (toUpdate: ICartProduct, quantity: number) => {
     if (!cartData) return;
 
     const updatedProducts = cartData.products.map((product) => {
-      if (product._id === id) product.quantity = quantity;
+      if (product._id === toUpdate._id && product.price.title === toUpdate.price.title) product.quantity = quantity;
       return product;
     });
     const promotionCodes = cartData.promotions.map(

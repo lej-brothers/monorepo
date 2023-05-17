@@ -58,13 +58,13 @@ const CartService = {
         );
       });
 
-      let afterPrice = product.price;
+      let afterPrice = product.price.price;
 
       if (toApply) {
         afterPrice =
           toApply.promoPrice <= 1
-            ? product.price - product.price * toApply.promoPrice
-            : product.price - toApply.promoPrice;
+            ? product.price.price - product.price.price * toApply.promoPrice
+            : product.price.price - toApply.promoPrice;
       }
 
       return { ...product, afterPrice };
