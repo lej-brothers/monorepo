@@ -14,6 +14,8 @@ export const S3_BUCKET = process.env["S3_BUCKET"] || "lej-marketplace";
 export const SEND_IN_BLUE_KEY = process.env["SEND_IN_BLUE_KEY"] || "";
 export const IS_PRODUCTION = process.env["NODE_ENV"] === "production";
 
+export const REDIS_URL = process.env["REDIS_URL"] || "";
+
 export const MOMO_BASE_URL = IS_PRODUCTION
   ? "https://payment.momo.vn/v2/gateway/api"
   : "https://test-payment.momo.vn/v2/gateway/api";
