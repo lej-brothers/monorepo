@@ -9,7 +9,7 @@ import mongoose from "mongoose";
 import passport from "passport";
 import passportCustom from "passport-custom";
 import { v4 as uuidv4 } from "uuid";
-import MINIO from "./configs/minio";
+import S3 from "./configs/s3";
 import { logger } from "./configs/pino";
 import REDIS_CLIENT from "./configs/redis";
 import { MOMO_BASE_URL, MONGO_URL, SECRET } from "./configs/secrets";
@@ -24,8 +24,6 @@ const port = 4000;
 
 mongoose.set("strictQuery", false);
 mongoose.connect(MONGO_URL);
-
-MINIO.getBucketNotification("lej-marketplace");
 
 app.use(
   cors({
