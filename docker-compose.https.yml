@@ -30,7 +30,6 @@ services:
       - "/tmp/acme_challenge:/tmp/acme_challenge"
     environment:
       - TERM=xterm
-      - 
   networks:
     nginx.docker:
       name: nginx.docker
