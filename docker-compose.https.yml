@@ -1,0 +1,29 @@
+version: "3"
+
+services:
+  nginx:
+    container_name: 'nginx-service'
+    build:
+      context: .
+      dockerfile: docker/nginx.Dockerfile
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./config:/config
+      - /etc/letsencrypt:/etc/letsencrypt:ro
+      - /tmp/acme_challenge:/tmp/acme_challenge
+    depends_on:
+      - letsencrypt
+    restart: always
+    
+  letsencrypt:
+    container_name: 'certbot-service'
+    image: certbot/certbot:v1.17.0
+    command: sh -c "certbot certonly --expand --webroot -w /tmp/acme_challenge -d lej-api.garfdev.com --text --agree-tos --email nguyengiatuan3110@gmail.com --rsa-key-size 4096 --verbose --keep-until-expiring --preferred-challenges=http"
+    entrypoint: ""
+    volumes:
+      - "/etc/letsencrypt:/etc/letsencrypt"
+      - "/tmp/acme_challenge:/tmp/acme_challenge"
+    environment:
+      - TERM=xterm
