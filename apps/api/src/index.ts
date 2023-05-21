@@ -32,7 +32,6 @@ app.use(
       "http://localhost:3000",
       "http://192.168.1.8:4001",
       "http://localhost:4001",
-      "http://conmeocam.ddns.net:4001",
       MOMO_BASE_URL,
     ],
     methods: ["POST", "PUT", "PATCH", "GET", "OPTIONS", "DELETE", "HEAD"],
