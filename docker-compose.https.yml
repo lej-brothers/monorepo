@@ -31,7 +31,7 @@ services:
     environment:
       - TERM=xterm
       - 
-networks:
-  nginx.docker:
-    name: nginx.docker
-    external: true
+  networks:
+    nginx.docker:
+      name: nginx.docker
+      external: true
