@@ -16,7 +16,7 @@ services:
     depends_on:
       - letsencrypt
     networks:
-      - nginx.docker
+      - "nginx.docker"
     restart: always
     
     
