@@ -32,6 +32,8 @@ app.use(
       "http://localhost:3000",
       "http://192.168.1.8:4001",
       "http://localhost:4001",
+      "https://lej.garfdev.com",
+      "https://lejcafe.com",
       MOMO_BASE_URL,
     ],
     methods: ["POST", "PUT", "PATCH", "GET", "OPTIONS", "DELETE", "HEAD"],
