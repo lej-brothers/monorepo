@@ -69,6 +69,7 @@ const Preview = ({ cart, onChange }: Props) => {
           <div className="flex mt-3">
             {cart?.promotions.map((promotion) => (
               <Tag
+                key={promotion._id}
                 className="flex bg-black text-white items-center"
                 onClose={onRemovePromotion.bind(this, promotion.code)}
                 closeIcon={<AiOutlineClose color="white" />}
