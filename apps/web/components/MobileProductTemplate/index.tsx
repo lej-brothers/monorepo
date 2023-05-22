@@ -206,6 +206,7 @@ const MobileProductTemplate: React.FC<ProductInfoProps> = ({ product }) => {
           <p className="text-xl mr-9 mb-2">Phân loại:</p>
           <div className="flex">
             {prices.map(price => <button
+              key={price.title}
               className={`w-[142px] mr-3 font-medium h-[56px] transition-all bg-[#efefef] border-[1px] hover:border-black rounded-lg flex justify-center btn items-center ${
                 selectedPrice?.title === price.title ? "border-black" : "border-white"
               }`}
