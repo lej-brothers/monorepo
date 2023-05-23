@@ -19,7 +19,7 @@ import useCart from "../../../../hooks/useCart";
 
 const { Panel } = Collapse;
 
-const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
+const antIcon = <LoadingOutlined rev={"123"} style={{ fontSize: 24 }} spin />;
 
 interface Props {
   onChange: (tab: ORDER_TABS) => void;
