@@ -15,7 +15,7 @@ import Insight from "../views/Insight";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route path="/" element={<Root />}>
+    <Route path="/panel" element={<Root />}>
       <Route path="/auth" element={<Auth />} />
       <Route loader={authLoader} path="/orders" element={<Order />} />
       <Route loader={authLoader} path="/products" element={<Product />} />
