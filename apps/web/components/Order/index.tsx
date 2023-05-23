@@ -77,7 +77,7 @@ const Order: React.FC<Props> = ({ orderId }) => {
             description: "Xác nhận từ dịch vụ thanh toán",
             icon: paying && (
               <div className="rounded-full bg-black w-[32px] flex justify-center items-center h-[32px]">
-                <LoadingOutlined style={{ color: "white" }} />
+                <LoadingOutlined rev="123" style={{ color: "white" }} />
               </div>
             ),
           },
