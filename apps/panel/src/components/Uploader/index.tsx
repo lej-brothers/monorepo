@@ -172,7 +172,7 @@ const Uploader = ({ images = [], onChange }: Props) => {
         }}
       >
         <div>
-          <PlusOutlined /> <div style={{ marginTop: 8 }}>Upload</div>
+          <PlusOutlined rev="123" /> <div style={{ marginTop: 8 }}>Upload</div>
         </div>
       </Upload>
     </DndProvider>

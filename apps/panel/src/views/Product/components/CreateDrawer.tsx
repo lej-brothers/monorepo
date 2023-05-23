@@ -122,7 +122,7 @@ const CreateDrawer: React.FC<Props> = ({
           defaultActiveKey={["1", "2"]}
           style={{ background: "transparent" }}
           expandIcon={({ isActive }) => (
-            <CaretRightOutlined rotate={isActive ? 90 : 0} />
+            <CaretRightOutlined rev='123' rotate={isActive ? 90 : 0} />
           )}
         >
           <Panel
@@ -202,7 +202,7 @@ const CreateDrawer: React.FC<Props> = ({
                     )}
                     size="small"
                   >
-                    <PlusOutlined size={8} />
+                    <PlusOutlined rev="123" size={8} />
                   </Button>
                 </div>
 
@@ -214,7 +214,7 @@ const CreateDrawer: React.FC<Props> = ({
                       className="flex items-center justify-center"
                       size="small"
                     >
-                      <MinusOutlined onClick={onRemovePriceVariant.bind(this, index)} size={8} />
+                      <MinusOutlined rev="123" onClick={onRemovePriceVariant.bind(this, index)} size={8} />
                     </Button>
                   </div>} />
                 </Table>
@@ -261,7 +261,7 @@ const CreateDrawer: React.FC<Props> = ({
                     onClick={() => toggleModal(PRODUCT_MODAL.CATEGORY_CREATE)}
                     size="small"
                   >
-                    <PlusOutlined />
+                    <PlusOutlined rev="123" />
                   </Button>
                 </div>
                 <Select

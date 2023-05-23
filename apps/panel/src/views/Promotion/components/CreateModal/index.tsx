@@ -211,7 +211,7 @@ const CreateModal: React.FC<Props> = ({ toggleModal, open, onOk, onClose }) => {
             <label className="flex items-center text-sm mb-2 font-semibold">
               <FormattedMessage id="price_drop" />
               <Tooltip title={<FormattedMessage id="price_drop.tooltip" />}>
-                <InfoCircleOutlined className="ml-1" />
+                <InfoCircleOutlined rev="123" className="ml-1" />
               </Tooltip>
             </label>
             <Input name="promoPrice" placeholder="100000" />

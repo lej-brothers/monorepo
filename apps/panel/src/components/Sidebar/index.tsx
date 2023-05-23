@@ -27,7 +27,7 @@ const ITEMS: MenuItem[] = [
     <FormattedMessage id="insights" />,
     "/insights",
     <Link to="/insights">
-      <AppstoreOutlined />
+      <AppstoreOutlined rev="123" />
     </Link>
   ),
   getItem(
@@ -48,7 +48,7 @@ const ITEMS: MenuItem[] = [
     <FormattedMessage id="promotion" />,
     "/promotion",
     <Link to="/promotions">
-      <GiftOutlined />
+      <GiftOutlined rev="123" />
     </Link>
   ),
 ];
