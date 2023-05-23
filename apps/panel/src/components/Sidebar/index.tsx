@@ -34,14 +34,14 @@ const ITEMS: MenuItem[] = [
     <FormattedMessage id="product" />,
     "/product",
     <Link to="/products">
-      <AppstoreOutlined />
+      <AppstoreOutlined rev="123" />
     </Link>
   ),
   getItem(
     <FormattedMessage id="order" />,
     "/order",
     <Link to="/orders">
-      <AppstoreOutlined />
+      <AppstoreOutlined rev="213" />
     </Link>
   ),
   getItem(
