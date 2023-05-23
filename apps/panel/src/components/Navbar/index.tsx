@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { isMobile } from "react-device-detect";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -98,7 +97,7 @@ const Navbar = () => {
         className="flex max-w-2xl backdrop-blur-2xl w-full h-[88px] rounded-full"
       >
         <div className="flex flex-1 justify-center items-center">
-          <Image
+          <img
             src={LeJCompactLogo}
             width={47}
             height={52}
