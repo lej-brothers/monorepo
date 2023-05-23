@@ -1,37 +1,11 @@
 import { isMobile } from "react-device-detect";
-import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
 import { FaSearch } from "react-icons/fa";
 
 import LeJCompactLogo from "../../../../../public/lej-compact-logo.png";
 
 const Navbar = () => {
-  const { pathname } = useRouter();
-  const [isHome, setIsHome] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
+  
 
-  //useEffect that detects if window is scrolled > 5px on the Y axis
-  useEffect(() => {
-    if (isHome) {
-      const detectScrollY = () => {
-        if (window.scrollY > 5) {
-          setIsScrolled(true);
-        } else {
-          setIsScrolled(false);
-        }
-      };
-
-      window.addEventListener("scroll", detectScrollY);
-
-      return () => {
-        window.removeEventListener("scroll", detectScrollY);
-      };
-    }
-  }, [isHome]);
-
-  useEffect(() => {
-    pathname === "/" ? setIsHome(true) : setIsHome(false);
-  }, [pathname]);
 
   // return (
   //   <div
