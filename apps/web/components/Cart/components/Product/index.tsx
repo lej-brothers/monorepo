@@ -47,7 +47,7 @@ const OrderProduct = ({ product, editable = true }: Props) => {
         />
       </div>
       <div className="flex-1 flex pt-[24px] pl-[24px] flex-col">
-        <p className="text-base mb-[12px] font-medium">{data.title} ({product.price.title})</p>
+        <p className="text-base mb-[12px] font-medium">{data.title.substring(0, 50)} ({product.price.title})</p>
         <div className="flex mb-[12px]">
           <p className={`text-sm mr-2 ${isDiscounted && 'line-through text-gray-300'} text-[#9A9A9A]`}>{price} VND</p>
           {isDiscounted && (
