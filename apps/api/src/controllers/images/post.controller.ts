@@ -5,7 +5,7 @@ const controller = async (req: Request, res: Response) => {
   if (!req.file) return res.status(400).send({ error: "cannot read file" });
   const image = await ImageService.upload(req.file);
   if (!image)
-    return res.send(400).send({ error: "Cannot Upload Destinated File" });
+    return res.status(400).send({ error: "Cannot Upload Destinated File" });
   const url = ImageService.get(image.key);
 
   res.send({
