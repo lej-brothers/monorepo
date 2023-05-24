@@ -13,7 +13,7 @@ const ScrollBar = dynamic(() => import("react-scrollbar"), { ssr: false });
 const Setup = () => {
   return (
     <ScrollBar
-      smoothScrolling
+      
       className="flex flex-col items-center max-h-full w-full"
       contentClassName="pb-[250px]"
     >

@@ -42,7 +42,7 @@ const Store = () => {
   /* MAIN RETURN */
   return (
     <ScrollBar
-      smoothScrolling
+      
       className="h-[100vh]"
       contentClassName="pb-[250px]"
     >
@@ -95,7 +95,7 @@ const Store = () => {
         {!isTablet && (
           <MobileView>
             <InvisibleScrollbar
-              smoothScrolling
+              
               className="w-full"
               contentClassName="w-[max-content] flex"
               vertical={true}

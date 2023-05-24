@@ -14,7 +14,7 @@ const HighlightedProductSlider: React.FC<Props> = ({ products }) => {
   return (
     <div className="w-[100vw] flex h-full">
       <InvisibleScrollbar
-        smoothScrolling
+        
         className="w-full h-full flex flex-col justify-end flex-1"
         contentClassName="w-[max-content] h-[145px] flex"
         contentStyle={{ overflow: 'visible' }}

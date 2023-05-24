@@ -19,7 +19,7 @@ import Layout from "../../components/Layout";
 const About = () => {
   return (
     <ScrollBar
-      smoothScrolling
+      
       className="h-[100vh]"
       contentClassName="flex justify-center"
     >
