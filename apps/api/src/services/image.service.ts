@@ -16,8 +16,6 @@ const ImageService = {
     const key = v4() + path.extname(file.originalname);
     try {
       
-      console.log(S3_BUCKET, S3_ENDPOINT, S3_ACCESS, S3_SECRET)
-      
       const data = await S3.send(new PutObjectCommand({
         ...PUT_BASE_PARAMS,
         ACL: 'public-read',
@@ -26,8 +24,6 @@ const ImageService = {
         Metadata: {  }
       }));
       
-      console.log(data)
-
       const image = await Image.create({
         key,
         width: 0,
