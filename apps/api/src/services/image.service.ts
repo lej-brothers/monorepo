@@ -1,12 +1,13 @@
 import path from "path";
 import { Express } from "express";
-import { S3_ENDPOINT, S3_PORT } from "./../configs/secrets";
+import { S3_ACCESS, S3_ENDPOINT, S3_SECRET } from "./../configs/secrets";
 import { v4 } from "uuid";
 import { PutObjectCommand } from '@aws-sdk/client-s3';
-import S3, { PUT_BASE_PARAMS } from "../configs/s3";
+import S3 from "../configs/s3";
 import { S3_BUCKET } from "../configs/secrets";
 import { Image } from "../model/images.model";
 import { logger } from "../configs/pino";
+import { PUT_BASE_PARAMS } from "../configs/PUT_BASE_PARAMS";
 
 const ImageService = {
   get: (key: string) => `http://${S3_BUCKET}.${S3_ENDPOINT}/${key}`,
@@ -14,10 +15,15 @@ const ImageService = {
   async upload(file: Express.Multer.File) {
     const key = v4() + path.extname(file.originalname);
     try {
+      
+      console.log(S3_BUCKET, S3_ENDPOINT, S3_ACCESS, S3_SECRET)
+      
       const data = await S3.send(new PutObjectCommand({
         ...PUT_BASE_PARAMS,
+        ACL: 'public-read',
         Key: key,
-        Body: file.buffer
+        Body: file.buffer,
+        Metadata: {  }
       }));
       
       console.log(data)

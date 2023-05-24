@@ -1,5 +1,5 @@
-import { S3_ENDPOINT, S3_ACCESS, S3_SECRET, S3_BUCKET } from "./secrets";
-import { S3Client } from '@aws-sdk/client-s3';
+import { S3_ACCESS, S3_ENDPOINT, S3_SECRET } from "./secrets";
+import { S3Client } from "@aws-sdk/client-s3";
 
 const s3Client = new S3Client({
   endpoint: S3_ENDPOINT, // Find your endpoint in the control panel, under Settings. Prepend "https://".
@@ -11,10 +11,6 @@ const s3Client = new S3Client({
   }
 });
 
-export const PUT_BASE_PARAMS = {
-  Bucket: S3_BUCKET,
-  ACL: "public",
-}
 
 
 export default s3Client;
