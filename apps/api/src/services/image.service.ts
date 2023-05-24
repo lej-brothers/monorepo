@@ -19,6 +19,8 @@ const ImageService = {
         Key: key,
         Body: file.buffer
       }));
+      
+      console.log(data)
 
       const image = await Image.create({
         key,
