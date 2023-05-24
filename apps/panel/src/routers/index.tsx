@@ -15,14 +15,14 @@ import Insight from "../views/Insight";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route path="/panel" element={<Root />}>
+    <Route element={<Root />}>
       <Route path="/auth" element={<Auth />} />
       <Route loader={authLoader} path="/orders" element={<Order />} />
       <Route loader={authLoader} path="/products" element={<Product />} />
       <Route loader={authLoader} path="/promotions" element={<Promotion />} />
       <Route loader={authLoader} path="/insights" element={<Insight />} />
     </Route>
-  )
+  ), { basename: '/panel' }
 );
 
 export default router;
