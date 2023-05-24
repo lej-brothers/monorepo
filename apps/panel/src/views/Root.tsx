@@ -11,9 +11,7 @@ const Root: React.FC = () => {
   const location = useLocation();
 
   useEffect(() => {
-    if (!location.pathname) {
-      nativate("/products");
-    }
+    nativate("/products");
   }, []);
 
   return (

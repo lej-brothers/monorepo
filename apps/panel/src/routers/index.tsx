@@ -1,5 +1,6 @@
 import React from "react";
 import {
+  Navigate,
   createBrowserRouter,
   createRoutesFromElements,
   Route,
@@ -15,13 +16,15 @@ import Insight from "../views/Insight";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route element={<Root />}>
-      <Route path="/auth" element={<Auth />} />
-      <Route loader={authLoader} path="/orders" element={<Order />} />
-      <Route loader={authLoader} path="/products" element={<Product />} />
-      <Route loader={authLoader} path="/promotions" element={<Promotion />} />
-      <Route loader={authLoader} path="/insights" element={<Insight />} />
-    </Route>
+      <Route path="/" element={<Root />}>
+        <Route path="/auth" element={<Auth />} />
+        <Route loader={authLoader} path="/orders" element={<Order />} />
+        <Route loader={authLoader} path="/products" element={<Product />} />
+        <Route loader={authLoader} path="/promotions" element={<Promotion />} />
+        <Route loader={authLoader} path="/insights" element={<Insight />} />
+      </Route>
+   
+    
   ), { basename: '/panel' }
 );
 
