@@ -29,16 +29,16 @@ const TRANSISTION = {
 };
 
 const POSITION_MAP_MOBILE: { [key: number]: any } = {
-  1: { left: -50, top: -20, width: 110, height: 150, rotate: -25 },
+  1: { left: -50, top: -20, width: 90, height: 120, rotate: -25 },
   2: {
     zIndex: 1,
     rotate: 0,
     left: "calc(50% - 75px)",
     top: -80,
-    width: 150,
-    height: 190,
+    width: 110,
+    height: 150,
   },
-  3: { right: -50, top: -20, width: 110, height: 150, rotate: 25 },
+  3: { right: -50, top: -20, width: 90, height: 120, rotate: 25 },
 };
 
 const POSITION_MAP_DESKTOP: { [key: number]: any } = {
