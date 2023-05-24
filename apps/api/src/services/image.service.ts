@@ -10,7 +10,7 @@ import { logger } from "../configs/pino";
 import { PUT_BASE_PARAMS } from "../configs/PUT_BASE_PARAMS";
 
 const ImageService = {
-  get: (key: string) => `http://${S3_BUCKET}.${S3_ENDPOINT}/${key}`,
+  get: (key: string) => `http://${S3_BUCKET}.${S3_ENDPOINT.replace('https://', '')}/${key}`,
 
   async upload(file: Express.Multer.File) {
     const key = v4() + path.extname(file.originalname);
