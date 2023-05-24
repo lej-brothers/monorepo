@@ -77,7 +77,7 @@ const CreateDrawer: React.FC<Props> = ({
 
   const onCreateButtonClick = () => {
     const values = methods.getValues();
-    onSubmit(values);
+    onSubmit({...values});
   };
 
   const onCreatePriceVariant = useCallback((variant: IPriceVariant) => {

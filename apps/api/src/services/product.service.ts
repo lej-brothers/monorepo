@@ -127,7 +127,16 @@ const ProductService = {
     return product;
   },
   async update(payload: Partial<IProductCreate>) {
-    return Product.findOneAndUpdate({ _id: payload._id }, payload, {
+      
+    const product = await Product.findOne({ _id: payload._id })!
+    const warehouse = await Warehourse.findOne({ _id: product!.warehourse })
+
+    if (payload.prices && warehouse) {
+      warehouse.prices = payload.prices;
+      await warehouse.save();
+    }
+    
+    await Product.findOneAndUpdate({ _id: payload._id }, payload, {
       timestamps: true,
     });
   },
