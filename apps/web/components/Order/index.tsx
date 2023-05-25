@@ -78,7 +78,7 @@ const Order: React.FC<Props> = ({ orderId }) => {
           {
             title: "Xác nhận thanh toán",
             description: "Thanh toán không thành công",
-            status: 'failed',
+            status: 'error',
             icon:  
               <div className="rounded-full bg-black w-[32px] flex justify-center items-center h-[32px]">
                 <InfoCircleOutlined rev="123" style={{ color: "red" }} />
