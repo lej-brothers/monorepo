@@ -1,7 +1,9 @@
 "use client";
 
+// orderID=646f0c4d218f3bda69033586&partnerCode=MOMOG2LT20230206&orderId=646f0c4d218f3bda69033586&requestId=646f0c4d218f3bda69033586&amount=800000&orderInfo=646f0c4d218f3bda69033586&orderType=momo_wallet&transId=1684999253990&resultCode=1006&message=Transaction+denied+by+user.&payType=&responseTime=1684999254003&extraData=&signature=14bd69ee5a4fb55601c2fdcab3b88fd15fc019a8b1ef52dda5d006184e48be85
+
 import Image from "next/image";
-import { LoadingOutlined } from "@ant-design/icons";
+import { LoadingOutlined, InfoCircleOutlined } from "@ant-design/icons";
 import { Steps as AntSteps } from "antd";
 import React, { useEffect, useMemo, useState } from "react";
 
@@ -24,7 +26,9 @@ const Order: React.FC<Props> = ({ orderId }) => {
 
   const [refetch, setRefetch] = useState(orderId ? 1000 : false);
   const { data } = useOrder(orderId, refetch as any);
+  const { resultCode } = router.query;
 
+  const error = resultCode === '0';
   const paying = data?.status === ORDER_STATUS.Draft;
   const delivering = !paying && data?.status !== ORDER_STATUS.Delivery;
 
@@ -65,7 +69,23 @@ const Order: React.FC<Props> = ({ orderId }) => {
         className={`pt-[45px] ${(isMobile && !isTablet) ? "px-6" : "pl-[110px] pr-[65px]"}`}
         direction="vertical"
         current={current}
-        items={[
+        items={error ? [
+          {
+            status: "finish",
+            title: "Tiếp nhận bởi Le J’",
+            description: "Đơn hàng được tiếp nhận bởi Le J’",
+          },
+          {
+            title: "Xác nhận thanh toán",
+            description: "Thanh toán không thành công",
+            status: 'failed',
+            icon:  
+              <div className="rounded-full bg-black w-[32px] flex justify-center items-center h-[32px]">
+                <InfoCircleOutlined rev="123" style={{ color: "red" }} />
+              </div>
+            ,
+          },
+        ] : [
           {
             status: "finish",
             title: "Tiếp nhận bởi Le J’",

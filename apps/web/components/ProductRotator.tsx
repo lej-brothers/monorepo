@@ -35,8 +35,8 @@ const POSITION_MAP_MOBILE: { [key: number]: any } = {
     rotate: 0,
     left: "calc(50% - 75px)",
     top: -80,
-    width: 110,
-    height: 150,
+    width: 130,
+    height: 170,
   },
   3: { right: -50, top: -20, width: 90, height: 120, rotate: 25 },
 };
