@@ -28,7 +28,7 @@ const Order: React.FC<Props> = ({ orderId }) => {
   const { data } = useOrder(orderId, refetch as any);
   const { resultCode } = router.query;
 
-  const error = resultCode === '0';
+  const error = resultCode !== '0';
   const paying = data?.status === ORDER_STATUS.Draft;
   const delivering = !paying && data?.status !== ORDER_STATUS.Delivery;
 
