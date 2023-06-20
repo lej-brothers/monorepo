@@ -235,7 +235,7 @@ const MobileProductTemplate: React.FC<ProductInfoProps> = ({ product }) => {
         <div className="flex-1 flex justify-center flex-col pl-10">
           <p className="font-medium mb-1">Thành tiền:</p>
           <p className="text-2xl">
-            {format("vi-VN", "VND", selectedPrice.price * quantity)}
+            {format("vi-VN", "VND", (selectedPrice?.price || 0) * quantity)}
           </p>
         </div>
         <div className="flex-1 flex justify-center items-center">
