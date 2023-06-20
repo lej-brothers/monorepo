@@ -80,8 +80,8 @@ const Order: React.FC<Props> = ({ orderId }) => {
             description: "Thanh toán không thành công",
             status: 'error',
             icon:  
-              <div className="rounded-full bg-black w-[32px] flex justify-center items-center h-[32px]">
-                <InfoCircleOutlined rev="123" style={{ color: "red" }} />
+              <div className="rounded-full bg-red-500 w-[32px] flex justify-center items-center h-[32px]">
+                <InfoCircleOutlined rev="123" style={{ color: "white" }} />
               </div>
             ,
           },

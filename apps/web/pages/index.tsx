@@ -28,7 +28,7 @@ export default function Web() {
       <Head>
         <title>Le J` Cafe - Trang chủ</title>
       </Head>
-      <ScrollBar smoothScrolling className="h-[100vh]">
+      <ScrollBar contentClassName={`${isMobile ? 'pb-6' : ''}`} smoothScrolling className="h-[100vh]">
         <section
           className={`relative flex justify-center items-end ${
             isMobile && !isTablet ? "h-[70vh]" : "h-[100vh]"
